@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="background">#86b6dc</color>
+    <color name="activity_background">#eed</color>
+    <color name="button_pressed">#1992ef</color>
+    <color name="button_focused">#fff</color>
+    <color name="Edit_background">#fff</color>
+
+</resources>

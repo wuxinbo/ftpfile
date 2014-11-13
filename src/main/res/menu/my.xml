@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".FileInfoActivity">
+    <item
+        android:id="@+id/setting"
+        android:icon="@android:drawable/ic_menu_set_as"
+        android:title="@string/setting"></item>
+    <item
+        android:id="@+id/exit"
+        android:title="@string/exit"></item>
+</menu>

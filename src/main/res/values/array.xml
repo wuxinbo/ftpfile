@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="setting">
+        <item >账号管理</item>
+        <item >关于</item>
+        <item >退出</item>
+    </string-array><string-array name="play">
+        <item >rmvb</item>
+        <item >mkv</item>
+        <item >avi</item>
+        <item >flv</item>
+    </string-array>
+    
+</resources>

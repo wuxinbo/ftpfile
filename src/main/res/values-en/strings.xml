@@ -1,0 +1,20 @@
+<resources>
+
+    <string name="about">about</string>
+    <string name="action_settings">setting</string>
+    <string name="app_name">ftp file</string>
+    <string name="exit">exit</string>
+    <string name="login">login</string>
+    <string name="pwd">password</string>
+    <string name="update">update</string>
+    <string name="url">url</string>
+    <string name="user">username</string>
+    <string name="setting">set</string>
+    <string name="title_activity_main">fileinfo</string>
+
+    <string name="network_normal">wifi have opened！</string>
+    <string name="press_exit">press again to exit</string>
+    <string name="network_err">当前网络不可用，不能连接服务器！</string>
+    <!-- about-->
+    <string name="copyright">copyright(C)wuincaiaaa@163.com</string>
+</resources>

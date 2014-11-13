@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.wu.ftpfile" >
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
+        >
+        <activity android:name="com.wu.ftpfile.activity.FileInfoActivity"
+            >
+        </activity>
+        <activity
+            android:name="com.wu.ftpfile.activity.AboutActivity"
+            android:label="@string/about" >
+        </activity><activity
+            android:name="com.wu.ftpfile.activity.UserActivity"
+            android:label="@string/about" >
+        </activity>
+        <activity
+            android:name="com.wu.ftpfile.activity.SetActivity"
+            android:label="@string/setting" >
+        </activity>
+        <activity android:name="com.wu.ftpfile.activity.LoginActivity" >
+        </activity>
+        <activity
+            android:name="com.wu.ftpfile.activity.MainActivity"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

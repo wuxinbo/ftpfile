@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:background="@color/activity_background">
+    <com.wu.ftpfile.UI.Myprogress
+        android:id="@+id/progressBar1"
+        style="@style/progress"
+        android:layout_width="match_parent"
+        android:layout_height="20sp"
+        android:max="100"
+        />
+		<TextView
+		    android:id="@+id/tv2"
+		    android:layout_height="30sp"
+		    android:layout_width="wrap_content"
+		    android:layout_below="@+id/progressBar1"
+		    />
+    <com.wu.ftpfile.UI.FileListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    </com.wu.ftpfile.UI.FileListView>
+</LinearLayout>
