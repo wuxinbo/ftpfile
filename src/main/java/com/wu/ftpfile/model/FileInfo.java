@@ -1,6 +1,5 @@
 package com.wu.ftpfile.model;
 
-import com.wu.ftp.UserInfo;
 import com.wu.ftpfile.utils.Fileutil;
 
 import org.apache.commons.net.ftp.FTPFile;
@@ -22,7 +21,13 @@ public class FileInfo {
      * 文件名
      */
     private String filename;
+    /**
+     * 文件创建时间。
+     */
     private String creattime;
+    /**
+     * 是否为文件。
+     */
     private int isdir = 0;
     private final static SimpleDateFormat sdf =new
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -88,7 +93,11 @@ public class FileInfo {
     }
 
     public void setCreattime(Calendar creattime) {
+        if (creattime==null){
+        this.creattime="";
+        }else{
         this.creattime=sdf.format(creattime.getTime());
+        }
     }
 
     public int getIsdir() {

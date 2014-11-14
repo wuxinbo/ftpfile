@@ -16,6 +16,5 @@ public class LoginIpl implements Loginclicklistener{
         if(UserInfo.userIsNull(user)){
 //            throw new FTPconnectException("信息为空");
         }
-        Log.d("login", "请登录");
     }
 }

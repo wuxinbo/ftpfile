@@ -11,12 +11,14 @@
     <string name="pwd">密码</string>
     <string name="login">登录</string>
     <string name="setting">设置</string>
-    <string name="copyright">copyright(C)wuincaiaaa@163.com</string>
     <string name="press_exit">再按一次退出键退出</string>
     <string name="network_err">当前网络不可用，不能连接服务器！</string>
     <string name="network_normal">wifi已打开！</string>
+    <string name="login_err">登录失败！</string>
     <!-- 主页面-->
     <string name="download">下载</string>
+    <string name="not_null">所填信息不能为空！</string>
+    <string name="title_local">本地文件</string>
     <!-- 设置界面 -->
     <string name="action_settings">设置</string>
     <string name="title_activity_main">服务器</string>

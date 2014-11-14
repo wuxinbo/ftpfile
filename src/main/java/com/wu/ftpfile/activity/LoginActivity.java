@@ -88,9 +88,10 @@ public class LoginActivity extends MyActivity  implements preLoginlistener {
         edit.putString("url",user.getUrl());
         edit.putString("username",user.getUsername());
         edit.putString("pwd",user.getPassword());
-        edit.commit();}
+        edit.commit();
+        }
         else{
-            print("不能为空");
+            print(R.string.not_null);
         }
     }
 

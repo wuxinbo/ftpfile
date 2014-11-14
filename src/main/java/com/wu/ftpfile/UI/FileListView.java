@@ -1,34 +1,25 @@
 package com.wu.ftpfile.UI;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 
-import com.wu.ftp.UserInfo;
 import com.wu.ftpfile.AsyncTask.AsyncDownLoad;
-import com.wu.ftpfile.model.Constant;
 import com.wu.ftpfile.AsyncTask.AsyncUpdatelist;
 import com.wu.ftpfile.Interface.UpdatelistViewIn;
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.activity.FileInfoActivity;
 import com.wu.ftpfile.model.FileInfo;
 import com.wu.ftpfile.utils.DataBaseUtil;
-import com.wu.ftpfile.utils.Fileutil;
 
 import org.apache.commons.net.ftp.FTPFile;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -41,9 +32,9 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
     private static Context context;
     private static final String tag ="IFlelistview";
     private UpdatelistViewIn updatelistview=null;
-    private FTPFile [] files=null;
-    private static  SQLiteDatabase db=null;
-    private static DataBaseUtil dbhelper =null;
+//    private FTPFile [] files=null;
+//    private static  SQLiteDatabase db=null;
+//    private static DataBaseUtil dbhelper =null;
     private List<FileInfo> fileinfos =null;
     /**
      * 第一次得到对象。
@@ -99,9 +90,6 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
     private void initView(Context context){
         this.context =context;
         setOnItemClickListener(this);
-//        dbhelper=new DataBaseUtil(context
-//                , "ftpfile", null, 1);
-//        db=dbhelper.getWritableDatabase();
     }
     public void setlistener( UpdatelistViewIn updatelistview){
         this.updatelistview =updatelistview;

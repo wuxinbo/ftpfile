@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.wu.ftpfile.activity.LocalFileFragment;
-import com.wu.ftpfile.activity.ServerInfoFragment;
+import com.wu.ftpfile.fragment.LocalFileFragment;
+import com.wu.ftpfile.fragment.ServerInfoFragment;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,5 +1,6 @@
 package com.wu.ftpfile.Interface;
 
+import com.wu.ftpfile.UI.FileListView;
 import com.wu.ftpfile.model.FileInfo;
 
 import org.apache.commons.net.ftp.FTPFile;

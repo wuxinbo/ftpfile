@@ -1,32 +1,22 @@
 package com.wu.ftpfile.utils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Environment;
-import android.util.Log;
 
 import com.wu.ftp.UserInfo;
+import com.wu.ftpfile.model.FileInfo;
 
 public class Fileutil {
 
-	public static File getFile(){
-		File file = new File(Environment.getExternalStorageDirectory()+File.separator
-				+"mydownloadfile"+File.separator);
-		if (!file.exists()) {
-			file.mkdir();
-		}
-		return file;
-		
-	}
+
 
     /**
      * 根据给出的目录，创建相应的文件对象，
@@ -81,11 +71,11 @@ public class Fileutil {
 		//1GB=1024MB
 		final double GB=MB*1024.0;
 		double  filesize=size;
-		//��B����ת����
+		//如果文件小于1KB.
 		if (size<KB) {
 			filesize_str=size+"B";
 		}
-		//��KB����ת����
+
 		else if((size<MB)&&(size>=KB)){
 			filesize=size/KB;
 			filesize_str=FomatString(filesize)+"KB";
@@ -104,9 +94,9 @@ public class Fileutil {
 		return filesize_str;
 	}
 	/**
-	 *  �Եõ����ļ���С��ʽת����
-	 * @param filesize �ļ���С
-	 * @return ת��֮���String��
+	 *  对文件大小进行格式化
+	 * @param filesize   文件大小
+	 * @return  格式化之后小数点后两位的字符串
 	 */
 	public static String FomatString(double filesize) {
 		String filesize_str;
@@ -170,5 +160,23 @@ public class Fileutil {
 
 
 
+    }
+
+    /**
+     *  通过给定的路径返回文件列表
+     * @param path 路径
+     * @return 封装好的文件列表。
+     */
+    public static List<FileInfo> getListfile(String path){
+        File file =new File(path);
+        List<FileInfo> fileInfos =new ArrayList<FileInfo>();
+        for (File file1:file.listFiles()){
+            FileInfo fileInfo=FileInfo.getinstance(file1.length(),
+                                                    file1.getName(),
+                                                    null,
+                                                    file1.isDirectory());
+            fileInfos.add(fileInfo);
+        }
+        return fileInfos;
     }
 }

@@ -1,26 +1,25 @@
-package com.wu.ftpfile.activity;
+package com.wu.ftpfile.fragment;
 
-import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.wu.ftp.UserInfo;
 import com.wu.ftpfile.AsyncTask.AsyncConnectServer;
-import com.wu.ftpfile.Interface.UpdatelistViewIn;
 import com.wu.ftpfile.R;
-import com.wu.ftpfile.adapter.FileLIstAdapter;
 import com.wu.ftpfile.UI.FileListView;
+import com.wu.ftpfile.activity.FileInfoActivity;
+import com.wu.ftpfile.activity.MyfragmentActivity;
+import com.wu.ftpfile.adapter.FileLIstAdapter;
 import com.wu.ftpfile.model.FileInfo;
 
 import org.apache.commons.net.ftp.FTPClient;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,15 +27,7 @@ import java.util.List;
  * 这个fragment显示服务器上的文件
  * Created by wuxinbo on 2014/11/3.
  */
-public class ServerInfoFragment extends Fragment implements UpdatelistViewIn {
-    private TextView tv;
-    private FileListView filelistview;
-    private FileInfoActivity ACTIVITY =null;
-    BaseAdapter listItemAdapter = null;
-    List<FileInfo> fileinfos = null;
-    /**
-     * 存放目录
-     */
+public class ServerInfoFragment extends FileListFragment  {
     private final String tag = "ServerInfoFragment";
     /**
      * ftp操作时需要使用的FTPClient
@@ -49,8 +40,8 @@ public class ServerInfoFragment extends Fragment implements UpdatelistViewIn {
     /**
      * 服务器上的目录路径
      */
-    public String path = File.separator;
     private TextView nav_title;
+    private FileListView filelistview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,20 +55,12 @@ public class ServerInfoFragment extends Fragment implements UpdatelistViewIn {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.activity_fileinfo,container,false);
-        initactivity(view);
+        initview(view);
         startAction();
         return view;
-
     }
-    public void initactivity(View view) {
-        filelistview = (FileListView) view.findViewById(R.id.listView1);
-        filelistview.setlistener(this);
-        fileinfos = new ArrayList<FileInfo>();
-        tv = (TextView) view.findViewById(R.id.tv2);
-        listItemAdapter = new FileLIstAdapter(ACTIVITY,fileinfos);
 
 
-    }
     /**
      * 根据wifi的状态执行相应的操作，当wifi可用时连接服务器。
      *
@@ -88,11 +71,11 @@ public class ServerInfoFragment extends Fragment implements UpdatelistViewIn {
         switch (i){
             case WifiManager.WIFI_STATE_DISABLED:
                 //提示用户当前网络不可用。
-                ACTIVITY.print(getResources().getString(R.string.network_err));
+                ACTIVITY.print(R.string.network_err);
                 break;
             case WifiManager.WIFI_STATE_ENABLED:
             {   //wifi已经打开。
-                ACTIVITY.print(getResources().getString(R.string.network_normal));
+                ACTIVITY.print(R.string.network_normal);
                 conenctserver();
                 break;
             }
@@ -122,26 +105,15 @@ public class ServerInfoFragment extends Fragment implements UpdatelistViewIn {
     }
 
     @Override
-    public void updatelist(List<FileInfo> fileinfo) {
-        List<FileInfo> files=fileinfo;
-        if (fileinfos.size() > 0) {
-            fileinfos.clear();
-        }
-        if (files==null){
-            ACTIVITY.print("登录失败！");
-            return ;
-        }else{
-        for (FileInfo file : files) {
-            FileInfo fileInfo  = FileListView.FileInit(file);
-            fileinfos.add(fileInfo);
-        }
-        }
-        listItemAdapter.notifyDataSetChanged();
-        filelistview.setAdapter(listItemAdapter);
-        if (path.equals("/")){
-            tv.setText("root");
-        }else {
-            tv.setText(path);
-        }
+    public void initFilelist(View view) {
+        filelistview= (com.wu.ftpfile.UI.FileListView) view.findViewById(R.id.server_listView);
+        filelistview.setlistener(this);
     }
+
+    @Override
+    public void setadapter() {
+        filelistview.setAdapter(listItemAdapter);
+    }
+
+
 }

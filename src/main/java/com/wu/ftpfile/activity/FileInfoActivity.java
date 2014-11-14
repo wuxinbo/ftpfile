@@ -1,19 +1,10 @@
 package com.wu.ftpfile.activity;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
 
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -25,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
+import com.wu.ftpfile.Implment.FileListPagechangelistener;
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.adapter.FileFragmentpageAdapter;
 
@@ -64,9 +56,7 @@ public class FileInfoActivity extends MyfragmentActivity  {
      */
     private ImageView server_img;
     private ViewPager fileViewpage;
-
-
-
+    public  TextView nav_title;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,6 +101,9 @@ public class FileInfoActivity extends MyfragmentActivity  {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * 跳转到设置界面。
+     */
     private void jumpTosetactivity() {
         Intent in = new Intent();
         in.setClass(this, SetActivity.class);
@@ -124,6 +117,7 @@ public class FileInfoActivity extends MyfragmentActivity  {
 
     public void initactivity() {
         nav_settext=(TextView) findViewById(R.id.nav_setting);
+        nav_title=(TextView) findViewById(R.id.nav_title);
         localimgview=(ImageView)findViewById(R.id.local_img);
         server_img=(ImageView)findViewById(R.id.server_img);
         nav_settext.setOnClickListener(new View.OnClickListener() {
@@ -134,20 +128,7 @@ public class FileInfoActivity extends MyfragmentActivity  {
         });
         fileViewpage= (ViewPager) findViewById(R.id.fileviewpager);
         fileViewpage.setAdapter(new FileFragmentpageAdapter(getSupportFragmentManager()));
-
-//        localimgview.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                LocalFileFragment localfilefragment = new LocalFileFragment();
-//                fragmentTransaction.
-//                        replace(R.id.fragment_container, localfilefragment)
-//                        .addToBackStack(null)
-//                        .commit()
-//                ;
-//                server_img.setImageResource(R.drawable.server_nomal);
-//                isserver=false;
-//            }
-//        });
+        fileViewpage.setOnPageChangeListener(new FileListPagechangelistener(this));
     }
 
 
@@ -160,7 +141,7 @@ public class FileInfoActivity extends MyfragmentActivity  {
     private void press_back(String path) {
         if (path.equals(File.separator)) {
             if (i == 0) {
-                print("再按一次返回退出");
+                print(R.string.press_exit);
                 i++;
             } else {
                 finish();
