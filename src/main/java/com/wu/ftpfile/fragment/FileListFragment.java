@@ -15,6 +15,7 @@ import com.wu.ftpfile.model.FileInfo;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /** <code>serverfragment</code>和localfileserverment的父类，实现了<b>updatelistviewIn<b/>
@@ -29,10 +30,14 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
     protected List<FileInfo> fileinfos = null;
     protected String path = File.separator;
     protected  FileInfoActivity ACTIVITY =null;
-    protected TextView tv;
+    /**
+     * 用于显示路径的
+     */
+    protected TextView path_view;
     private String tag="FileListFragment";
 
-    public void updatelist(List<FileInfo> fileinfo){
+    public synchronized void updatelist(List<FileInfo> fileinfo){
+
         List<FileInfo> files=fileinfo;
         if (fileinfos.size() > 0) {
             fileinfos.clear();
@@ -46,20 +51,28 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
                 fileinfos.add(fileInfo);
             }
         }
+        Collections.sort(fileinfos);
         listItemAdapter.notifyDataSetChanged();
         setadapter();
-        Log.d(tag, String.valueOf(fileinfos.size()));
-        if (path.equals("/")){
-            tv.setText("root");
-        }else {
-            tv.setText(path);
+        if (this instanceof LocalFileFragment){
+            if (path.equals("/")){
+                path_view.setText("内存");
+            }else {
+                path_view.setText(path);
+            }
+        }else{
+            if (path.equals("/")){
+                path_view.setText("root");
+            }else {
+                path_view.setText(path);
+            }
         }
     }
     protected void initview(View view) {
         fileinfos = new ArrayList<FileInfo>();
         initFilelist(view);
         listItemAdapter = new FileLIstAdapter(ACTIVITY,fileinfos);
-        tv = (TextView) view.findViewById(R.id.tv2);
+        path_view = (TextView) view.findViewById(R.id.tv2);
     }
 
     public abstract  void initFilelist(View view);

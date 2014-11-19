@@ -54,7 +54,7 @@ public class FileInfoActivity extends MyfragmentActivity  {
     /**
      * 底部导航栏上面的服务器图标
      */
-    private ImageView server_img;
+    public  ImageView server_img;
     private ViewPager fileViewpage;
     public  TextView nav_title;
     @Override

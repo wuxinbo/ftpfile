@@ -175,6 +175,9 @@ public class Fileutil {
                                                     file1.getName(),
                                                     null,
                                                     file1.isDirectory());
+            if (file1.isHidden()){
+                continue;
+            }
             fileInfos.add(fileInfo);
         }
         return fileInfos;
