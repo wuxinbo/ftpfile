@@ -1,7 +1,6 @@
 package com.wu.ftpfile.fragment;
 
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.View;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
@@ -25,7 +24,7 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
     /**
      * 文件信息列表展示。
      */
-//    protected FileListView fileListView;
+    protected FileListView fileListView;
     protected BaseAdapter listItemAdapter = null;
     protected List<FileInfo> fileinfos = null;
     protected String path = File.separator;
@@ -34,26 +33,25 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
      * 用于显示路径的
      */
     protected TextView path_view;
-    private String tag="FileListFragment";
-
+//    private String tag="FileListFragment";
     public synchronized void updatelist(List<FileInfo> fileinfo){
 
-        List<FileInfo> files=fileinfo;
+//        List<FileInfo> files=fileinfo;
         if (fileinfos.size() > 0) {
             fileinfos.clear();
         }
-        if (files==null){
+        if (fileinfo==null){
             ACTIVITY.print(R.string.login_err);
             return ;
         }else{
-            for (FileInfo file : files) {
+            for (FileInfo file : fileinfo) {
                 FileInfo fileInfo  = FileListView.FileInit(file);
                 fileinfos.add(fileInfo);
             }
         }
         Collections.sort(fileinfos);
         listItemAdapter.notifyDataSetChanged();
-        setadapter();
+        fileListView.setAdapter(listItemAdapter);
         if (this instanceof LocalFileFragment){
             if (path.equals("/")){
                 path_view.setText("内存");
@@ -70,11 +68,10 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
     }
     protected void initview(View view) {
         fileinfos = new ArrayList<FileInfo>();
-        initFilelist(view);
+        fileListView= (com.wu.ftpfile.UI.FileListView) view.findViewById(R.id.local_listView);
+        fileListView.setlistener(this);
         listItemAdapter = new FileLIstAdapter(ACTIVITY,fileinfos);
-        path_view = (TextView) view.findViewById(R.id.tv2);
+        path_view = (TextView) view.findViewById(R.id.pathView);
     }
 
-    public abstract  void initFilelist(View view);
-    public abstract  void setadapter();
 }
