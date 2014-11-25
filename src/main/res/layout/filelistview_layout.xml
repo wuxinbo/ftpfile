@@ -48,14 +48,15 @@
     android:layout_marginTop="5dp"
     android:text="2014-10-22"/>
 
-    <Button
+    <com.wu.ftpfile.UI.DownloadButton
         android:id="@+id/download_btn"
         android:layout_width="60dp"
         android:layout_height="35dp"
-        android:text="@string/download"
         android:layout_alignParentRight="true"
         android:layout_marginTop="20dp"
-        android:visibility="invisible"/>
+        android:background="@drawable/downloadbutton"
+        android:visibility="invisible"
+        />
     <ProgressBar
         android:id="@+id/download_probar"
         android:layout_width="match_parent"

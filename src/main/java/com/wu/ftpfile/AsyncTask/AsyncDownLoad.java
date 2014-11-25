@@ -1,8 +1,6 @@
 package com.wu.ftpfile.AsyncTask;
 
-import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.ProgressBar;
 
@@ -10,9 +8,7 @@ import com.wu.ftpfile.model.Constant;
 import com.wu.ftpfile.model.FileInfo;
 import com.wu.ftpfile.utils.Fileutil;
 
-import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPFile;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,12 +17,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-/**
+/** 本类主要完成从服务器上面下载文件，并将信息传递到UI线程进行更新。
  * Created by wuxinbo on 2014/11/1.
  */
 public class AsyncDownLoad extends AsyncTask<FileInfo,Long,Void> {
     private FTPClient ftpclient;
-//    private Context context;
     private ProgressBar downloadbar;
     private Button download_button;
     public AsyncDownLoad(FTPClient client,ProgressBar downloadbar,
@@ -43,19 +38,18 @@ public class AsyncDownLoad extends AsyncTask<FileInfo,Long,Void> {
         final byte[] readdata=new byte [2048];
         StringBuffer writefile_path = initWriteFilePath();
         StringBuffer readfilepath=new StringBuffer(File.separator);
-        readfilepath.append(filename);
+        readfilepath.append(fileinfo.getFilepath()+File.separator+filename);
         OutputStream opt= null;
         File file = Fileutil.createFile(writefile_path.toString(),filename);
-        Log.d("file_path",writefile_path.toString());
         try {
             opt = new FileOutputStream(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         InputStream is=null;
-        long read_size=0,download_size=0;
+        long read_size=0L,download_size=0;
         try {
-            ftpclient.enterLocalPassiveMode();
+//            ftpclient.enterLocalPassiveMode();
             ftpclient.setFileType(FTPClient.BINARY_FILE_TYPE);
             is=ftpclient.retrieveFileStream(readfilepath.toString());
             while((read_size=is.read(readdata))!=-1){

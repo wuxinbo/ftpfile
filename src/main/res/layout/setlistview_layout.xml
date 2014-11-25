@@ -12,6 +12,5 @@
         android:textSize="18sp"
         android:background="@drawable/listview_setting"
         />
-    
 
 </RelativeLayout>

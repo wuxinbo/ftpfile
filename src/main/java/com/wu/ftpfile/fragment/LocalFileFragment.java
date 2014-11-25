@@ -16,11 +16,12 @@ import com.wu.ftpfile.model.Constant;
  * Created by wuxinbo on 2014/11/3.
  */
 public class LocalFileFragment extends FileListFragment {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ACTIVITY=(FileInfoActivity)getActivity();
-
+        path=Constant.SD_ROOT_PATH;
     }
 
     @Override

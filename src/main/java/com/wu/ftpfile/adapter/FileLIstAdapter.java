@@ -41,7 +41,7 @@ public class FileLIstAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view=inflater.inflate(R.layout.listview,null);
+        View view=inflater.inflate(R.layout.filelistview_layout,null);
         FileInfo file =fileslist.get(position);
         ImageView icon_view= (ImageView) view.findViewById(R.id.icon);
         TextView ItemTitle_view= (TextView) view.findViewById(R.id.ItemTitle);

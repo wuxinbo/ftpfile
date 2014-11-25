@@ -10,6 +10,7 @@ import com.wu.ftpfile.R;
 import com.wu.ftpfile.UI.FileListView;
 import com.wu.ftpfile.activity.FileInfoActivity;
 import com.wu.ftpfile.adapter.FileLIstAdapter;
+import com.wu.ftpfile.model.Constant;
 import com.wu.ftpfile.model.FileInfo;
 
 import java.io.File;
@@ -28,15 +29,14 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
     protected BaseAdapter listItemAdapter = null;
     protected List<FileInfo> fileinfos = null;
     protected String path = File.separator;
-    protected  FileInfoActivity ACTIVITY =null;
+    protected FileInfoActivity ACTIVITY =null;
     /**
      * 用于显示路径的
      */
     protected TextView path_view;
-//    private String tag="FileListFragment";
-    public synchronized void updatelist(List<FileInfo> fileinfo){
 
-//        List<FileInfo> files=fileinfo;
+//    private String tag="FileListFragment";
+    public  void updatelist(List<FileInfo> fileinfo){
         if (fileinfos.size() > 0) {
             fileinfos.clear();
         }
@@ -50,10 +50,11 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
             }
         }
         Collections.sort(fileinfos);
+        fileListView.setFileinfos(fileinfos);
         listItemAdapter.notifyDataSetChanged();
         fileListView.setAdapter(listItemAdapter);
         if (this instanceof LocalFileFragment){
-            if (path.equals("/")){
+            if (path.equals(Constant.SD_ROOT_PATH)){
                 path_view.setText("内存");
             }else {
                 path_view.setText(path);
@@ -73,5 +74,19 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
         listItemAdapter = new FileLIstAdapter(ACTIVITY,fileinfos);
         path_view = (TextView) view.findViewById(R.id.pathView);
     }
+
+    public String getPath() {
+        return path;
+    }
+
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public TextView getPath_view() {
+        return path_view;
+    }
+
 
 }

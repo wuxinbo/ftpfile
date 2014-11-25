@@ -73,6 +73,17 @@ public class FileInfo implements Comparable<Object> {
      * 未格式化的文件大小。
      */
     private long size;
+    /**
+     * 文件的存放路径。
+     */
+    private String filepath;
+
+    public String getFilepath() {
+        return filepath;
+    }
+    public void setFilepath(String filepath) {
+        this.filepath = filepath;
+    }
 
     public static FileInfo getinstance(long filesize,
                                        String filename,

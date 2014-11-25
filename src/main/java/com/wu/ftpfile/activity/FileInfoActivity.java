@@ -57,6 +57,15 @@ public class FileInfoActivity extends MyfragmentActivity  {
     public  ImageView server_img;
     private ViewPager fileViewpage;
     public  TextView nav_title;
+    /**
+     * fragment的ID。
+     * <ul>
+     * <li>如果该值为0说明当前活动的fragment是serverinfofragment<li/>
+     * <li>如果该值为1说明当前活动的是localfilefragment</li>
+     * </ul>
+     */
+    private  int fragmnetnumber;
+//    private FileListView filelistview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +140,9 @@ public class FileInfoActivity extends MyfragmentActivity  {
         fileViewpage.setOnPageChangeListener(new FileListPagechangelistener(this));
     }
 
-
+    public ViewPager getFileViewpage() {
+        return fileViewpage;
+    }
 
     /**
      * 点击返回键触发该动作。
@@ -151,7 +162,13 @@ public class FileInfoActivity extends MyfragmentActivity  {
         }
 
     }
+    public int getFragmnetnumber() {
+        return fragmnetnumber;
+    }
 
+    public void setFragmnetnumber(int fragmnetnumber) {
+        this.fragmnetnumber = fragmnetnumber;
+    }
     /**
      * 返回上一级目录
      */

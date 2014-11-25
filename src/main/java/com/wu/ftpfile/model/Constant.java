@@ -8,22 +8,10 @@ import android.os.Environment;
  * @author wuxinbo
  */
 public class Constant {
-    /**
-     * 菜单更新按钮的ID
-     */
-    public static final int UPDATE = 1;
-    /**
-     * 菜单关于按钮的ID
-     */
-    public static final int ABOUT = 2;
-    /**
-     * 菜单退出按钮的ID
-     */
-    public static final int EXIT = 3;
-    /**
-     * 菜单设置按钮的ID
-     */
-    public static final int SETTING = 4;
+//    /**
+//     * 菜单设置按钮的ID
+//     */
+//    public static final int SETTING = 4;
     /**
      * 建Fileinfo表，主要存储文件对象的相关信息。
      */
@@ -48,4 +36,13 @@ public class Constant {
      * 服务器下载到本地的目录。
      */
     public static final String APP_DIR_DOWNLOAD_PATH="download";
+    /**
+     * <a href="#">serverfilefragment<a/>在viewpage中的id
+     */
+    public static final int SERVERFILE_FRAGMNET_NUMBER=0;
+    /**
+     * <a href="#">localfilefragment</a>在viewpager中的id。
+     */
+    public static final int LOCALFILE_FRAGMNET_NUMBER=1;
+
 }

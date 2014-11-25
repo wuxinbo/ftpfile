@@ -2,19 +2,19 @@ package com.wu.ftpfile.Implment;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.activity.FileInfoActivity;
+import com.wu.ftpfile.model.Constant;
 
-/**
+/** 本类是监听fragment切换时的变化
  * Created by Administrator on 2014/11/14.
  */
 public class FileListPagechangelistener implements ViewPager.OnPageChangeListener{
     /**
      * 调试信息
      */
-    private String tag=getClass().getName();
+//    private String tag=getClass().getName();
     /**
      * 上下文环境
      */
@@ -48,6 +48,7 @@ public class FileListPagechangelistener implements ViewPager.OnPageChangeListene
     private void serverfilefragmentChange(){
         activity.nav_title.setText(activity.getString(R.string.title_activity_main));
         activity.server_img.setImageResource(R.drawable.server_pressed);
+        activity.setFragmnetnumber(Constant.SERVERFILE_FRAGMNET_NUMBER);
     }
 
     /**
@@ -57,6 +58,7 @@ public class FileListPagechangelistener implements ViewPager.OnPageChangeListene
     private void LocalfilefragmentChange(){
         activity.nav_title.setText(activity.getString(R.string.title_local));
         activity.server_img.setImageResource(R.drawable.server_nomal);
+        activity.setFragmnetnumber(Constant.LOCALFILE_FRAGMNET_NUMBER);
     }
 
     @Override
