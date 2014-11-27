@@ -16,10 +16,12 @@ import android.widget.EditText;
 public class MyEdittext  extends EditText{
     public MyEdittext(Context context) {
         super(context);
+        initview();
     }
 
     public MyEdittext(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initview();
     }
 
     @Override
@@ -28,10 +30,14 @@ public class MyEdittext  extends EditText{
         paint.setColor(Color.DKGRAY);
         paint.setStrokeWidth(1);
         int width=getWidth();
-        int height =getHeight();
+//        int height =getHeight();
         canvas.drawColor(Color.WHITE);
         canvas.drawLine(0,0,width,0,paint);
         super.onDraw(canvas);
+    }
+    private void initview(){
+        setTextSize(14.0f);
 
     }
+
 }

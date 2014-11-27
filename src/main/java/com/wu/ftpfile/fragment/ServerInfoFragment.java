@@ -40,8 +40,8 @@ public class ServerInfoFragment extends FileListFragment  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ACTIVITY=(FileInfoActivity)getActivity();
-        nav_title= (TextView) ACTIVITY.findViewById(R.id.nav_title);
-        nav_title.setText("服务器");
+//        nav_title= (TextView) ACTIVITY.findViewById(R.id.nav_title);
+//        nav_title.setText("服务器");
     }
 
 

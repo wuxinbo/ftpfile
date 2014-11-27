@@ -1,9 +1,5 @@
 package com.wu.ftpfile.activity;
 
-import java.io.File;
-
-import org.apache.commons.net.ftp.FTPClient;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -13,12 +9,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-
+import com.wu.ftpfile.AsyncTask.AsyncUpdatelist;
 import com.wu.ftpfile.Implment.FileListPagechangelistener;
 import com.wu.ftpfile.R;
+import com.wu.ftpfile.UI.FileListView;
 import com.wu.ftpfile.adapter.FileFragmentpageAdapter;
+import com.wu.ftpfile.fragment.FileListFragment;
+import com.wu.ftpfile.model.Constant;
+
+import org.apache.commons.net.ftp.FTPClient;
+
+import java.io.File;
 
 
 /**
@@ -26,7 +28,7 @@ import com.wu.ftpfile.adapter.FileFragmentpageAdapter;
  *
  * @author wuxinbo
  */
-public class FileInfoActivity extends MyfragmentActivity  {
+public class FileInfoActivity extends MyfragmentActivity {
     //	private ProgressBar pga;
     private ImageView localimgview;
     /**
@@ -40,23 +42,14 @@ public class FileInfoActivity extends MyfragmentActivity  {
 
     int i = 0;
     /**
-     * 服务器上的目录路径
-     */
-    public String path = File.separator;
-    /**
-     * 导航栏的设置
-     */
-    private TextView nav_settext;
-    /**
      * 用来判断当前属于哪个fragment。
      */
-    private boolean isserver=true;
+    private boolean isserver = true;
     /**
      * 底部导航栏上面的服务器图标
      */
-    public  ImageView server_img;
+    public ImageView server_img;
     private ViewPager fileViewpage;
-    public  TextView nav_title;
     /**
      * fragment的ID。
      * <ul>
@@ -64,8 +57,8 @@ public class FileInfoActivity extends MyfragmentActivity  {
      * <li>如果该值为1说明当前活动的是localfilefragment</li>
      * </ul>
      */
-    private  int fragmnetnumber;
-//    private FileListView filelistview;
+    private int fragmnetnumber;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +81,7 @@ public class FileInfoActivity extends MyfragmentActivity  {
              * 否则将会返回父目录。
              */
             case KeyEvent.KEYCODE_BACK:
-                press_back(path);
+                press_back();
                 break;
             case KeyEvent.KEYCODE_MENU:
                 showPopup();
@@ -104,7 +97,7 @@ public class FileInfoActivity extends MyfragmentActivity  {
                 jumpTosetactivity();
             }
             case R.id.exit:
-                press_back(path);
+                press_back();
         }
 
         return super.onOptionsItemSelected(item);
@@ -124,20 +117,29 @@ public class FileInfoActivity extends MyfragmentActivity  {
     }
 
 
-    public void initactivity() {
-        nav_settext=(TextView) findViewById(R.id.nav_setting);
-        nav_title=(TextView) findViewById(R.id.nav_title);
-        localimgview=(ImageView)findViewById(R.id.local_img);
-        server_img=(ImageView)findViewById(R.id.server_img);
+    @Override
+    protected void setview() {
         nav_settext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 jumpTosetactivity();
             }
         });
-        fileViewpage= (ViewPager) findViewById(R.id.fileviewpager);
         fileViewpage.setAdapter(new FileFragmentpageAdapter(getSupportFragmentManager()));
         fileViewpage.setOnPageChangeListener(new FileListPagechangelistener(this));
+    }
+
+    @Override
+    protected void initview() {
+        initnavbar();
+        server_img = (ImageView) findViewById(R.id.server_img);
+        fileViewpage = (ViewPager) findViewById(R.id.fileviewpager);
+    }
+
+    protected void initactivity() {
+//        localimgview=(ImageView)findViewById(R.id.local_img);
+        initview();
+        setview();
     }
 
     public ViewPager getFileViewpage() {
@@ -146,21 +148,46 @@ public class FileInfoActivity extends MyfragmentActivity  {
 
     /**
      * 点击返回键触发该动作。
-     *
-     * @param path
      */
-    private void press_back(String path) {
-        if (path.equals(File.separator)) {
-            if (i == 0) {
-                print(R.string.press_exit);
-                i++;
-            } else {
-                finish();
+    private void press_back() {
+        String serverfilepath = getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER).getPath();
+        String localfilepath = getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER).getPath();
+        if(isFragmentByFragmennumber()){
+            if (serverfilepath.equals(File.separator)){
+                finnshActivity();
+            }else{
+            backParentDirectory(serverfilepath);
             }
-        } else {
-            backParentDirectory();
+        }else{
+            if (localfilepath.equals(Constant.SD_ROOT_PATH)) {
+                finnshActivity();
+            }
+            else{
+                backParentDirectory(localfilepath);
+            }
+
         }
 
+    }
+
+    private void finnshActivity() {
+        if (i == 0) {
+            print(R.string.press_exit);
+            i++;
+        } else {
+            finish();
+        }
+    }
+
+    /**
+     * 根据fragmentnumber判断当前属于哪个fragment。
+     * @return 如果返回true就是serverfileinfofragment，否则为Localfileinfofragment。
+     */
+    public boolean isFragmentByFragmennumber(){
+        if (fragmnetnumber == Constant.SERVERFILE_FRAGMNET_NUMBER) {
+            return true;
+        }
+        return false;
     }
     public int getFragmnetnumber() {
         return fragmnetnumber;
@@ -169,13 +196,35 @@ public class FileInfoActivity extends MyfragmentActivity  {
     public void setFragmnetnumber(int fragmnetnumber) {
         this.fragmnetnumber = fragmnetnumber;
     }
+
     /**
      * 返回上一级目录
      */
-    private void backParentDirectory() {
-//        path = path.substring(0, path.lastIndexOf(File.separator));
-//        AsyncUpdatelist updatelist = new AsyncUpdatelist(filelistview, this);
-//        updatelist.execute(path);
+    private void backParentDirectory(String path) {
+        path = path.substring(0, path.lastIndexOf(File.separator));
+//        if (isFragmentByFragmennumber()){
+//            getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER).setPath();
+//        }
+        FileListView filelistview = null;
+        if (isFragmentByFragmennumber()) {
+            filelistview = getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER).getFileListView();
+        } else {
+            filelistview = getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER).getFileListView();
+        }
+        AsyncUpdatelist updatelist = new AsyncUpdatelist(filelistview, this);
+        updatelist.execute(path);
     }
 
+    public FileListFragment getFragmentInstance(int fragmentnumber) {
+        switch (fragmentnumber) {
+            case Constant.SERVERFILE_FRAGMNET_NUMBER:
+                return (FileListFragment) fileViewpage.getAdapter().
+                        instantiateItem(fileViewpage, Constant.SERVERFILE_FRAGMNET_NUMBER);
+            case Constant.LOCALFILE_FRAGMNET_NUMBER:
+                return (FileListFragment) fileViewpage.getAdapter().
+                        instantiateItem(fileViewpage, Constant.LOCALFILE_FRAGMNET_NUMBER);
+
+        }
+        return null;
+    }
 }

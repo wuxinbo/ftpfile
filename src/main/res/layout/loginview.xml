@@ -1,58 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#cecece"
-    android:orientation="vertical"
-
     >
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="150dp"
-        android:layout_gravity="center_horizontal"
-        >
-        <com.wu.ftpfile.UI.MyEdittext
-            android:id="@+id/login_url"
+        <include
+            android:id="@+id/login_edittext"
+            layout="@layout/user_pwd_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:hint="@string/url"
-            />
-
-        <com.wu.ftpfile.UI.MyEdittext
-            android:id="@+id/login_user"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:hint="@string/user"
-        />
-
-        <com.wu.ftpfile.UI.MyEdittext
-            android:id="@+id/login_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:hint="@string/pwd"
-            android:inputType="textPassword"
-        />
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:layout_marginTop="150dp"
+            ></include>
 
         <com.wu.ftpfile.UI.LoginButton
         android:id="@+id/login_button"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/loginview_height"
-        android:layout_marginTop="@dimen/loginview_height"
         android:layout_marginLeft="@dimen/activity_vertical_margin"
         android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:layout_marginTop="30dp"
         android:text="@string/login"
         android:textColor="@color/Edit_background"
         android:background="@drawable/loginbuton"
-        android:gravity="fill_vertical|center_horizontal" />
-</LinearLayout>
-</LinearLayout>
+        android:gravity="fill_vertical|center_horizontal"
+        android:layout_below="@+id/login_edittext"/>
+</RelativeLayout>

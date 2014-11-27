@@ -1,11 +1,23 @@
 package com.wu.ftpfile.activity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public abstract class MyActivity extends Activity {
+import com.wu.ftp.UserInfo;
+import com.wu.ftpfile.R;
 
+public abstract class MyActivity extends Activity {
+    /**
+     * 导航栏的标题
+     */
+    protected TextView nav_title;
+    /**
+     * 导航栏设置按钮
+     */
+    protected TextView nav_settext;
     /**
 	 * 使用Toast向用户提示信息。
 	 * @param stringResId 字符串ID
@@ -22,11 +34,41 @@ public abstract class MyActivity extends Activity {
 	public void SetInput() {
 		getWindow().setSoftInputMode(WindowManager.
 				LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		
 	}
 
     /**
+     * 将用户信息保存在本地，
+     * @param user 用户信息
+     */
+    protected void saveuserinfo(UserInfo user) {
+        SharedPreferences userinfo=getSharedPreferences("userinfo",1);
+        SharedPreferences.Editor edit =userinfo.edit();
+        if (!UserInfo.userIsNull(user)){
+        edit.putString("url",user.getUrl());
+        edit.putString("username",user.getUsername());
+        edit.putString("pwd",user.getPassword());
+        edit.commit();
+        }
+        else{
+            print(R.string.not_null);
+        }
+    }
+
+    protected abstract void setview();
+    protected abstract void initview();
+    /**
      * 初始化activity
      */
-	public abstract void initactivity();
+	public  abstract void initactivity();
+    /**
+     * 初始化导航栏。
+     */
+    protected   void initnavbar(){
+        nav_settext = (android.widget.TextView) findViewById(R.id.nav_setting);
+        nav_title   = (android.widget.TextView) findViewById(R.id.nav_title);
+    }
+    protected  void initUserinfo(){
+
+    }
+
 }

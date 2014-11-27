@@ -2,7 +2,10 @@ package com.wu.ftp;
 
 import java.io.Serializable;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 
 /**
@@ -10,7 +13,7 @@ import android.app.Application;
  * @author wuxinbo
  *
  */
-public class UserInfo  extends Application implements Serializable {
+public class UserInfo  implements Serializable {
 	private String url;
 	private String username;
 	private String password;
@@ -30,7 +33,46 @@ public class UserInfo  extends Application implements Serializable {
 		server.username=Username;
 		return server;
 	}
-	public String getUrl() {
+
+    /**
+     * 读取用户信息，
+     * @param context 上下文环境
+     * @return 用户信息对象
+     */
+    public static UserInfo readUserinfo(Context context){
+        UserInfo user = new UserInfo();
+       SharedPreferences userinfo= ((Activity)context).
+                                    getSharedPreferences("userinfo",1);
+
+        user.setPassword(userinfo.getString("pwd",""));
+        user.setUsername(userinfo.getString("username",""));
+        user.setUrl(userinfo.getString("url",""));
+        return user;
+
+
+
+    }
+
+    /**
+     * 判断配置文件是否存在
+     * @param context  上下文环境
+     * @param sharepreferenceName 配置文件名
+     * @param key 文件中包含的key
+     * @return 如果文件存在返回true，否则返回false
+     */
+    public static  boolean sharepreferenceIsExist(Context context,
+                                          String sharepreferenceName,
+                                          String key){
+        SharedPreferences sharedpreference = ((Activity)context).
+                                              getSharedPreferences(
+                                              sharepreferenceName,1);
+        if (sharedpreference.contains(key)){
+            return true;
+        }
+            return false;
+    }
+
+    public String getUrl() {
 		return url;
 	}
 	public void setUrl(String url) {

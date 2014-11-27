@@ -31,6 +31,7 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
     private static Context context;
     private static final String tag = "IFlelistview";
     private UpdatelistViewIn updatelistview = null;
+    private  FileInfoActivity fileInfoActivity;
     /**
      * serverfileinfofragmnet实例
      */
@@ -70,18 +71,12 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
         this.fileinfos = fileinfos;
     }
 
-    public FileListFragment getServerfileListFragment() {
-        return serverfileListFragment;
-    }
-
-    public FileListFragment getLocalfileListFragment() {
-        return LocalfileListFragment;
-    }
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         final FileInfo fileinfo = fileinfos.get(position);
         final int fragmentnumber=((FileInfoActivity) context).getFragmnetnumber();
+        serverpath = new StringBuffer(serverfileListFragment.getPath());
+        localpath = new StringBuffer(LocalfileListFragment.getPath());
         serverpath = serverpath.append(File.separator
                 + fileinfo.getFilename());
         if (fragmentnumber==Constant.SERVERFILE_FRAGMNET_NUMBER){
@@ -104,13 +99,15 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
                 });
             }
         }else{
+            String path=((FileInfoActivity) context).getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER).getPath();
             localpath.append(File.separator+fileinfo.getFilename());
             if (fileinfo.getIsdir() == 1){
                 gotoDir(localpath.toString());
             }
 
         }
-
+            serverpath=null;
+            localpath=null;
 
     }
 
@@ -128,15 +125,12 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
      */
     private void initView(Context context) {
         this.context = context;
-        ViewPager filelistviewpager = ((FileInfoActivity) context).getFileViewpage();
-        serverfileListFragment = (FileListFragment) filelistviewpager.getAdapter().
-                instantiateItem(filelistviewpager,
-                        Constant.SERVERFILE_FRAGMNET_NUMBER);
-        LocalfileListFragment = (FileListFragment) filelistviewpager.getAdapter().
-                instantiateItem(filelistviewpager,
-                        Constant.LOCALFILE_FRAGMNET_NUMBER);
-        serverpath = new StringBuffer(serverfileListFragment.getPath());
-        localpath = new StringBuffer(LocalfileListFragment.getPath());
+        fileInfoActivity = ((FileInfoActivity) context);
+        serverfileListFragment = fileInfoActivity.getFragmentInstance(
+                Constant.SERVERFILE_FRAGMNET_NUMBER);
+        LocalfileListFragment = fileInfoActivity.getFragmentInstance(
+                Constant.LOCALFILE_FRAGMNET_NUMBER);
+
         setOnItemClickListener(this);
     }
 

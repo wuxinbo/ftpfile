@@ -125,44 +125,6 @@ public class Fileutil {
 	}
 
     /**
-     * 判断配置文件是否存在
-     * @param context  上下文环境
-     * @param sharepreferenceName 配置文件名
-     * @param key 文件中包含的key
-     * @return 如果文件存在返回true，否则返回false
-     */
-    public static  boolean sharepreferenceIsExist(Context context,
-                                          String sharepreferenceName,
-                                          String key){
-        SharedPreferences sharedpreference = ((Activity)context).
-                                              getSharedPreferences(
-                                              sharepreferenceName,1);
-        if (sharedpreference.contains(key)){
-            return true;
-        }
-            return false;
-    }
-
-    /**
-     * 读取用户信息，
-     * @param context 上下文环境
-     * @return 用户信息对象
-     */
-    public static UserInfo readUserinfo(Context context){
-        UserInfo user = new UserInfo();
-       SharedPreferences userinfo= ((Activity)context).
-                                    getSharedPreferences("userinfo",1);
-
-        user.setPassword(userinfo.getString("pwd",""));
-        user.setUsername(userinfo.getString("username",""));
-        user.setUrl(userinfo.getString("url",""));
-        return user;
-
-
-
-    }
-
-    /**
      *  通过给定的路径返回文件列表
      * @param path 路径
      * @return 封装好的文件列表。

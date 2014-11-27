@@ -88,5 +88,7 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
         return path_view;
     }
 
-
+    public FileListView getFileListView() {
+        return fileListView;
+    }
 }

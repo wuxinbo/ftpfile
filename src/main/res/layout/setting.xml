@@ -5,6 +5,13 @@
     android:orientation="vertical" 
     android:background="#cecece"
     >
+    <include
+        android:id="@+id/nav_bar"
+        layout="@layout/nav_bar"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
+    </include>
+
     <ListView 
         android:id="@+id/userlistview"
         android:layout_width="wrap_content"
