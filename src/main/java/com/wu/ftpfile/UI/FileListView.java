@@ -1,8 +1,10 @@
 package com.wu.ftpfile.UI;
 
 import android.content.Context;
-import android.support.v4.view.ViewPager;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -103,6 +105,8 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
             localpath.append(File.separator+fileinfo.getFilename());
             if (fileinfo.getIsdir() == 1){
                 gotoDir(localpath.toString());
+            } else {
+                clickfile(localpath.toString());
             }
 
         }
@@ -161,19 +165,27 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
      * @return 装载好的Hashmap
      */
     public static FileInfo FileInit(FileInfo file) {
-        String FileInfo = file.getFilename();
+        String fileInfo = file.getFilename();
         if (file.getIsdir() == 1) {
             file.setFile_pic(R.drawable.dir);
-        } else if (isplay(FileInfo)) {
+        } else if (isplay(fileInfo)) {
             file.setFile_pic(R.drawable.play);
-        } else if (FileInfo.endsWith("mp3")) {
+        } else if (fileInfo.endsWith("mp3")) {
             file.setFile_pic(R.drawable.mp3);
-        } else if (FileInfo.endsWith("doc")) {
+        } else if (fileInfo.endsWith("doc")) {
             file.setFile_pic(R.drawable.doc);
-        } else if (FileInfo.endsWith("xls")) {
+        } else if (fileInfo.endsWith("xls")) {
             file.setFile_pic(R.drawable.xls);
-        } else if (FileInfo.endsWith("exe")) {
+        } else if (fileInfo.endsWith("exe")) {
             file.setFile_pic(R.drawable.exe);
+        } else if (isZIP(fileInfo)) {
+            file.setFile_pic(R.drawable.zip);
+        } else if (ispicture(fileInfo)) {
+            file.setHeadimg(FileInfo.getdrawable(file.getFilepath()));
+            file.setFile_pic(0);
+        } else if (isApk(fileInfo)) {
+            file.setIcon(FileInfoActivity.getApkIcon(context, file.getFilepath()));
+            file.setFile_pic(0);
         } else {
             file.setFile_pic(R.drawable.unkown);
         }
@@ -188,12 +200,66 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
      */
     private static boolean isplay(String filename) {
         String[] play = context.getResources().getStringArray(R.array.play);
+        return isIncludeString(filename, play);
+    }
+
+    /**
+     * 从给定的数组中寻找str。
+     *
+     * @param str  需要查询的string
+     * @param play 需要查询的数组
+     * @return 如果数组中某个字符串以str结尾则返回TRUE，如果没有符合条件的返回false。
+     */
+    private static boolean isIncludeString(String str, String[] play) {
         for (String name : play) {
-            if (filename.endsWith(name)) {
+            if (str.endsWith(name)) {
                 return true;
             }
         }
         return false;
+    }
+
+    private static boolean isZIP(String filename) {
+        String[] zip = context.getResources().getStringArray(R.array.zip);
+        return isIncludeString(filename, zip);
+    }
+
+    private static boolean isMusic(String filename) {
+        String[] music = context.getResources().getStringArray(R.array.music);
+        return isIncludeString(filename, music);
+    }
+
+    private static boolean ispicture(String filename) {
+        String[] picture = context.getResources().getStringArray(R.array.picture);
+        return isIncludeString(filename, picture);
+    }
+
+    /**
+     * 判断是否是apk安装文件
+     *
+     * @param filename 文件名
+     * @return 如果是apk文件返回true，否则返回flase。
+     */
+    private static boolean isApk(String filename) {
+        if (filename.endsWith("apk")) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 当点击本地可识别文件执行相应的操作。
+     */
+    private void clickfile(String filepath) {
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        if (isMusic(filepath)) {
+            intent.setDataAndType(Uri.parse(filepath), "audio/mp3");
+        } else if (isplay(filepath)) {
+            intent.setDataAndType(Uri.parse(filepath), "video/mp4");
+        } else if (ispicture(filepath)) {
+            intent.setDataAndType(Uri.parse(filepath), "image/jpeg");
+        }
+        context.startActivity(intent);
     }
 }
 

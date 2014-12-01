@@ -1,9 +1,17 @@
 package com.wu.ftpfile.model;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
+
 import com.wu.ftpfile.utils.Fileutil;
 
 import org.apache.commons.net.ftp.FTPFile;
 
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -31,6 +39,13 @@ public class FileInfo implements Comparable<Object> {
     private int isdir = 0;
     private final static SimpleDateFormat sdf =new
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    public static boolean isdir(int dir) {
+        if (dir == Constant.DIR) {
+            return true;
+        }
+        return false;
+    }
 
 //    public boolean isHidden() {
 //        return isHidden;
@@ -77,6 +92,43 @@ public class FileInfo implements Comparable<Object> {
      * 文件的存放路径。
      */
     private String filepath;
+    /**
+     * 文件图标。
+     */
+    private Bitmap headimg;
+    /**
+     * 主要用于从apk文件中读取icon图标。
+     */
+    private Drawable icon;
+    /**
+     * 如果是文件夹类型，此变量为该文件夹下的文件个数。
+     */
+    private int fileCount;
+
+    public Drawable getIcon() {
+        return icon;
+    }
+
+    public void setfileCount(String dirpath) {
+        File file = new File(dirpath);
+        fileCount = file.listFiles().length;
+    }
+
+    public int getFileCount() {
+        return fileCount;
+    }
+
+    public void setIcon(Drawable icon) {
+        this.icon = icon;
+    }
+
+    public Bitmap getHeadimg() {
+        return headimg;
+    }
+
+    public void setHeadimg(Bitmap headimg) {
+        this.headimg = headimg;
+    }
 
     public String getFilepath() {
         return filepath;
@@ -192,6 +244,14 @@ public class FileInfo implements Comparable<Object> {
             return compareBydirfile(fileInfo);
         }
 
+    }
+
+    public static Bitmap getdrawable(String filepath) {
+        final int height = 100;
+        final int width = 100;
+        Bitmap bitmap = BitmapFactory.decodeFile(filepath);
+        bitmap = ThumbnailUtils.extractThumbnail(bitmap, height, width);
+        return bitmap;
     }
 
 }

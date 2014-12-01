@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="setting">
-        <item >账号管理</item>
-        <item >关于</item>
-        <item >退出</item>
+        <item>账号管理</item>
+        <item>关于</item>
+        <item>退出</item>
     </string-array>
     <string-array name="play">
-        <item >rmvb</item>
-        <item >mkv</item>
-        <item >avi</item>
-        <item >flv</item>
+        <item>rmvb</item>
+        <item>mkv</item>
+        <item>avi</item>
+        <item>flv</item>
     </string-array>
-    
+    <string-array name="zip">
+        <item>zip</item>
+        <item>jar</item>
+        <item>rar</item>
+        <item>iso</item>
+    </string-array>
+    <string-array name="music">
+        <item>mp3</item>
+        <item>wma</item>
+        <item>wav</item>
+    </string-array>
+    <string-array name="picture">
+        <item>jpg</item>
+        <item>png</item>
+    </string-array>
+
 </resources>

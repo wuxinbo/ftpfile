@@ -40,6 +40,7 @@ public class AsyncUpdatelist extends AsyncTask<String, List<FileInfo>, Void> {
         List<FileInfo> fileinfos = null;
         if (!bypathToRecognizeFragment()) {
             fileinfos = Fileutil.getListfile(path);
+
         } else {
             try {
                 if (ftp == null) {
@@ -58,6 +59,7 @@ public class AsyncUpdatelist extends AsyncTask<String, List<FileInfo>, Void> {
 
     /**
      * 根据路径来判断属于哪个fragment。
+     *
      * @return 如果为TRUE说明是serverfilefragment, 否则是Localfilefragment。
      */
     public boolean bypathToRecognizeFragment() {
@@ -71,14 +73,15 @@ public class AsyncUpdatelist extends AsyncTask<String, List<FileInfo>, Void> {
     protected void onProgressUpdate(List<FileInfo>... values) {
         List<FileInfo> files = values[0];
         filelistview.updateListVIew(files);
-        FileListFragment serverfragment=activity.getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER);
-        FileListFragment localfragment=activity.getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER);
+        FileListFragment serverfragment = activity.getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER);
+        FileListFragment localfragment = activity.getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER);
         if (bypathToRecognizeFragment()) {
             serverfragment.setPath(path);
-            serverfragment. getPath_view().setText(path);
-        }else{
-        localfragment.setPath(path);
-        localfragment.getPath_view().setText(path);}
+            serverfragment.getPath_view().setText(path);
+        } else {
+            localfragment.setPath(path);
+            localfragment.getPath_view().setText(path);
+        }
 
     }
 }

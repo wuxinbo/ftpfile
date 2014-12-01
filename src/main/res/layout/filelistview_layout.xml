@@ -4,68 +4,73 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:descendantFocusability="blocksDescendants">
-<RelativeLayout    
-    android:id="@+id/RelativeLayout01"    
-    android:layout_width="fill_parent"    
-    android:layout_height="wrap_content"    
-    android:paddingBottom="4dip"    
-    android:paddingLeft="12dip"  
-    android:paddingRight="12dip">  
-<ImageView    
-    android:layout_width="40dp"
-    android:layout_height="40dp"
-    android:src="@drawable/dir"
-    android:id="@+id/icon"
-    android:layout_marginTop="6dp"
 
-    android:layout_gravity="center" />
-<TextView    
-    android:layout_height="wrap_content"    
-    android:textSize="16sp"
-    android:layout_toRightOf="@+id/icon"
-    android:layout_marginTop="10dp"
-    android:layout_marginLeft="@dimen/listview_textview_margin_left"
-    android:text="kuwo"
-    android:layout_width="match_parent"
-    android:id="@+id/ItemTitle"  
-    />
-<TextView
-    android:id="@+id/filesize"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_toRightOf="@+id/icon"
-    android:layout_marginLeft="@dimen/listview_textview_margin_left"
-    android:layout_below="@+id/ItemTitle"
-    android:layout_marginTop="5dp"
-    android:text="1.1MB"/>
-    <TextView
-    android:id="@+id/createtime"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_toRightOf="@+id/filesize"
-    android:layout_marginLeft="@dimen/listview_textview_margin_left"
-    android:layout_below="@+id/ItemTitle"
-    android:layout_marginTop="5dp"
-    android:text="2014-10-22"/>
+    <RelativeLayout
+        android:id="@+id/RelativeLayout01"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="4dip"
+        android:paddingLeft="12dip"
+        android:paddingRight="12dip">
 
-    <com.wu.ftpfile.UI.DownloadButton
-        android:id="@+id/download_btn"
-        android:layout_width="60dp"
-        android:layout_height="35dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/downloadbutton"
-        android:visibility="invisible"
-        />
-    <ProgressBar
-        android:id="@+id/download_probar"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        style="@android:style/Widget.ProgressBar.Horizontal"
-        android:layout_below="@+id/createtime"
-        android:max="100"
-        android:visibility="invisible"/>
-</RelativeLayout>  
-    
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/dir"
+            android:id="@+id/icon"
+            android:layout_marginTop="6dp"
+            android:layout_centerVertical="true"
+
+            android:layout_gravity="center" />
+
+        <TextView
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:layout_toRightOf="@+id/icon"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="@dimen/listview_textview_margin_left"
+            android:text="kuwo"
+            android:layout_width="match_parent"
+            android:id="@+id/ItemTitle" />
+
+        <TextView
+            android:id="@+id/filesize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/icon"
+            android:layout_marginLeft="@dimen/listview_textview_margin_left"
+            android:layout_below="@+id/ItemTitle"
+            android:layout_marginTop="5dp"
+            android:text="1.1MB" />
+
+        <TextView
+            android:id="@+id/createtime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/filesize"
+            android:layout_marginLeft="@dimen/listview_textview_margin_left"
+            android:layout_below="@+id/ItemTitle"
+            android:layout_marginTop="5dp"
+            android:text="2014-10-22" />
+
+        <com.wu.ftpfile.UI.DownloadButton
+            android:id="@+id/download_btn"
+            android:layout_width="60dp"
+            android:layout_height="35dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/downloadbutton"
+            android:visibility="invisible" />
+
+        <ProgressBar
+            android:id="@+id/download_probar"
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            android:layout_below="@+id/createtime"
+            android:max="100"
+            android:visibility="invisible" />
+    </RelativeLayout>
+
 
 </LinearLayout>

@@ -14,7 +14,11 @@
 
     <string name="network_normal">wifi have opened！</string>
     <string name="press_exit">press again to exit</string>
+    <string name="login_err">login_falture！</string>
+    <string name="download">download</string>
+    <string name="not_null">infomation not null！</string>
+    <string name="title_local">SDFile</string>
     <string name="network_err">当前网络不可用，不能连接服务器！</string>
     <!-- about-->
-    <string name="copyright">copyright(C)wuincaiaaa@163.com</string>
+    <string name="weibo_link">http://weibo.com/wuxincaiaaa</string>
 </resources>

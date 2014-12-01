@@ -7,11 +7,6 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
-
-import com.wu.ftp.UserInfo;
 import com.wu.ftpfile.model.FileInfo;
 
 public class Fileutil {
@@ -137,10 +132,15 @@ public class Fileutil {
                                                     file1.getName(),
                                                     null,
                                                     file1.isDirectory());
+            fileInfo.setFilepath(path + File.separator + file1.getName());
+            if (FileInfo.isdir(fileInfo.getIsdir())) {
+                fileInfo.setfileCount(fileInfo.getFilepath());
+            }
             if (file1.isHidden()){
                 continue;
             }
             fileInfos.add(fileInfo);
+
         }
         return fileInfos;
     }

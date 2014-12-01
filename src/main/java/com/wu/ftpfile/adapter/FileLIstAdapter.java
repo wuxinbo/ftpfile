@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.wu.ftpfile.R;
+import com.wu.ftpfile.model.Constant;
 import com.wu.ftpfile.model.FileInfo;
 
 import java.util.List;
@@ -41,22 +42,41 @@ public class FileLIstAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view=inflater.inflate(R.layout.filelistview_layout,null);
-        FileInfo file =fileslist.get(position);
-        ImageView icon_view= (ImageView) view.findViewById(R.id.icon);
-        TextView ItemTitle_view= (TextView) view.findViewById(R.id.ItemTitle);
-        TextView filesize_view= (TextView) view.findViewById(R.id.filesize);
-        TextView createtime_view= (TextView) view.findViewById(R.id.createtime);
-        icon_view.setImageResource(file.getFile_pic());
-        String FileInfo=file.getFilename();
-        if (FileInfo.length()>18){
-            FileInfo=FileInfo.substring(0,18);
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.filelistview_layout, null);
         }
+        FileInfo file =fileslist.get(position);
+        ImageView icon_view = (ImageView) convertView.findViewById(R.id.icon);
+        TextView ItemTitle_view = (TextView) convertView.findViewById(R.id.ItemTitle);
+        TextView filesize_view = (TextView) convertView.findViewById(R.id.filesize);
+        TextView createtime_view = (TextView) convertView.findViewById(R.id.createtime);
+        if (file.getFile_pic() == 0) {
+            if (file.getHeadimg() != null) {
+                icon_view.setImageBitmap(file.getHeadimg());
+            } else if (file.getIcon() != null) {
+                icon_view.setImageDrawable(file.getIcon());
+            }
+        } else {
+            icon_view.setImageResource(file.getFile_pic());
+        }
+        if (FileInfo.isdir(file.getIsdir())) {
+            filesize_view.setText(file.getFileCount() + "项");
+        } else {
+            filesize_view.setText(file.getFilesize());
+        }
+        String FileInfo=file.getFilename();
+        FileInfo = String_length_format(FileInfo);
         ItemTitle_view.setText(FileInfo);
-        filesize_view.setText(file.getFilesize());
         createtime_view.setText(file.getCreattime());
-        return view;
+        file = null;
+        return convertView;
     }
 
+    public static String String_length_format(String str) {
+        if (str.length() > Constant.FILENAME_FORMAT_LENGTH) {
+            str = str.substring(0, Constant.FILENAME_FORMAT_LENGTH);
+        }
+        return str;
+    }
 
 }

@@ -1,6 +1,11 @@
 package com.wu.ftpfile.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -227,4 +232,26 @@ public class FileInfoActivity extends MyfragmentActivity {
         }
         return null;
     }
+
+    /**
+     * 采用了新的办法获取APK图标，之前的失败是因为android中存在的一个BUG,通过
+     */
+    public static Drawable getApkIcon(Context context, String apkPath) {
+        PackageManager pm = context.getPackageManager();
+        PackageInfo info = pm.getPackageArchiveInfo(apkPath,
+                PackageManager.GET_ACTIVITIES);
+        if (info != null) {
+            ApplicationInfo appInfo = info.applicationInfo;
+            appInfo.sourceDir = apkPath;
+            appInfo.publicSourceDir = apkPath;
+            try {
+                return appInfo.loadIcon(pm);
+            } catch (OutOfMemoryError e) {
+                Log.e("ApkIconLoader", e.toString());
+            }
+        }
+        return null;
+    }
+
+
 }

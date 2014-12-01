@@ -1,5 +1,7 @@
 package com.wu.ftpfile.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.BaseAdapter;
@@ -91,4 +93,6 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
     public FileListView getFileListView() {
         return fileListView;
     }
+
+
 }
