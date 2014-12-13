@@ -33,7 +33,7 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
     private static Context context;
     private static final String tag = "IFlelistview";
     private UpdatelistViewIn updatelistview = null;
-    private  FileInfoActivity fileInfoActivity;
+    private FileInfoActivity fileInfoActivity;
     /**
      * serverfileinfofragmnet实例
      */
@@ -76,12 +76,12 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         final FileInfo fileinfo = fileinfos.get(position);
-        final int fragmentnumber=((FileInfoActivity) context).getFragmnetnumber();
+        final int fragmentnumber = ((FileInfoActivity) context).getFragmnetnumber();
         serverpath = new StringBuffer(serverfileListFragment.getPath());
         localpath = new StringBuffer(LocalfileListFragment.getPath());
         serverpath = serverpath.append(File.separator
                 + fileinfo.getFilename());
-        if (fragmentnumber==Constant.SERVERFILE_FRAGMNET_NUMBER){
+        if (fragmentnumber == Constant.SERVERFILE_FRAGMNET_NUMBER) {
             if (fileinfo.getIsdir() == 1) {
                 gotoDir(serverpath.toString());
             } else {
@@ -100,25 +100,25 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
                     }
                 });
             }
-        }else{
-            String path=((FileInfoActivity) context).getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER).getPath();
-            localpath.append(File.separator+fileinfo.getFilename());
-            if (fileinfo.getIsdir() == 1){
+        } else {
+            String path = ((FileInfoActivity) context).getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER).getPath();
+            localpath.append(File.separator + fileinfo.getFilename());
+            if (fileinfo.getIsdir() == 1) {
                 gotoDir(localpath.toString());
             } else {
                 clickfile(localpath.toString());
             }
 
         }
-            serverpath=null;
-            localpath=null;
+        serverpath = null;
+        localpath = null;
 
     }
 
     /**
      * 根据传入的路径,进入相应的目录。
      */
-    private void gotoDir(String path ){
+    private void gotoDir(String path) {
         AsyncUpdatelist updatelist = new AsyncUpdatelist(this, context);
         updatelist.execute(path);
 
@@ -257,7 +257,10 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
         } else if (isplay(filepath)) {
             intent.setDataAndType(Uri.parse(filepath), "video/mp4");
         } else if (ispicture(filepath)) {
-            intent.setDataAndType(Uri.parse(filepath), "image/jpeg");
+            intent.setDataAndType(Uri.parse(filepath), "image/*");
+        } else if (isApk(filepath)) {
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setDataAndType(Uri.parse(filepath), Constant.APK_INSTALL_DATATYPE);
         }
         context.startActivity(intent);
     }

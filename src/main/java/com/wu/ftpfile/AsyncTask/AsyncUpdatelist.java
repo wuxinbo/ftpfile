@@ -47,7 +47,7 @@ public class AsyncUpdatelist extends AsyncTask<String, List<FileInfo>, Void> {
                     Log.d("updatelist", "ftp is null");
                 } else {
                     files = ftp.listFiles(path);
-                    fileinfos = FileInfo.getFileInfoList(files);
+                    fileinfos = FileInfo.getFileInfoList(files, path);
                 }
             } catch (IOException e) {
                 e.printStackTrace();

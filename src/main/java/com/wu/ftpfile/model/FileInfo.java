@@ -37,7 +37,7 @@ public class FileInfo implements Comparable<Object> {
      * 是否为文件。
      */
     private int isdir = 0;
-    private final static SimpleDateFormat sdf =new
+    private final static SimpleDateFormat sdf = new
             SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     public static boolean isdir(int dir) {
@@ -133,6 +133,7 @@ public class FileInfo implements Comparable<Object> {
     public String getFilepath() {
         return filepath;
     }
+
     public void setFilepath(String filepath) {
         this.filepath = filepath;
     }
@@ -146,7 +147,7 @@ public class FileInfo implements Comparable<Object> {
         fileinfo.setFilesize(filesize);
         fileinfo.setFilename(filename);
         fileinfo.setCreattime(creattime);
-        fileinfo.size=filesize;
+        fileinfo.size = filesize;
         return fileinfo;
     }
 
@@ -155,9 +156,9 @@ public class FileInfo implements Comparable<Object> {
     }
 
     public void setFilesize(long filesize) {
-        if (isdir==1){
-            this.filesize="";
-        }else {
+        if (isdir == 1) {
+            this.filesize = "";
+        } else {
             this.filesize = Fileutil.Format(filesize);
         }
     }
@@ -175,10 +176,10 @@ public class FileInfo implements Comparable<Object> {
     }
 
     public void setCreattime(Calendar creattime) {
-        if (creattime==null){
-        this.creattime="";
-        }else{
-        this.creattime=sdf.format(creattime.getTime());
+        if (creattime == null) {
+            this.creattime = "";
+        } else {
+            this.creattime = sdf.format(creattime.getTime());
         }
     }
 
@@ -187,60 +188,64 @@ public class FileInfo implements Comparable<Object> {
     }
 
     public void setIsdir(boolean isdir) {
-           int i=0;
-        if (isdir){
-            i=1;
+        int i = 0;
+        if (isdir) {
+            i = 1;
         }
         this.isdir = i;
     }
 
     /**
      * 对FileiNfo进行封装，
+     *
      * @param files
      * @return
      */
-    public static List<FileInfo> getFileInfoList(FTPFile[] files){
-        List<FileInfo> fileinfos =new ArrayList<FileInfo>();
-        if (files!=null){
-            for (FTPFile  ftpfile:files){
-                FileInfo fileInfo=FileInfo.getinstance(ftpfile.getSize(),
+    public static List<FileInfo> getFileInfoList(FTPFile[] files, String path) {
+        List<FileInfo> fileinfos = new ArrayList<FileInfo>();
+        if (files != null) {
+            for (FTPFile ftpfile : files) {
+                FileInfo fileInfo = FileInfo.getinstance(ftpfile.getSize(),
                         ftpfile.getName(),
                         ftpfile.getTimestamp(),
                         ftpfile.isDirectory());
+                fileInfo.setFilepath(path + fileInfo.getFilename());
                 fileinfos.add(fileInfo);
             }
             return fileinfos;
-    }
+        }
         return null;
     }
 
     @Override
     public int compareTo(Object another) {
-        FileInfo fileInfo=(FileInfo)another;
+        FileInfo fileInfo = (FileInfo) another;
         return compareBydirfile(fileInfo);
 //        return compareByname( fileInfo);
     }
-    private int compareBydirfile(FileInfo fileInfo){
-        if (this.getIsdir()< fileInfo.getIsdir()){
+
+    private int compareBydirfile(FileInfo fileInfo) {
+        if (this.getIsdir() < fileInfo.getIsdir()) {
             return 1;
-        }else if (this.getIsdir()> fileInfo.getIsdir()){
+        } else if (this.getIsdir() > fileInfo.getIsdir()) {
             return -1;
         }
-        return compareByname( fileInfo);
+        return compareByname(fileInfo);
     }
 
     /**
-     *  对名字进行排序。
+     * 对名字进行排序。
+     *
      * @param fileInfo
      * @return
      */
-    private int compareByname(FileInfo fileInfo){
-        int i=this.filename.compareToIgnoreCase(fileInfo.filename);
-        if (i>0){
+    private int compareByname(FileInfo fileInfo) {
+        int i = this.filename.compareToIgnoreCase(fileInfo.filename);
+        if (i > 0) {
             return 1;
-        }else if (i<0){
+        } else if (i < 0) {
             return -1;
-        }else {
+        } else {
             return compareBydirfile(fileInfo);
         }
 

@@ -21,25 +21,27 @@ import java.util.List;
 /**
  * Created by wuxinbo on 2014/10/21.
  */
-public class AsyncConnectServer extends AsyncTask<UserInfo,List<FileInfo>,FTPClient> {
-    private FileListView filelistview =null;
+public class AsyncConnectServer extends AsyncTask<UserInfo, List<FileInfo>, FTPClient> {
+    private FileListView filelistview = null;
     private Context context;
-    public AsyncConnectServer(FileListView listview,Context context ){
-        filelistview=listview;
-        this.context=context;
+
+    public AsyncConnectServer(FileListView listview, Context context) {
+        filelistview = listview;
+        this.context = context;
     }
+
     @Override
-    protected FTPClient  doInBackground(UserInfo... params) {
+    protected FTPClient doInBackground(UserInfo... params) {
         UserInfo user = params[0];
         FTPClient ftp = null;
         ftp = Ftpclient.initFTP();
-        FTPFile[] files=Ftpclient.Login(ftp,
-                    user.getUrl(),
-                    user.getPassword(),
-                    user.getUsername());
-        List<FileInfo> fileinfos =FileInfo.getFileInfoList(files);
+        FTPFile[] files = Ftpclient.Login(ftp,
+                user.getUrl(),
+                user.getPassword(),
+                user.getUsername());
+        List<FileInfo> fileinfos = FileInfo.getFileInfoList(files, "/");
         publishProgress(fileinfos);
-        fileinfos=null;
+        fileinfos = null;
         return ftp;
     }
 
@@ -50,7 +52,7 @@ public class AsyncConnectServer extends AsyncTask<UserInfo,List<FileInfo>,FTPCli
 
     @Override
     protected void onPostExecute(FTPClient ftpClient) {
-        ((FileInfoActivity)context).ftp=ftpClient;
+        ((FileInfoActivity) context).ftp = ftpClient;
     }
 }
 

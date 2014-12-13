@@ -15,39 +15,44 @@ public class Constant {
     /**
      * 建Fileinfo表，主要存储文件对象的相关信息。
      */
-    public static final String TABLE_NAME="fileinfo";
-    public static final String createtable = "create table "+TABLE_NAME+"(" +
-                                             "id int," +
-                                             "name varchar(30)," +
-                                             "filesize varchar(5)," +
-                                             "createtime varchar(10)," +
-                                             "isdir int)";
+    public static final String TABLE_NAME = "fileinfo";
+    public static final String createtable = "create table " + TABLE_NAME + "(" +
+            "id int," +
+            "name varchar(30)," +
+            "filesize varchar(5)," +
+            "createtime varchar(10)," +
+            "isdir int)";
     /**
      * sd卡的根目录
      */
-    public static final String SD_ROOT_PATH= Environment.
-                                             getExternalStorageDirectory().
-                                             getAbsolutePath();
+    public static final String SD_ROOT_PATH = Environment.
+            getExternalStorageDirectory().
+            getAbsolutePath();
     /**
      * APP文件存放目录
      */
-    public static final String APP_DIR_PATH="ftpfile";
+    public static final String APP_DIR_PATH = "ftpfile";
     /**
      * 服务器下载到本地的目录。
      */
-    public static final String APP_DIR_DOWNLOAD_PATH="download";
+    public static final String APP_DIR_DOWNLOAD_PATH = "download";
     /**
      * <a href="#">serverfilefragment<a/>在viewpage中的id
      */
-    public static final int SERVERFILE_FRAGMNET_NUMBER=0;
+    public static final int SERVERFILE_FRAGMNET_NUMBER = 0;
     /**
      * <a href="#">localfilefragment</a>在viewpager中的id。
      */
-    public static final int LOCALFILE_FRAGMNET_NUMBER=1;
+    public static final int LOCALFILE_FRAGMNET_NUMBER = 1;
 
     public static final int FILENAME_FORMAT_LENGTH = 23;
     public static final int DIR = 1;
 //    public static final int FILE=0;
+    /**
+     * apk文件的datatype类型。
+     */
+    public static final String APK_INSTALL_DATATYPE =
+            "application/vnd.android.package-archive";
 
 
 }

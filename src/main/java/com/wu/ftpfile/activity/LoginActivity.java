@@ -13,8 +13,8 @@ import com.wu.ftpfile.Interface.preLoginlistener;
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.UI.LoginButton;
 
-public class LoginActivity extends MyActivity  implements preLoginlistener {
-    private String tag="loginactivity";
+public class LoginActivity extends MyActivity implements preLoginlistener {
+    private String tag = "loginactivity";
     /**
      * 自定义登录按钮
      */
@@ -38,7 +38,7 @@ public class LoginActivity extends MyActivity  implements preLoginlistener {
     /**
      * 用户信息是否存在
      */
-    protected  boolean userinfoIsExist;
+    protected boolean userinfoIsExist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,47 +46,55 @@ public class LoginActivity extends MyActivity  implements preLoginlistener {
         setContentView(R.layout.loginview);
         userinfoIsExist = UserInfo.
                 sharepreferenceIsExist(this, "userinfo", "url");
-        if (userinfoIsExist){
-            initactivity();
-        }
+        initactivity();
     }
 
 
     @Override
     public UserInfo prelogin() {
-      UserInfo  user=loginbutton.getuserinfo(login_url.getText().toString(),
-                                login_user.getText().toString(),
-                                login_pwd.getText().toString());
-        if (!userinfoIsExist){
+        UserInfo user = loginbutton.getuserinfo(login_url.getText().toString(),
+                login_user.getText().toString(),
+                login_pwd.getText().toString());
+        if (!userinfoIsExist) {
             saveuserinfo(user);
-        }else{
-              Intent in =new Intent();
-              in.setClass(this,FileInfoActivity.class);
-              startActivity(in);
+        } else {
+            gotofileinfoactivity();
         }
         return user;
+    }
+
+    public void gotofileinfoactivity() {
+        Intent in = new Intent();
+        in.setClass(this, FileInfoActivity.class);
+        startActivity(in);
     }
 
 
     @Override
     protected void setview() {
-        login_pwd.setText(userinfo.getPassword());
-        login_url.setText(userinfo.getUrl());
-        login_user.setText(userinfo.getUsername());
+        if (userinfoIsExist) {
+            setloginvalue();
+        }
         //登录按钮回调函数。
-        loginbutton.setListener(this,new LoginIpl());
+        loginbutton.setListener(this, new LoginIpl(this));
         //加载动画。
-        Animation annimation = AnimationUtils.loadAnimation(this,R.anim.button_animation);
+        Animation annimation = AnimationUtils.loadAnimation(this, R.anim.button_animation);
         //设置对象的动画。
         loginbutton.startAnimation(annimation);
     }
 
+    private void setloginvalue() {
+        login_pwd.setText(userinfo.getPassword());
+        login_url.setText(userinfo.getUrl());
+        login_user.setText(userinfo.getUsername());
+    }
+
     @Override
     protected void initview() {
-        loginbutton= (LoginButton) findViewById(R.id.login_button);
-        login_url= (EditText) findViewById(R.id.login_url);
-        login_pwd= (EditText) findViewById(R.id.login_pwd);
-        login_user= (EditText) findViewById(R.id.login_user);
+        loginbutton = (LoginButton) findViewById(R.id.login_button);
+        login_url = (EditText) findViewById(R.id.login_url);
+        login_pwd = (EditText) findViewById(R.id.login_pwd);
+        login_user = (EditText) findViewById(R.id.login_user);
         userinfo = UserInfo.readUserinfo(this);
     }
 

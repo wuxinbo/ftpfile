@@ -157,17 +157,16 @@ public class FileInfoActivity extends MyfragmentActivity {
     private void press_back() {
         String serverfilepath = getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER).getPath();
         String localfilepath = getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER).getPath();
-        if(isFragmentByFragmennumber()){
-            if (serverfilepath.equals(File.separator)){
+        if (isFragmentByFragmennumber()) {
+            if (serverfilepath.equals(File.separator)) {
                 finnshActivity();
-            }else{
-            backParentDirectory(serverfilepath);
+            } else {
+                backParentDirectory(serverfilepath);
             }
-        }else{
+        } else {
             if (localfilepath.equals(Constant.SD_ROOT_PATH)) {
                 finnshActivity();
-            }
-            else{
+            } else {
                 backParentDirectory(localfilepath);
             }
 
@@ -186,14 +185,16 @@ public class FileInfoActivity extends MyfragmentActivity {
 
     /**
      * 根据fragmentnumber判断当前属于哪个fragment。
+     *
      * @return 如果返回true就是serverfileinfofragment，否则为Localfileinfofragment。
      */
-    public boolean isFragmentByFragmennumber(){
+    public boolean isFragmentByFragmennumber() {
         if (fragmnetnumber == Constant.SERVERFILE_FRAGMNET_NUMBER) {
             return true;
         }
         return false;
     }
+
     public int getFragmnetnumber() {
         return fragmnetnumber;
     }
@@ -207,9 +208,6 @@ public class FileInfoActivity extends MyfragmentActivity {
      */
     private void backParentDirectory(String path) {
         path = path.substring(0, path.lastIndexOf(File.separator));
-//        if (isFragmentByFragmennumber()){
-//            getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER).setPath();
-//        }
         FileListView filelistview = null;
         if (isFragmentByFragmennumber()) {
             filelistview = getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER).getFileListView();
@@ -253,5 +251,9 @@ public class FileInfoActivity extends MyfragmentActivity {
         return null;
     }
 
+    public void initmenu() {
+
+
+    }
 
 }
