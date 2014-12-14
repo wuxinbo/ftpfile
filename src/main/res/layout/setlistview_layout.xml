@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:text="@string/setting"
         android:layout_toLeftOf="@+id/dayu"
+        android:textColor="@color/dark"
         android:paddingTop="@dimen/listview_textview_padding_top_bottom" />
 
     <ImageView

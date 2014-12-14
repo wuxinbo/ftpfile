@@ -53,6 +53,12 @@ public class Constant {
      */
     public static final String APK_INSTALL_DATATYPE =
             "application/vnd.android.package-archive";
-
-
+    public static final String FILE_LOCALTION = "sdcard0:ftpfile\\download";
+    /**
+     * LOGINACTIVITY number
+     */
+    public static final int LOGINACTIVITY = 0;
+    public static final int DIYACTIVITY = 2;
+    public static final int SHAREACTIVITY = 3;
+    public static final int ABOUTACTIVITY = 4;
 }

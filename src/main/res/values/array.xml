@@ -3,8 +3,6 @@
     <string-array name="setting">
         <item>账号管理</item>
         <item>文件存放位置</item>
-    </string-array>
-    <string-array name="settint-2">
         <item>自定义图标</item>
         <item>关于</item>
     </string-array>

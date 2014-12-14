@@ -12,21 +12,41 @@
         android:layout_width="wrap_content">
     </include>
 
-    <ListView
-        android:id="@+id/userlistview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/listview_top_margin"
-        android:listSelector="@android:color/transparent"
-        android:background="@drawable/listview_setting"></ListView>
+    <com.wu.ftpfile.UI.LevelItem
+        android:layout_marginTop="30dp"
+        android:id="@+id/user"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/listview_setting"></com.wu.ftpfile.UI.LevelItem>
 
-    <ListView
-        android:id="@+id/about_diylistview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/listview_top_margin"
-        android:listSelector="@android:color/transparent"
+    <com.wu.ftpfile.UI.LevelItem
+        android:layout_marginTop="1dp"
+        android:id="@+id/filelocation"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/listview_setting"></com.wu.ftpfile.UI.LevelItem>
+
+    <com.wu.ftpfile.UI.LevelItem
+        android:layout_marginTop="30dp"
+        android:id="@+id/DIY"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/listview_setting"></com.wu.ftpfile.UI.LevelItem>
+
+    <com.wu.ftpfile.UI.LevelItem
+        android:layout_marginTop="1dp"
+        android:id="@+id/share"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/listview_setting"></com.wu.ftpfile.UI.LevelItem>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:background="@drawable/listview_setting"
-        >
-    </ListView>
+        android:text="@string/exit"
+        android:textSize="18sp"
+        android:layout_marginTop="35dp"
+        android:gravity="center"
+        android:onClick="exit" />
 </LinearLayout>

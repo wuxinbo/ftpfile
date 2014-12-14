@@ -3,8 +3,6 @@
     <string-array name="setting">
         <item>user</item>
         <item>file location</item>
-    </string-array>
-    <string-array name="settint-2">
         <item>DIYicon</item>
         <item>about</item>
     </string-array>
