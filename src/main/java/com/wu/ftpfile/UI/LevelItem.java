@@ -15,7 +15,7 @@ import com.wu.ftpfile.model.SetItemmodel;
  * 设置界面的组合控件，用于显示设置条目。
  * Created by Administrator on 2014/12/14.
  */
-public class LevelItem extends LinearLayout {
+public class LevelItem extends LinearLayout implements View.OnClickListener {
     private TextView itemNameview;
     private TextView itemvalview;
 
@@ -37,6 +37,7 @@ public class LevelItem extends LinearLayout {
         View view = LayoutInflater.from(context).inflate(R.layout.setlistview_layout, this);
         itemNameview = (TextView) view.findViewById(R.id.SetText);
         itemvalview = (TextView) view.findViewById(R.id.value);
+        setOnClickListener(this);
     }
 
     /**
@@ -46,4 +47,11 @@ public class LevelItem extends LinearLayout {
         itemNameview.setText(model.getItemname());
         itemvalview.setText(model.getItemval());
     }
+
+    @Override
+    public void onClick(View v) {
+
+        System.out.println("click me");
+    }
+
 }

@@ -55,6 +55,15 @@ public class Constant {
             "application/vnd.android.package-archive";
     public static final String FILE_LOCALTION = "sdcard0:ftpfile\\download";
     /**
+     * 安装器包名
+     */
+    public static final String PACKAGENAME_INSTALLER = "com.android.packageinstaller";
+    /**
+     * 调用安装器时需要启动的activity名。
+     */
+    public static final String PACKAGENAME_INSTALLER_ACTIVITY =
+            "com.android.packageinstaller.PackageInstallerActivity";
+    /**
      * LOGINACTIVITY number
      */
     public static final int LOGINACTIVITY = 0;

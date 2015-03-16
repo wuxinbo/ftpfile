@@ -1,5 +1,6 @@
 package com.wu.ftpfile.UI;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -254,12 +255,20 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
         Intent intent = new Intent(Intent.ACTION_VIEW);
         if (isMusic(filepath)) {
             intent.setDataAndType(Uri.parse(filepath), "audio/mp3");
+//            intent.setComponent(new ComponentName("com.android.music",
+//                    "com.android.music.MediaPlaybackActivity"));
         } else if (isplay(filepath)) {
             intent.setDataAndType(Uri.parse(filepath), "video/mp4");
         } else if (ispicture(filepath)) {
+//            ComponentName com =new ComponentName("com.android.gallery",
+//                    "com.android.camera.GalleryPicker");
+//            intent.setComponent(com);
             intent.setDataAndType(Uri.parse(filepath), "image/*");
         } else if (isApk(filepath)) {
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            ComponentName com = new ComponentName(Constant.PACKAGENAME_INSTALLER,
+                    Constant.PACKAGENAME_INSTALLER_ACTIVITY);
+            intent.setComponent(com);
             intent.setDataAndType(Uri.parse(filepath), Constant.APK_INSTALL_DATATYPE);
         }
         context.startActivity(intent);

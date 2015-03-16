@@ -18,7 +18,7 @@ public class setListViewItemclick implements AdapterView.OnItemClickListener {
     /**
      * 设置界面信息
      */
-    private String [] setarray;
+    private String[] setarray;
     /**
      * 上下文环境
      */
@@ -26,28 +26,30 @@ public class setListViewItemclick implements AdapterView.OnItemClickListener {
     /**
      * 列表与之对应的activity名。
      */
-    private Map<String,String> setMap;
+    private Map<String, String> setMap;
     /**
      * activity 跳转
      */
-    private Intent in =new Intent();
-    public final String PACKAGE_NAME="com.wu.ftpfile.activity";
-    private  SetActivity setactivity=null;
-    public setListViewItemclick(Context context){
-        setactivity=((SetActivity)context);
-        this.context=context;
+    private Intent in = new Intent();
+    public final String PACKAGE_NAME = "com.wu.ftpfile.activity";
+    private SetActivity setactivity = null;
+
+    public setListViewItemclick(Context context) {
+        setactivity = ((SetActivity) context);
+        this.context = context;
         setarray = setactivity.getSetArray();
-        setMap=setactivity.getSetmap();
+//        setMap=setactivity.getSetmap();
 
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String activityName =setMap.get(setarray[position]);
-        if (activityName.equals("exit")){
+        String activityName = setMap.get(setarray[position]);
+        if (activityName.equals("exit")) {
             setactivity.finish();
-        }else{
-        in.setClassName(context,PACKAGE_NAME+"."+activityName);
-        context.startActivity(in);
+        } else {
+            in.setClassName(context, PACKAGE_NAME + "." + activityName);
+            context.startActivity(in);
         }
     }
 

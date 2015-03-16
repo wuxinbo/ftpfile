@@ -1,7 +1,12 @@
 package com.wu.ftpfile.activity;
 
+import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.UI.LevelItem;
@@ -23,15 +28,13 @@ public class SetActivity extends MyActivity {
      *
 	 */
 	private String[] setArray;
-    private Map<String,String> setmap = new HashMap<String, String>();
+    private TextView exit;
+    private AlertDialog.Builder exitBuilder;
+    //    private Map<String,String> setmap = new HashMap<String, String>();
     private SetItemmodel[] setvalues = new SetItemmodel[4];
     private ArrayList<LevelItem> itemlist = new ArrayList<LevelItem>();
     public String[] getSetArray() {
         return setArray;
-    }
-
-    public Map<String, String> getSetmap() {
-        return setmap;
     }
 
     @Override
@@ -59,21 +62,20 @@ public class SetActivity extends MyActivity {
             setvalues[i] = model;
             model = null;
         }
+
 //        setmap.put(setArray[0],);
 //        setmap.put(setArray[1],"AboutActivity");
 //        setmap.put(setArray[2],"exit");
+    }
+
+    public void getActivity() {
+        PackageManager manager = getPackageManager();
+//        manager.getActivityInfo(new ComponentName(this,));
     }
     @Override
     protected void setview(){
         nav_title.setText(getString(R.string.setting));
         nav_settext.setVisibility(View.INVISIBLE);
-
-//        setListview.setAdapter(new ArrayAdapter<String>
-//                (this,
-//                        R.layout.setlistview_layout,
-//                        R.id.SetText,
-//                        setArray));
-//        setListview.setOnItemClickListener(new setListViewItemclick(this));
     }
     @Override
     public void initactivity() {
@@ -88,13 +90,33 @@ public class SetActivity extends MyActivity {
         itemlist.add((LevelItem) findViewById(R.id.DIY));
         itemlist.add((LevelItem) findViewById(R.id.share));
         setArray=getResources().getStringArray(R.array.setting);
+        exit = (TextView) findViewById(R.id.setting_exit);
         initmodel();
         initnavbar();
         setItemvalue();
     }
 
+    /**
+     * 初始化退出对话框，并且显示
+     */
+    private void initDialog() {
+        exitBuilder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_LIGHT);
+        exitBuilder.setMessage(R.string.sure_Exit).setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finish();
+            }
+        }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        }).show();
+
+    }
     public void exit(View v) {
-        finish();
+        initDialog();
+
     }
 
     private void setItemvalue() {
