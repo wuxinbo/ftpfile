@@ -15,13 +15,13 @@ public class Constant {
     /**
      * 建Fileinfo表，主要存储文件对象的相关信息。
      */
-    public static final String TABLE_NAME = "fileinfo";
+    public static final String TABLE_NAME = "userinfo";
     public static final String createtable = "create table " + TABLE_NAME + "(" +
             "id int," +
-            "name varchar(30)," +
-            "filesize varchar(5)," +
-            "createtime varchar(10)," +
-            "isdir int)";
+            "username varchar(30)," +
+            "password varchar(5)," +
+            "host_name varchar(10)," +
+            "login_time time)";
     /**
      * sd卡的根目录
      */
@@ -54,15 +54,6 @@ public class Constant {
     public static final String APK_INSTALL_DATATYPE =
             "application/vnd.android.package-archive";
     public static final String FILE_LOCALTION = "sdcard0:ftpfile\\download";
-    /**
-     * 安装器包名
-     */
-    public static final String PACKAGENAME_INSTALLER = "com.android.packageinstaller";
-    /**
-     * 调用安装器时需要启动的activity名。
-     */
-    public static final String PACKAGENAME_INSTALLER_ACTIVITY =
-            "com.android.packageinstaller.PackageInstallerActivity";
     /**
      * LOGINACTIVITY number
      */

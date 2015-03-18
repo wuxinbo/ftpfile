@@ -16,10 +16,10 @@ public class DataBaseUtil extends SQLiteOpenHelper{
     /**
      * Fileinfo表对应的列名。
      */
-    public final static String FILE_NAME="name";
-    public final static String SIZE="filesize";
-    public final static String CREATE_TIME="createtime";
-    public final static String IS_DIR="isdir";
+    public final static String UESR_NAME="user_name";
+    public final static String PASSWORD="password";
+    public final static String LOGIN_TIME="login_time";
+    public final static String HOST_NAME="host_name";
     public DataBaseUtil(Context context, String name, SQLiteDatabase.CursorFactory factory,
                         int version) {
         super(context, name, factory, version);
@@ -33,15 +33,24 @@ public class DataBaseUtil extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
+    /**
+     * 组成查询sqllite条件。
+     * @param filename
+     * @param size
+     * @param creattime
+     * @param isdir
+     * @return
+     */
     public static ContentValues getContentValues(String filename,
                                                  String size,
                                                  String creattime,
                                                  int isdir){
         ContentValues values =new ContentValues();
-        values.put(DataBaseUtil.FILE_NAME,filename);
-        values.put(DataBaseUtil.SIZE,size);
-        values.put(DataBaseUtil.CREATE_TIME,creattime);
-        values.put(DataBaseUtil.IS_DIR,isdir);
+//        values.put(DataBaseUtil.FILE_NAME,filename);
+//        values.put(DataBaseUtil.SIZE,size);
+//        values.put(DataBaseUtil.CREATE_TIME,creattime);
+//        values.put(DataBaseUtil.IS_DIR,isdir);
         return values;
     }
 
