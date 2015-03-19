@@ -266,10 +266,10 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
             intent.setDataAndType(Uri.parse(filepath), "image/*");
         } else if (isApk(filepath)) {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            ComponentName com = new ComponentName(Constant.PACKAGENAME_INSTALLER,
-                    Constant.PACKAGENAME_INSTALLER_ACTIVITY);
-            intent.setComponent(com);
-            intent.setDataAndType(Uri.parse(filepath), Constant.APK_INSTALL_DATATYPE);
+//            ComponentName com = new ComponentName(Constant.PACKAGENAME_INSTALLER,
+//                    Constant.PACKAGENAME_INSTALLER_ACTIVITY);
+//            intent.setComponent(com);
+//            intent.setDataAndType(Uri.parse(filepath), Constant.APK_INSTALL_DATATYPE);
         }
         context.startActivity(intent);
     }

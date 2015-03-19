@@ -14,10 +14,33 @@ import android.content.SharedPreferences;
  *
  */
 public class UserInfo  implements Serializable {
-	private String url;
+    /**
+     * 服务器iph或者域名
+     */
+    private String url;
+    /**
+     * 用户名
+     */
 	private String username;
+    /**
+     * 密码。
+     */
 	private String password;
-	private static UserInfo server= new UserInfo();
+    /**
+     *FTP连接端口号。
+     */
+    private String port;
+
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    private static UserInfo server= new UserInfo();
 	
 	/**
 	 *  工厂方法得到服务器实例

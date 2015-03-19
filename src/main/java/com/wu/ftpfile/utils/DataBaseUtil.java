@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.wu.ftp.UserInfo;
 import com.wu.ftpfile.model.Constant;
 
 /**
@@ -26,7 +27,7 @@ public class DataBaseUtil extends SQLiteOpenHelper{
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
-    db.execSQL(Constant.createtable);
+        db.execSQL(Constant.createtable);
     }
 
     @Override
@@ -36,16 +37,9 @@ public class DataBaseUtil extends SQLiteOpenHelper{
 
     /**
      * 组成查询sqllite条件。
-     * @param filename
-     * @param size
-     * @param creattime
-     * @param isdir
      * @return
      */
-    public static ContentValues getContentValues(String filename,
-                                                 String size,
-                                                 String creattime,
-                                                 int isdir){
+    public static ContentValues getContentValues(UserInfo user){
         ContentValues values =new ContentValues();
 //        values.put(DataBaseUtil.FILE_NAME,filename);
 //        values.put(DataBaseUtil.SIZE,size);

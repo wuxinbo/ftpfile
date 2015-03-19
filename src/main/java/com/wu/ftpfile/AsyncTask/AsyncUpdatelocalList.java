@@ -10,6 +10,7 @@ import com.wu.ftpfile.utils.Fileutil;
 import java.util.List;
 
 /**
+ * 利用后台线程来更新本地文件。
  * Created by Administrator on 2014/11/14.
  */
 public class AsyncUpdatelocalList extends AsyncTask<String,List<FileInfo>,Void> {
