@@ -1,5 +1,8 @@
 package com.wu.ftpfile.utils;
 
+import android.util.Log;
+
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -133,6 +136,9 @@ public class Fileutil {
                                                     null,
                                                     file1.isDirectory());
             fileInfo.setFilepath(path + File.separator + file1.getName());
+            /*
+            判断当前文件是文件夹。
+             */
             if (FileInfo.isdir(fileInfo.getIsdir())) {
                 fileInfo.setfileCount(fileInfo.getFilepath());
             }
@@ -143,5 +149,31 @@ public class Fileutil {
 
         }
         return fileInfos;
+    }
+
+    /**
+     * 应用程序申请Root权限
+     * @param command 需要执行的命令
+     *  @return  获取成功返回true，否则返回false；
+     */
+    public static boolean getRoot(String command){
+        Process process = null;
+        DataOutputStream os = null;
+        try {
+            process = Runtime.getRuntime().exec("su");
+//            os = new DataOutputStream(process.getOutputStream());
+//            os.writeBytes（command+"\n"）；\\os.writeBytes("echo \"Do I have root?\" >/system/sd/temporary.txt\n");
+//            os.writeBytes（"exit\n"）；
+//            os.flush（）；
+            process.waitFor();
+            } catch (Exception e) {
+            Log.d("ROOT", "the device is not rooted， error message： " + e.getMessage());
+            return false;
+            } finally {
+//                os.close();
+            process.destroy();
+            }
+
+            return true;
     }
 }

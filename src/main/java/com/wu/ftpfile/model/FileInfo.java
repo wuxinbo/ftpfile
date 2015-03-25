@@ -47,6 +47,7 @@ public class FileInfo implements Comparable<Object> {
         return false;
     }
 
+
 //    public boolean isHidden() {
 //        return isHidden;
 //    }
@@ -111,7 +112,16 @@ public class FileInfo implements Comparable<Object> {
 
     public void setfileCount(String dirpath) {
         File file = new File(dirpath);
-        fileCount = file.listFiles().length;
+        /*
+        为了防止某些文件需要Root权限才能访问，而一般用户没有获取大Root权限，
+        没有获取到Root很有可能就会报nullPointException.所以在这里捕获异常。
+         */
+        try {
+            fileCount = file.listFiles().length;
+        }catch(NullPointerException e)
+        {
+            fileCount = 0;
+        }
     }
 
     public int getFileCount() {
@@ -221,7 +231,6 @@ public class FileInfo implements Comparable<Object> {
     public int compareTo(Object another) {
         FileInfo fileInfo = (FileInfo) another;
         return compareBydirfile(fileInfo);
-//        return compareByname( fileInfo);
     }
 
     private int compareBydirfile(FileInfo fileInfo) {

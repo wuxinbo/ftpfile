@@ -25,6 +25,7 @@ import java.io.File;
 import java.util.List;
 
 /**
+ * 自定义Listview用来封装显示数据。
  * Created by wuxinbo on 2014/10/21.
  */
 public class FileListView extends ListView implements AdapterView.OnItemClickListener {
@@ -78,10 +79,13 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         final FileInfo fileinfo = fileinfos.get(position);
         final int fragmentnumber = ((FileInfoActivity) context).getFragmnetnumber();
-        serverpath = new StringBuffer(serverfileListFragment.getPath());
-        localpath = new StringBuffer(LocalfileListFragment.getPath());
+        serverpath = new StringBuffer(serverfileListFragment.getPath()); //得到服务器上的文件路径
+        localpath = new StringBuffer(LocalfileListFragment.getPath());//得到本地文件的路径。
         serverpath = serverpath.append(File.separator
                 + fileinfo.getFilename());
+        /*
+        如果是当前是服务器fragment,就显示服务器上面的文件。
+         */
         if (fragmentnumber == Constant.SERVERFILE_FRAGMNET_NUMBER) {
             if (fileinfo.getIsdir() == 1) {
                 gotoDir(serverpath.toString());
@@ -91,6 +95,9 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
                 btn_download.setVisibility(View.VISIBLE);
                 bar_download.setVisibility(View.VISIBLE);
                 fileinfo.setFilepath(serverpath.toString());
+                /*
+                下载按钮监听器执行方法。
+                 */
                 btn_download.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -102,6 +109,9 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
                 });
             }
         } else {
+            /*
+            进入本地文件
+             */
             String path = ((FileInfoActivity) context).getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER).getPath();
             localpath.append(File.separator + fileinfo.getFilename());
             if (fileinfo.getIsdir() == 1) {
@@ -220,16 +230,29 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
         return false;
     }
 
+    /**
+     * 是否是压缩文件
+     * @param filename 文件名
+     * @return 如果是返回true，否则返回FALSE。
+     */
     private static boolean isZIP(String filename) {
         String[] zip = context.getResources().getStringArray(R.array.zip);
         return isIncludeString(filename, zip);
     }
-
+    /**
+     * 是否是音乐文件
+     * @param filename 文件名
+     * @return 如果是返回true，否则返回FALSE。
+     */
     private static boolean isMusic(String filename) {
         String[] music = context.getResources().getStringArray(R.array.music);
         return isIncludeString(filename, music);
     }
-
+    /**
+     * 是否是图片。
+     * @param filename 文件名
+     * @return 如果是返回true，否则返回FALSE。
+     */
     private static boolean ispicture(String filename) {
         String[] picture = context.getResources().getStringArray(R.array.picture);
         return isIncludeString(filename, picture);

@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
+ * 连接FTP服务器的后台线程。
  * Created by wuxinbo on 2014/10/21.
  */
 public class AsyncConnectServer extends AsyncTask<UserInfo, List<FileInfo>, FTPClient> {
@@ -39,12 +40,16 @@ public class AsyncConnectServer extends AsyncTask<UserInfo, List<FileInfo>, FTPC
                 user.getUrl(),
                 user.getPassword(),
                 user.getUsername());
-        List<FileInfo> fileinfos = FileInfo.getFileInfoList(files, "/");
+        List<FileInfo> fileinfos = FileInfo.getFileInfoList(files, "/");//设定初始目录。
         publishProgress(fileinfos);
-        fileinfos = null;
+        fileinfos = null;//将该集合对象置为null，方便GC回收。
         return ftp;
     }
 
+    /**
+     * 更新UI主线程。
+     * @param values
+     */
     @Override
     protected void onProgressUpdate(List<FileInfo>... values) {
         filelistview.updateListVIew(values[0]);

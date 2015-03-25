@@ -50,17 +50,19 @@ public class FileLIstAdapter extends BaseAdapter {
         TextView ItemTitle_view = (TextView) convertView.findViewById(R.id.ItemTitle);
         TextView filesize_view = (TextView) convertView.findViewById(R.id.filesize);
         TextView createtime_view = (TextView) convertView.findViewById(R.id.createtime);
-        if (file.getFile_pic() == 0) {
+        if (file.getFile_pic() == 0) {//判断文件（文件夹图标）
             if (file.getHeadimg() != null) {
                 icon_view.setImageBitmap(file.getHeadimg());
             } else if (file.getIcon() != null) {
                 icon_view.setImageDrawable(file.getIcon());
             }
         } else {
-            icon_view.setImageResource(file.getFile_pic());
+            icon_view.setImageResource(file.getFile_pic());//设置文件图标
         }
         if (FileInfo.isdir(file.getIsdir())) {
-            filesize_view.setText(file.getFileCount() + "项");
+            if (file!=null){
+                filesize_view.setText(file.getFileCount() + "项");
+            }
         } else {
             filesize_view.setText(file.getFilesize());
         }

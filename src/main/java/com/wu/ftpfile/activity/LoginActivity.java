@@ -13,6 +13,10 @@ import com.wu.ftpfile.Interface.preLoginlistener;
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.UI.LoginButton;
 
+/**
+ * 显示登录页面，并执行登录操作。
+ * @author  wuxinibo
+ */
 public class LoginActivity extends MyActivity implements preLoginlistener {
     private String tag = "loginactivity";
     /**

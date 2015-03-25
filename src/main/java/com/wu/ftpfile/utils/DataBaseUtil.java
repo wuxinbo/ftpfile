@@ -25,6 +25,7 @@ public class DataBaseUtil extends SQLiteOpenHelper{
                         int version) {
         super(context, name, factory, version);
     }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Constant.createtable);

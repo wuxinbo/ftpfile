@@ -78,6 +78,12 @@ public class FileInfoActivity extends MyfragmentActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * 重写onkeydown事件，使其自定义返回键功能。
+     * @param keyCode
+     * @param event
+     * @return
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
@@ -96,6 +102,11 @@ public class FileInfoActivity extends MyfragmentActivity {
         return true;
     }
 
+    /**
+     * 菜单选项监听器绑定。
+     * @param item
+     * @return
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.setting: {
@@ -130,8 +141,8 @@ public class FileInfoActivity extends MyfragmentActivity {
                 jumpTosetactivity();
             }
         });
-        fileViewpage.setAdapter(new FileFragmentpageAdapter(getSupportFragmentManager()));
-        fileViewpage.setOnPageChangeListener(new FileListPagechangelistener(this));
+        fileViewpage.setAdapter(new FileFragmentpageAdapter(getSupportFragmentManager()));//绑定适配器
+        fileViewpage.setOnPageChangeListener(new FileListPagechangelistener(this));//绑定滑动事件监听器。
     }
 
     @Override
@@ -218,6 +229,11 @@ public class FileInfoActivity extends MyfragmentActivity {
         updatelist.execute(path);
     }
 
+    /**
+     * 获取到fragment实例。
+     * @param fragmentnumber
+     * @return
+     */
     public FileListFragment getFragmentInstance(int fragmentnumber) {
         switch (fragmentnumber) {
             case Constant.SERVERFILE_FRAGMNET_NUMBER:

@@ -25,6 +25,10 @@ public abstract class MyfragmentActivity extends FragmentActivity {
                 Toast.LENGTH_SHORT).
                 show();
     }
+
+    /**
+     * 初始化导航栏。
+     */
     protected   void initnavbar(){
         nav_settext = (android.widget.TextView) findViewById(R.id.nav_setting);
         nav_title   = (android.widget.TextView) findViewById(R.id.nav_title);

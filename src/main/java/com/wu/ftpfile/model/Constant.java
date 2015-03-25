@@ -13,18 +13,22 @@ public class Constant {
 //     */
 //    public static final int SETTING = 4;
     /**
-     * 建Fileinfo表，主要存储文件对象的相关信息。
+     * 用户表表名。
      */
     public static final String TABLE_NAME = "userinfo";
+    /**
+     * 建用户表，主要存储用户相关信息。
+     */
     public static final String createtable = "create table " + TABLE_NAME + "(" +
-            "id int," +
-            "username varchar(30)," +
-            "password varchar(5)," +
-            "host_name varchar(10)," +
-            "login_time time)";
+            "id int," + //表的主键
+            "username varchar(30)," + //用户名
+            "password varchar(5)," + //密码
+            "host_name varchar(10)," + //ip地址
+            "login_time time)"; //最后登录时间
     /**
      * sd卡的根目录
      */
+    public static final String DATABASE_NAME="ftpfile";
     public static final String SD_ROOT_PATH = Environment.
             getExternalStorageDirectory().
             getAbsolutePath();
