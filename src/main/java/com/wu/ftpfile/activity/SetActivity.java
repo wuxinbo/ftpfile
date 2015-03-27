@@ -29,7 +29,6 @@ public class SetActivity extends MyActivity {
      *
 	 */
 	private String[] setArray;
-    private TextView exit;
     private AlertDialog.Builder exitBuilder;
     private SetItemmodel[] setvalues = new SetItemmodel[4];
     private ArrayList<LevelItem> itemlist = new ArrayList<LevelItem>();
@@ -87,7 +86,6 @@ public class SetActivity extends MyActivity {
         itemlist.add((LevelItem) findViewById(R.id.DIY));
         itemlist.add((LevelItem) findViewById(R.id.share));
         setArray=getResources().getStringArray(R.array.setting);
-        exit = (TextView) findViewById(R.id.setting_exit);
         initmodel();
         initnavbar();
         setItemvalue();

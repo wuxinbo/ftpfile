@@ -61,7 +61,7 @@ public class LevelItem extends LinearLayout implements View.OnClickListener {
     }
 
     /**
-     * 给空间初始化赋值
+     * 给控件赋值
      */
     public void setViewval(SetItemmodel model) {
         itemNameview.setText(model.getItemname());
@@ -82,6 +82,7 @@ public class LevelItem extends LinearLayout implements View.OnClickListener {
                 //根据存放在数组Map的activity名，来决定跳转到对应的activity。
                 in.setClassName(context,activityMaps.get(str));
                 context.startActivity(in);
+                break;
             }
        }
     }
