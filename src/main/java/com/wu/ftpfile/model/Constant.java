@@ -15,20 +15,26 @@ public class Constant {
     /**
      * 用户表表名。
      */
-    public static final String TABLE_NAME = "userinfo";
+    public static final String TABLE_NAME = "USER_INFO";
     /**
      * 建用户表，主要存储用户相关信息。
      */
-    public static final String createtable = "create table " + TABLE_NAME + "(" +
-            "id int," + //表的主键
-            "username varchar(30)," + //用户名
-            "password varchar(5)," + //密码
+    public static final String createtable = "create table if not exists " + TABLE_NAME + "(" +
+            "id integer primary key," + //表的主键
+            "user_name varchar(30)," + //用户名
+            "password varchar(20)," + //密码
             "host_name varchar(10)," + //ip地址
+            "port varchar(5),"+ //端口号
+            "encoding varchar(5),"+//服务器上的编码
             "login_time time)"; //最后登录时间
+
+    /**
+     * 数据库名
+     */
+    public static final String DATABASE_NAME="ftpfile";
     /**
      * sd卡的根目录
      */
-    public static final String DATABASE_NAME="ftpfile";
     public static final String SD_ROOT_PATH = Environment.
             getExternalStorageDirectory().
             getAbsolutePath();

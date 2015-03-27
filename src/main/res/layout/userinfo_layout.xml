@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background"
+    android:orientation="vertical">
+    <include
+        layout="@layout/nav_bar"
+        android:id="@+id/user_navbar">
+
+    </include>
+    <com.wu.ftpfile.UI.LevelItem
+        android:id="@+id/userView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+
+    </com.wu.ftpfile.UI.LevelItem>
+    <TextView
+        android:id="@+id/addUser"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/Edit_background"
+        android:text="@string/addUser"
+        android:paddingTop="8dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginTop="60dp"
+        android:background="@color/Edit_background"
+        android:text="@string/exit_current_User"
+        android:gravity="center"
+        />
+</LinearLayout>

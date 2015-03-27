@@ -12,6 +12,7 @@ import com.wu.ftpfile.R;
 import com.wu.ftpfile.UI.LevelItem;
 import com.wu.ftpfile.model.Constant;
 import com.wu.ftpfile.model.SetItemmodel;
+import com.wu.ftpfile.utils.ExitApplication;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +31,6 @@ public class SetActivity extends MyActivity {
 	private String[] setArray;
     private TextView exit;
     private AlertDialog.Builder exitBuilder;
-    //    private Map<String,String> setmap = new HashMap<String, String>();
     private SetItemmodel[] setvalues = new SetItemmodel[4];
     private ArrayList<LevelItem> itemlist = new ArrayList<LevelItem>();
     public String[] getSetArray() {
@@ -42,6 +42,7 @@ public class SetActivity extends MyActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.setting);
         initactivity();
+        ExitApplication.getInstance().addToList(this); //将activity添加到集合中。
 	}
 
     /**
@@ -63,15 +64,12 @@ public class SetActivity extends MyActivity {
             model = null;
         }
 
-//        setmap.put(setArray[0],);
-//        setmap.put(setArray[1],"AboutActivity");
-//        setmap.put(setArray[2],"exit");
     }
 
-    public void getActivity() {
-        PackageManager manager = getPackageManager();
-//        manager.getActivityInfo(new ComponentName(this,));
-    }
+//    public void getActivity() {
+//        PackageManager manager = getPackageManager();
+////        manager.getActivityInfo(new ComponentName(this,));
+//    }
     @Override
     protected void setview(){
         nav_title.setText(getString(R.string.setting));
@@ -82,7 +80,6 @@ public class SetActivity extends MyActivity {
         initview();
         setview();
     }
-//    private void init
 
     protected void initview() {
         itemlist.add((LevelItem) findViewById(R.id.user));
@@ -104,7 +101,7 @@ public class SetActivity extends MyActivity {
         exitBuilder.setMessage(R.string.sure_Exit).setPositiveButton(R.string.sure, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                finish();
+                ExitApplication.getInstance().exitApplication();//退出应用程序。
             }
         }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
@@ -114,9 +111,13 @@ public class SetActivity extends MyActivity {
         }).show();
 
     }
+
+    /**
+     * 退出按钮点击事件。
+     * @param v
+     */
     public void exit(View v) {
         initDialog();
-
     }
 
     private void setItemvalue() {

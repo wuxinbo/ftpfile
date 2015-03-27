@@ -22,6 +22,7 @@ import com.wu.ftpfile.UI.FileListView;
 import com.wu.ftpfile.adapter.FileFragmentpageAdapter;
 import com.wu.ftpfile.fragment.FileListFragment;
 import com.wu.ftpfile.model.Constant;
+import com.wu.ftpfile.utils.ExitApplication;
 
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -69,6 +70,7 @@ public class FileInfoActivity extends MyfragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fileinfofragment);
         initactivity();
+        ExitApplication.getInstance().addToList(this); //将activity添加到集合中。
     }
 
 
@@ -185,12 +187,15 @@ public class FileInfoActivity extends MyfragmentActivity {
 
     }
 
+    /**
+     * 退出activity，结束应用程序。
+     */
     private void finnshActivity() {
         if (i == 0) {
             print(R.string.press_exit);
             i++;
         } else {
-            finish();
+            ExitApplication.getInstance().exitApplication(); //退出应用。
         }
     }
 

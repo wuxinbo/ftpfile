@@ -27,5 +27,8 @@
     <string name="cancel">取消</string>
     <!-- 关于界面 -->
     <string name="weibo_link">http://weibo.com/wuxincaiaaa</string>
-
+    <!-- 用户界面-->
+    <string name="addUser">新增账号</string>
+    <string name="exit_current_User">注销当前账号</string>
+    <string name="userInfo">用户信息</string>
 </resources>

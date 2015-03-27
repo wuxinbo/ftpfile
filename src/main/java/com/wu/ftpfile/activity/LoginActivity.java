@@ -3,6 +3,7 @@ package com.wu.ftpfile.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
@@ -12,6 +13,9 @@ import com.wu.ftpfile.Implment.LoginIpl;
 import com.wu.ftpfile.Interface.preLoginlistener;
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.UI.LoginButton;
+import com.wu.ftpfile.model.Constant;
+import com.wu.ftpfile.utils.DataBaseUtil;
+import com.wu.ftpfile.utils.ExitApplication;
 
 /**
  * 显示登录页面，并执行登录操作。
@@ -42,15 +46,15 @@ public class LoginActivity extends MyActivity implements preLoginlistener {
     /**
      * 用户信息是否存在
      */
-    protected boolean userinfoIsExist;
+    protected boolean userInfoIsExist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.loginview);
-        userinfoIsExist = UserInfo.
-                sharepreferenceIsExist(this, "userinfo", "url");
+        userInfoIsExist = DataBaseUtil.userInfoTableIsExist(this, Constant.TABLE_NAME);
         initactivity();
+        ExitApplication.getInstance().addToList(this); //将activity添加到集合中。
     }
 
 
@@ -59,14 +63,16 @@ public class LoginActivity extends MyActivity implements preLoginlistener {
         UserInfo user = loginbutton.getuserinfo(login_url.getText().toString(),
                 login_user.getText().toString(),
                 login_pwd.getText().toString());
-        if (!userinfoIsExist) {
-            saveuserinfo(user);
-        } else {
+            DataBaseUtil dataHelper =DataBaseUtil.getdataHelper(this);
+            user.setEncoding("UTF-8");
+            dataHelper.saveUserInfo(user);
             gotofileinfoactivity();
-        }
         return user;
     }
 
+    /**
+     * 跳转到文件浏览界面
+     */
     public void gotofileinfoactivity() {
         Intent in = new Intent();
         in.setClass(this, FileInfoActivity.class);
@@ -76,7 +82,7 @@ public class LoginActivity extends MyActivity implements preLoginlistener {
 
     @Override
     protected void setview() {
-        if (userinfoIsExist) {
+        if (userInfoIsExist) {
             setloginvalue();
         }
         //登录按钮回调函数。

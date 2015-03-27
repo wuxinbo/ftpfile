@@ -36,24 +36,6 @@ public abstract class MyActivity extends Activity {
 				LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	}
 
-    /**
-     * 将用户信息保存在本地，
-     * @param user 用户信息
-     */
-    protected void saveuserinfo(UserInfo user) {
-        SharedPreferences userinfo=getSharedPreferences("userinfo",1);
-        SharedPreferences.Editor edit =userinfo.edit();
-        if (!UserInfo.userIsNull(user)){
-        edit.putString("url",user.getUrl());
-        edit.putString("username",user.getUsername());
-        edit.putString("pwd",user.getPassword());
-        edit.commit();
-        }
-        else{
-            print(R.string.not_null);
-        }
-    }
-
     protected abstract void setview();
     protected abstract void initview();
     /**

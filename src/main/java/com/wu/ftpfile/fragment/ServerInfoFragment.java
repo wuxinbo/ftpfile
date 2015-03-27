@@ -3,6 +3,7 @@ package com.wu.ftpfile.fragment;
 import android.content.SharedPreferences;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import com.wu.ftp.UserInfo;
 import com.wu.ftpfile.AsyncTask.AsyncConnectServer;
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.activity.FileInfoActivity;
+import com.wu.ftpfile.utils.DataBaseUtil;
 
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -90,8 +92,11 @@ public class ServerInfoFragment extends FileListFragment  {
         }
         return null;
     }
-    private void conenctserver() {
-        user = readConfig();
+    /*
+    连接Ftp服务器获取数据。
+     */
+    public void conenctserver() {
+        user = DataBaseUtil.getdataHelper(ACTIVITY).getUserInfoFromDataBase();
         AsyncConnectServer connectServer =
                 new AsyncConnectServer(fileListView, ACTIVITY);
         connectServer.execute(user);

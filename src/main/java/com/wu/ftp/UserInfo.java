@@ -15,7 +15,7 @@ import android.content.SharedPreferences;
  */
 public class UserInfo  implements Serializable {
     /**
-     * 服务器iph或者域名
+     * 服务器ip或者域名
      */
     private String url;
     /**
@@ -30,7 +30,18 @@ public class UserInfo  implements Serializable {
      *FTP连接端口号。
      */
     private String port;
+    /**
+     * 编码
+     */
+    private String Encoding;
 
+    public String getEncoding() {
+        return Encoding;
+    }
+
+    public void setEncoding(String encoding) {
+        Encoding = encoding;
+    }
 
     public String getPort() {
         return port;
@@ -71,28 +82,6 @@ public class UserInfo  implements Serializable {
         user.setUsername(userinfo.getString("username",""));
         user.setUrl(userinfo.getString("url",""));
         return user;
-
-
-
-    }
-
-    /**
-     * 判断配置文件是否存在
-     * @param context  上下文环境
-     * @param sharepreferenceName 配置文件名
-     * @param key 文件中包含的key
-     * @return 如果文件存在返回true，否则返回false
-     */
-    public static  boolean sharepreferenceIsExist(Context context,
-                                          String sharepreferenceName,
-                                          String key){
-        SharedPreferences sharedpreference = ((Activity)context).
-                                              getSharedPreferences(
-                                              sharepreferenceName,1);
-        if (sharedpreference.contains(key)){
-            return true;
-        }
-            return false;
     }
 
     public String getUrl() {

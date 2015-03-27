@@ -1,5 +1,7 @@
 package com.wu.ftp;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.net.SocketException;
 
@@ -31,13 +33,13 @@ public class Ftpclient {
 		FTPClient ftp =new FTPClient();
 		 FTPClientConfig config = new FTPClientConfig(
 				 FTPClientConfig.SYST_NT);
-		 ftp.setControlEncoding("gbk"); //设置编码
+		 ftp.setControlEncoding("utf-8"); //设置编码
 		 ftp.setControlKeepAliveTimeout(300); // 超时时间
 		 ftp.configure(config);
 		return ftp;
 	}
 	/**
-	 *  连接FTP服务器。
+	 *  对连接FTP服务器进行封装。
 	 * @param ftp
 	 * @param url
 	 * @param password
@@ -46,15 +48,18 @@ public class Ftpclient {
 	 */
 	public static FTPFile []  Login(FTPClient ftp,String url,String password,String username ){
 		FTPFile[] files =null;
-		FTPClient ftpclient=ftp;
 		try {
-			ftpclient.connect(url);
-			islogin=ftpclient.login(username, password);
-			files = ftpclient.listFiles("/");
+            ftp.connect(url);
+			islogin=ftp.login(username, password);
+           // Log.d("code",String.valueOf(ftp.getReply()));//打印返回码。
+			files = ftp.listFiles("/");
+            if (ftp.isConnected()){
+                ftp.disconnect();
+            }
 		} catch (SocketException e) {
-			e.printStackTrace();
+            Log.e("SocketException",e.toString());
 		} catch (IOException e) {
-			e.printStackTrace();
+            Log.e("IOException",e.getMessage());
 		}
 		return files;
 		

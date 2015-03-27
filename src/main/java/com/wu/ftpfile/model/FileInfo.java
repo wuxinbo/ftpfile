@@ -1,11 +1,9 @@
 package com.wu.ftpfile.model;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.media.ThumbnailUtils;
-import android.net.Uri;
 
 import com.wu.ftpfile.utils.Fileutil;
 
@@ -233,6 +231,11 @@ public class FileInfo implements Comparable<Object> {
         return compareBydirfile(fileInfo);
     }
 
+    /**
+     * 重写比较方法，文件夹排在前面，文件排在后面。如果是文件夹在根据文件名字进行排名
+     * @param fileInfo
+     * @return 如果
+     */
     private int compareBydirfile(FileInfo fileInfo) {
         if (this.getIsdir() < fileInfo.getIsdir()) {
             return 1;
