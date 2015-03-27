@@ -39,7 +39,7 @@ public class LevelItem extends LinearLayout implements View.OnClickListener {
     }
 
     private void initMap(){
-        activityMaps.put(array[0],"LoginActivity");
+        activityMaps.put(array[0],"com.wu.ftpfile.activity.UserActivity");
         activityMaps.put(array[1],"");
         activityMaps.put(array[2],"");
         activityMaps.put(array[3],"AboutActivity");
@@ -78,7 +78,7 @@ public class LevelItem extends LinearLayout implements View.OnClickListener {
        Intent in= new Intent();
        for (String str:array){
             //比对Map中存放的数据和和用户点击的数据。符合规则进行跳转。
-            if (text.toString().equals(str)&&!activityMaps.get(str).equals("")){
+            if (text.getText().toString().equals(str)&&!activityMaps.get(str).equals("")){
                 //根据存放在数组Map的activity名，来决定跳转到对应的activity。
                 in.setClassName(context,activityMaps.get(str));
                 context.startActivity(in);
