@@ -35,6 +35,7 @@ public class UserActivity extends MyActivity{
 
     @Override
     public void initactivity() {
+        initnavbar();
         initview();
         setview();
     }
