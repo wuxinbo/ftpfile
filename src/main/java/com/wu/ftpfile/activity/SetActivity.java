@@ -19,30 +19,30 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class SetActivity extends MyActivity {
-	/**
-	 * 设置列表
-	 */
+    /**
+     * 设置列表
+     */
 //	private ListView setListview;
 //    private ListView about_diylistview;
     /**
-	 * 设置界面选项
-     *
-	 */
-	private String[] setArray;
+     * 设置界面选项
+     */
+    private String[] setArray;
     private AlertDialog.Builder exitBuilder;
     private SetItemmodel[] setvalues = new SetItemmodel[4];
     private ArrayList<LevelItem> itemlist = new ArrayList<LevelItem>();
+
     public String[] getSetArray() {
         return setArray;
     }
 
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.setting);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.setting);
         initactivity();
         ExitApplication.getInstance().addToList(this); //将activity添加到集合中。
-	}
+    }
 
     /**
      * 初始化model数据，将数据绑定到对象上。
@@ -65,15 +65,12 @@ public class SetActivity extends MyActivity {
 
     }
 
-//    public void getActivity() {
-//        PackageManager manager = getPackageManager();
-////        manager.getActivityInfo(new ComponentName(this,));
-//    }
     @Override
-    protected void setview(){
+    protected void setview() {
         nav_title.setText(getString(R.string.setting));
         nav_settext.setVisibility(View.INVISIBLE);
     }
+
     @Override
     public void initactivity() {
         initview();
@@ -85,7 +82,7 @@ public class SetActivity extends MyActivity {
         itemlist.add((LevelItem) findViewById(R.id.filelocation));
         itemlist.add((LevelItem) findViewById(R.id.DIY));
         itemlist.add((LevelItem) findViewById(R.id.share));
-        setArray=getResources().getStringArray(R.array.setting);
+        setArray = getResources().getStringArray(R.array.setting);
         initmodel();
         initnavbar();
         setItemvalue();
@@ -112,6 +109,7 @@ public class SetActivity extends MyActivity {
 
     /**
      * 退出按钮点击事件。
+     *
      * @param v
      */
     public void exit(View v) {
