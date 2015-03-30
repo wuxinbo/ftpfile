@@ -24,11 +24,12 @@ public class DataBaseUtil extends SQLiteOpenHelper{
     public final static String LOGIN_TIME="login_time";//登录时间
     public final static String HOST_NAME="host_name";//主机名
     public final static String ENCODING="encoding";//编码
+    public final static String CURRENT_USER="current_user";//当前用户
     /**
      * userinfo表对应的列集合。
      */
     public final static String[] USER_INFO_COLUMNS= new String []{UESR_NAME,PASSWORD,LOGIN_TIME,
-                                                                       HOST_NAME,ENCODING};
+                                                                       HOST_NAME,ENCODING,CURRENT_USER};
 //    public final static String PORT="port";
     public DataBaseUtil(Context context, String name, SQLiteDatabase.CursorFactory factory,
                         int version) {
@@ -94,6 +95,7 @@ public class DataBaseUtil extends SQLiteOpenHelper{
         values.put(DataBaseUtil.PASSWORD,user.getPassword());
         values.put(DataBaseUtil.HOST_NAME,user.getUrl());
         values.put(DataBaseUtil.ENCODING,user.getEncoding());
+        values.put(DataBaseUtil.CURRENT_USER,user.isCurrentUser());
         values.put(DataBaseUtil.LOGIN_TIME,new Date().toString());//获取当前时间作为登录时间。
         return values;
     }
@@ -120,6 +122,24 @@ public class DataBaseUtil extends SQLiteOpenHelper{
        }
     }
 
+    /**
+     * 查询是否有该用户。
+     * @param context 上下文环境
+     * @param tableName 表名
+     * @param select 查询条件（字段）
+     * @param where 查询参数（值）
+     * @return 如果有改用户返回查询记录数，否则返回0
+     */
+    public static int selectUserInfo(Context context,String tableName,String select,String where){
+        DataBaseUtil dbHelper = getdataHelper(context);
+        String sql = "SELECT count(*) FROM "+tableName+" WHERE "+select+" = '"+where+"'; ";
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+        Cursor cursor=db.rawQuery(sql,null);
+        if (cursor.moveToFirst()){
+            return cursor.getInt(0);
+        }
+        return 0;
+    }
     /**
      * 根据所得的参数返回一个cursor对象。
      * @param db sqlitedatabase

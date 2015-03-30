@@ -19,6 +19,7 @@
     <string name="download">下载</string>
     <string name="not_null">所填信息不能为空！</string>
     <string name="title_local">本地文件</string>
+    <string name="net_err">不能连接到服务器，请检查网络！</string>
     <!-- 设置界面 -->
     <string name="action_settings">设置</string>
     <string name="title_activity_main">服务器</string>

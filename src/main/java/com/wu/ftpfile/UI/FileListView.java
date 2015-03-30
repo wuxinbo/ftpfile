@@ -41,8 +41,6 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
      */
     private FileListFragment serverfileListFragment;
     private FileListFragment LocalfileListFragment;
-    //    private static  SQLiteDatabase db=null;
-//    private static DataBaseUtil dbhelper =null;
     private List<FileInfo> fileinfos = null;
     /**
      * 服务器上的文件路径

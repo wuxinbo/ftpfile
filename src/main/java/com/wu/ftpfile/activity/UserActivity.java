@@ -1,7 +1,10 @@
 package com.wu.ftpfile.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.UI.LevelItem;
@@ -15,6 +18,7 @@ public class UserActivity extends MyActivity{
      * 显示当前用户信息。
      */
     private LevelItem userView;
+    private TextView exitView;
     @Override
     protected void setview() {
         nav_title.setText(getString(R.string.userInfo));//设置导航栏的表题。
@@ -28,9 +32,19 @@ public class UserActivity extends MyActivity{
         initactivity();
     }
 
+    /**
+     * 注销当前账号。
+     * @param v
+     */
+    public void logout(View v){
+        Intent in =new Intent();
+        in.setClass(this,LoginActivity.class);
+        startActivity(in);
+    }
     @Override
     protected void initview() {
-    userView =(LevelItem)findViewById(R.id.userView);
+        userView =(LevelItem)findViewById(R.id.userView);
+        exitView= (TextView) findViewById(R.id.exitView);
     }
 
     @Override

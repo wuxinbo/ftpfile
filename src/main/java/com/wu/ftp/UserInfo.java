@@ -34,6 +34,32 @@ public class UserInfo  implements Serializable {
      * 编码
      */
     private String Encoding;
+    /**
+     * 是否为当前用户，默认不是当前用户。
+     */
+    private boolean currentUser;
+
+    public String isCurrentUser() {
+        if (currentUser==true){
+            return "1";
+        }else{
+            return "0";
+        }
+    }
+
+    /**
+     * 根据传入的是0或者1进行判断，如果是1就赋值true，为0赋值为FALSE。
+     * @param currentUser
+     *
+     */
+    public void setCurrentUser(String currentUser) {
+        if (currentUser!=null&&!currentUser.equals("0")){
+            this.currentUser = false;
+        }else{
+            this.currentUser = true;
+        }
+
+    }
 
     public String getEncoding() {
         return Encoding;

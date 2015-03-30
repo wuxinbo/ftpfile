@@ -31,8 +31,7 @@ public class Ftpclient {
 	 */
 	public static FTPClient  initFTP()  {
 		FTPClient ftp =new FTPClient();
-		 FTPClientConfig config = new FTPClientConfig(
-				 FTPClientConfig.SYST_NT);
+		 FTPClientConfig config = new FTPClientConfig();
 		 ftp.setControlEncoding("utf-8"); //设置编码
 		 ftp.setControlKeepAliveTimeout(300); // 超时时间
 		 ftp.configure(config);
@@ -46,21 +45,14 @@ public class Ftpclient {
 	 * @param username
 	 * @return
 	 */
-	public static FTPFile []  Login(FTPClient ftp,String url,String password,String username ){
+	public static FTPFile []  Login(FTPClient ftp,String url,String password,String username )throws SocketException,IOException{
 		FTPFile[] files =null;
-		try {
             ftp.connect(url);
 			islogin=ftp.login(username, password);
-           // Log.d("code",String.valueOf(ftp.getReply()));//打印返回码。
-			files = ftp.listFiles("/");
+			files = ftp.listFiles("");
             if (ftp.isConnected()){
                 ftp.disconnect();
             }
-		} catch (SocketException e) {
-            Log.e("SocketException",e.toString());
-		} catch (IOException e) {
-            Log.e("IOException",e.getMessage());
-		}
 		return files;
 		
 	}

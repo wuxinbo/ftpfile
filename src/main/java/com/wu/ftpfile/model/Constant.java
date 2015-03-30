@@ -8,10 +8,6 @@ import android.os.Environment;
  * @author wuxinbo
  */
 public class Constant {
-//    /**
-//     * 菜单设置按钮的ID
-//     */
-//    public static final int SETTING = 4;
     /**
      * 用户表表名。
      */
@@ -26,6 +22,7 @@ public class Constant {
             "host_name varchar(10)," + //ip地址
             "port varchar(5),"+ //端口号
             "encoding varchar(5),"+//服务器上的编码
+            "current_user varchar(2),"+ //是否为当前用户
             "login_time time)"; //最后登录时间
 
     /**

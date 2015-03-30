@@ -12,24 +12,28 @@
     <com.wu.ftpfile.UI.LevelItem
         android:id="@+id/userView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="20dp">
 
     </com.wu.ftpfile.UI.LevelItem>
     <TextView
         android:id="@+id/addUser"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="50dp"
         android:layout_marginTop="2dp"
         android:background="@color/Edit_background"
         android:text="@string/addUser"
-        android:paddingTop="8dp"/>
+        android:gravity="center_vertical"
+        />
     <TextView
+        android:id="@+id/exitView"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="50dp"
         android:layout_marginTop="60dp"
         android:background="@color/Edit_background"
         android:text="@string/exit_current_User"
         android:gravity="center"
+        android:clickable="true"
+        android:onClick="logout"
         />
 </LinearLayout>

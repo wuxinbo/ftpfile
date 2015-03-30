@@ -65,6 +65,7 @@ public class LoginActivity extends MyActivity implements preLoginlistener {
                 login_pwd.getText().toString());
             DataBaseUtil dataHelper =DataBaseUtil.getdataHelper(this);
             user.setEncoding("UTF-8");
+            user.setCurrentUser("1");//登录时设置为默认用户。
             dataHelper.saveUserInfo(user);
             gotofileinfoactivity();
         return user;

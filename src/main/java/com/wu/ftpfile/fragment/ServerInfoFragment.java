@@ -70,28 +70,27 @@ public class ServerInfoFragment extends FileListFragment  {
                 break;
             case WifiManager.WIFI_STATE_ENABLED:
             {   //wifi已经打开。
-                ACTIVITY.print(R.string.network_normal);
                 conenctserver();
                 break;
             }
         }
     }
-    /**
-     * 读取保存在sharepreferences中的信息。
-     *
-     * @return 读取到值时返回true，否则返回false
-     */
-    public UserInfo readConfig() {
-        UserInfo info = null;
-        SharedPreferences shared = ACTIVITY.getSharedPreferences("userinfo", 1);
-        if (shared != null) {
-            info = UserInfo.getServerInstance(shared.getString("url", null),
-                    shared.getString("username", ""),
-                    shared.getString("pwd", ""));
-            return info;
-        }
-        return null;
-    }
+//    /**
+//     * 读取保存在sharepreferences中的信息。
+//     *
+//     * @return 读取到值时返回true，否则返回false
+//     */
+//    public UserInfo readConfig() {
+//        UserInfo info = null;
+//        SharedPreferences shared = ACTIVITY.getSharedPreferences("userinfo", 1);
+//        if (shared != null) {
+//            info = UserInfo.getServerInstance(shared.getString("url", null),
+//                    shared.getString("username", ""),
+//                    shared.getString("pwd", ""));
+//            return info;
+//        }
+//        return null;
+//    }
     /*
     连接Ftp服务器获取数据。
      */
