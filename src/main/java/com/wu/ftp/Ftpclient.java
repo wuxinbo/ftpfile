@@ -2,6 +2,8 @@ package com.wu.ftp;
 
 import android.util.Log;
 
+import com.wu.ftpfile.utils.Fileutil;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -81,31 +83,80 @@ public class Ftpclient {
         return uploadsize;
 
     }
+
+    /**
+     * 判断是否为目录。
+     * @param remotePath 远程文件路径
+     * @return 如果是返回true，否则返回false；
+     */
+    public static boolean isDirectory(FTPClient ftp,String remotePath){
+        try {
+            return ftp.changeWorkingDirectory(remotePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
     /**
      * 文件（文件夹）下载，
      * @param ftp ftp实例
-     * @param file 要下载的文件。
-     * @return
+     * @param remotePath 要下载的文件路径。
+     * @param localPath 保存到本地文件位置。
+     * @return 下载的文件大小
      */
-    public static long downloadFile(FTPClient ftp,FTPFile file,String localPath){
+    public static long downloadFile(FTPClient ftp,String remotePath,String localPath){
         long downloadsize=0L;//已经读取到的字节数
+        File file =new File(remotePath);
+        InputStream in=null;
+        FileOutputStream os=null;
+//		File DirFile = null;
         try{
-            if (file.isDirectory()) {
-
+            if (isDirectory(ftp,remotePath)) {
+                FTPFile[] subFiles= ftp.listFiles(remotePath);
+                for (FTPFile subFile : subFiles) {
+                    Fileutil.createDir(localPath);//在本地创建同名的目录。
+                    if (subFile.isDirectory()) {
+                        Fileutil.createDir(localPath+"/"+subFile.getName()); //在本地创建子目录
+                        ftp.changeWorkingDirectory(remotePath+"/"+subFile.getName());//切换当前目录到子目录
+                        downloadsize+=downloadFile(ftp, ftp.printWorkingDirectory(), localPath+"/"+subFile.getName());
+                    }else{
+                        in= ftp.retrieveFileStream(remotePath+"/"+subFile.getName());
+                        os =new FileOutputStream(new File(localPath+"/"+subFile.getName()));
+                        byte [] data =new byte[4096]; //缓冲区数组。
+                        int readSize=0;//每次读取到的字节
+                        while((readSize=in.read(data))!=-1){
+                            downloadsize+=readSize;
+                            os.write(data,0,readSize);
+                        }
+                        in.close(); //关闭输入流
+                        ftp.completePendingCommand();//关闭输入流之后，必须调用这个方法来向服务器确认操作成功。
+                    }
+                }
             }else{
-                InputStream in= ftp.retrieveFileStream(file.getName());
-                FileOutputStream os =new FileOutputStream(new File(localPath));
-                byte [] data =new byte[4096];
-
+                in= ftp.retrieveFileStream(remotePath);
+                System.out.println(remotePath);
+                os =new FileOutputStream(new File(localPath));
+                byte [] data =new byte[4096]; //缓冲区数组。
                 int readSize=0;//每次读取到的字节
                 while((readSize=in.read(data))!=-1){
                     downloadsize+=readSize;
                     os.write(data,0,readSize);
-                    System.out.println(downloadsize);
+//					System.out.println(downloadsize);
                 }
+                in.close(); //关闭输入流
+                ftp.completePendingCommand();
             }
         }catch(IOException e){
+        }
+        finally{
+            try {
+//				in.close(); //关闭输入流
 
+                os.close(); //关闭输出流
+            } catch (IOException e) {
+            }
         }
         return downloadsize;
     }
@@ -138,6 +189,42 @@ public class Ftpclient {
 		}
 		return true;
 	}
-	
-//
+    /**
+     * 上传整个文件夹或者是文件
+     * @param ftp
+     * @param dirName 目录名
+     * @return 如果上传成功返回true，否则返回FALSE；
+     */
+    public static boolean uploadDir(FTPClient ftp, String dirName){
+        File file =new File(dirName);
+        long uploadSize=0l;
+        try {
+            String path =ftp.printWorkingDirectory()+"/"+file.getName();
+            if(file.isDirectory()){ //是否为目录
+				/*在服务器上面新建一个和本地同名的目录*/
+                makeDir(path, ftp);
+                File[] files=file.listFiles();
+                ftp.changeWorkingDirectory(path);//将工作目录变更为该目录下
+                for (File subFile : files) {/*遍历该目录下的子文件。*/
+                    if(subFile.isDirectory()){//判断子文件是否是文件夹。
+                        makeDir(ftp.printWorkingDirectory()+"/"+subFile.getName(),ftp);//在服务器上面的父级目录下面新建该子目录。
+                        uploadDir(ftp,dirName+"/"+subFile.getName());//利用递归再遍历它的子目录。
+                    }else{
+                        InputStream in =getInputStream(dirName+"/"+subFile.getName());//得到输入流
+                        uploadSize+=uploadFile(ftp,path+"/"+subFile.getName(), in);//开始上传文件。
+                        System.out.println("返回的代码："+ftp.getReply());
+                        in.close();
+                    }
+                }
+            }else{
+                InputStream in =getInputStream(dirName);//得到输入流
+                uploadSize+=uploadFile(ftp,path, in);//开始上传文件。
+                in.close();
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
