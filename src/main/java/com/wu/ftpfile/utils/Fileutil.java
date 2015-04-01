@@ -55,6 +55,29 @@ public class Fileutil {
         }
         return null;
     }
+
+    /**
+     * 获取到文件或文件夹大小
+     * @param path 文件路径
+     * @return 文件或文件夹的大小。
+     */
+    public static long getFileSize(String path){
+        File file =new File(path);
+        long size=0L;
+        if (file.isDirectory()) {//判断是否为目录
+            File[] subFiles= file.listFiles();//获取到该目录下的子文件
+            for (File subFile : subFiles) {
+                if (subFile.isDirectory()) {
+                    size+=getFileSize(path+"/"+subFile.getName());//利用递归获取到子文件大小。再进行累加
+                }else{
+                    size+=subFile.length();//如果子文件是文件在进行累加。
+                }
+            }
+        }else{
+            size+=file.length();//如果是文件在进行累加。
+        }
+        return size;
+    }
 	/**
 	 *  对给定的字符串进行格式化
 	 * @param size 文件的大小
