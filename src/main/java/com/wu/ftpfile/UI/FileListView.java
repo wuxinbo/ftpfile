@@ -1,5 +1,6 @@
 package com.wu.ftpfile.UI;
 
+import android.app.AlertDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.net.Uri;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
@@ -28,7 +30,8 @@ import java.util.List;
  * 自定义Listview用来封装显示数据。
  * Created by wuxinbo on 2014/10/21.
  */
-public class FileListView extends ListView implements AdapterView.OnItemClickListener {
+public class FileListView extends ListView implements AdapterView.OnItemClickListener,
+                                                        AdapterView.OnItemLongClickListener {
     /**
      * 上下文环境
      */
@@ -50,10 +53,14 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
      * 本地文件路径。
      */
     private StringBuffer localpath = null;
+//    /**
+//     * 第一次得到对象。
+//     */
+//    public static boolean isfirstRead = true;
     /**
-     * 第一次得到对象。
+     * 菜单选项对话框。
      */
-    public static boolean isfirstRead = true;
+    private AlertDialog.Builder menuBuilder;
 
     public FileListView(Context context) {
         super(context);
@@ -73,6 +80,14 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
         this.fileinfos = fileinfos;
     }
 
+
+    /**
+     * 点击事件监听器。
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         final FileInfo fileinfo = fileinfos.get(position);
@@ -144,7 +159,8 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
         LocalfileListFragment = fileInfoActivity.getFragmentInstance(
                 Constant.LOCALFILE_FRAGMNET_NUMBER);
 
-        setOnItemClickListener(this);
+        setOnItemClickListener(this);//绑定点击事件。
+        setOnItemLongClickListener(this); //绑定长按事件监听器
     }
 
     /**
@@ -293,6 +309,22 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
 //            intent.setDataAndType(Uri.parse(filepath), Constant.APK_INSTALL_DATATYPE);
         }
         context.startActivity(intent);
+    }
+
+    /**
+     * listview 长按点击事件。
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+       Log.d("longClick","longLCick");
+        menuBuilder =new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
+        menuBuilder.setView(R.layout.grid_menu_layout).create().show();
+        return true;
     }
 }
 

@@ -20,6 +20,10 @@
     <string name="not_null">所填信息不能为空！</string>
     <string name="title_local">本地文件</string>
     <string name="net_err">不能连接到服务器，请检查网络！</string>
+    <string name="upload">上传</string>
+    <string name="cut">剪切</string>
+    <string name="copy">复制</string>
+    <string name="paste">粘贴</string>
     <!-- 设置界面 -->
     <string name="action_settings">设置</string>
     <string name="title_activity_main">服务器</string>

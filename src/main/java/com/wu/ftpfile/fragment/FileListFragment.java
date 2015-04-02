@@ -51,9 +51,9 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
                 fileinfos.add(fileInfo);
             }
         }
-        Collections.sort(fileinfos);
+        Collections.sort(fileinfos);//对文件集合进行排序。
         fileListView.setFileinfos(fileinfos);
-        listItemAdapter.notifyDataSetChanged();
+        listItemAdapter.notifyDataSetChanged();//通知适配器数据更新
         fileListView.setAdapter(listItemAdapter);
         if (this instanceof LocalFileFragment){
             if (path.equals(Constant.SD_ROOT_PATH)){
@@ -72,7 +72,7 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
     protected void initview(View view) {
         fileinfos = new ArrayList<FileInfo>();
         fileListView= (com.wu.ftpfile.UI.FileListView) view.findViewById(R.id.local_listView);
-        fileListView.setlistener(this);
+        fileListView.setlistener(this); //绑定监听器。
         listItemAdapter = new FileLIstAdapter(ACTIVITY,fileinfos);
         path_view = (TextView) view.findViewById(R.id.pathView);
     }

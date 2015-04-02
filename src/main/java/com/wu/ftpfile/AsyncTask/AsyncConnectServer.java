@@ -10,6 +10,7 @@ import com.wu.ftp.UserInfo;
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.UI.FileListView;
 import com.wu.ftpfile.activity.FileInfoActivity;
+import com.wu.ftpfile.model.Constant;
 import com.wu.ftpfile.model.FileInfo;
 
 import org.apache.commons.net.ftp.FTPClient;
@@ -37,18 +38,23 @@ public class AsyncConnectServer extends AsyncTask<UserInfo, List<FileInfo>, FTPC
     @Override
     protected FTPClient doInBackground(UserInfo... params) {
         UserInfo user = params[0];
-        FTPClient ftp = null;
-        ftp = Ftpclient.initFTP();
+        FTPClient ftp = Ftpclient.initFTP();
         FTPFile[] files = null;
         try {
             files = Ftpclient.Login(ftp,
                     user.getUrl(),
                     user.getPassword(),
                     user.getUsername());
+            Log.d("replay",String.valueOf(ftp.getReplyCode()));
+            FileInfoActivity fileInfoActivity = (FileInfoActivity) context;
+            fileInfoActivity.getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER)
+                    .setPath(ftp.printWorkingDirectory());//设置服务器上面的路径。
         } catch (SocketException e) {
+            Log.e("SocketException",e.getMessage());
             publishProgress(null);
             return ftp;
         } catch (IOException e) {
+            Log.e("IOException",e.getMessage());
             publishProgress(null);
             return ftp;
         }
@@ -67,6 +73,7 @@ public class AsyncConnectServer extends AsyncTask<UserInfo, List<FileInfo>, FTPC
         if (values==null){
             FileInfoActivity fileInfoActivity = (FileInfoActivity) context;
             fileInfoActivity.print(R.string.net_err);//用toast消息机制提示用户网络故障。
+
         }else{
             filelistview.updateListVIew(values[0]);
         }

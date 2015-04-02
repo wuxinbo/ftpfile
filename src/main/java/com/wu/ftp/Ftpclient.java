@@ -58,9 +58,6 @@ public class Ftpclient {
             ftp.connect(url);
 			islogin=ftp.login(username, password);
 			files = ftp.listFiles("");
-            if (ftp.isConnected()){
-                ftp.disconnect();
-            }
 		return files;
 		
 	}

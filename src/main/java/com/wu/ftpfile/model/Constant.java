@@ -54,7 +54,7 @@ public class Constant {
 
     public static final int FILENAME_FORMAT_LENGTH = 23;
     public static final int DIR = 1;
-//    public static final int FILE=0;
+
     /**
      * apk文件的datatype类型。
      */

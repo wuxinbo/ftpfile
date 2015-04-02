@@ -36,7 +36,6 @@ public class ServerInfoFragment extends FileListFragment  {
      * 服务器上的目录路径
      */
     private TextView nav_title;
-//    private FileListView filelistview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,22 +74,6 @@ public class ServerInfoFragment extends FileListFragment  {
             }
         }
     }
-//    /**
-//     * 读取保存在sharepreferences中的信息。
-//     *
-//     * @return 读取到值时返回true，否则返回false
-//     */
-//    public UserInfo readConfig() {
-//        UserInfo info = null;
-//        SharedPreferences shared = ACTIVITY.getSharedPreferences("userinfo", 1);
-//        if (shared != null) {
-//            info = UserInfo.getServerInstance(shared.getString("url", null),
-//                    shared.getString("username", ""),
-//                    shared.getString("pwd", ""));
-//            return info;
-//        }
-//        return null;
-//    }
     /*
     连接Ftp服务器获取数据。
      */
@@ -100,17 +83,6 @@ public class ServerInfoFragment extends FileListFragment  {
                 new AsyncConnectServer(fileListView, ACTIVITY);
         connectServer.execute(user);
     }
-
-//    @Override
-//    public void initFilelist(View view) {
-//        filelistview= (com.wu.ftpfile.UI.FileListView) view.findViewById(R.id.server_listView);
-//        filelistview.setlistener(this);
-//    }
-
-//    @Override
-//    public void setadapter() {
-//        filelistview.setAdapter(listItemAdapter);
-//    }
 
 
 }
