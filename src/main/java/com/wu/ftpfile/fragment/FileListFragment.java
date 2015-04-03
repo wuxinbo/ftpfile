@@ -1,7 +1,5 @@
 package com.wu.ftpfile.fragment;
 
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.BaseAdapter;

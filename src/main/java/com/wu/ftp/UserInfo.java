@@ -1,6 +1,7 @@
 package com.wu.ftp;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import android.app.Activity;
 import android.app.Application;
@@ -38,6 +39,25 @@ public class UserInfo  implements Serializable {
      * 是否为当前用户，默认不是当前用户。
      */
     private boolean currentUser;
+    /**
+     * 用户登录时间。
+     */
+    public Date loginTime;
+
+    public void setCurrentUser(boolean currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public Date getLoginTime() {
+        if (loginTime==null){
+            loginTime =new Date();
+        }
+        return loginTime;
+    }
+
+    public void setLoginTime(Date loginTime) {
+        this.loginTime = loginTime;
+    }
 
     public String isCurrentUser() {
         if (currentUser==true){
@@ -53,9 +73,9 @@ public class UserInfo  implements Serializable {
      *
      */
     public void setCurrentUser(String currentUser) {
-        if (currentUser!=null&&!currentUser.equals("0")){
+        if (currentUser!=null&&currentUser.equals("0")){
             this.currentUser = false;
-        }else{
+        }else if (currentUser!=null&&currentUser.equals("1")){
             this.currentUser = true;
         }
 

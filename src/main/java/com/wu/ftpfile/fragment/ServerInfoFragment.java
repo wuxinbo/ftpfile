@@ -1,6 +1,7 @@
 package com.wu.ftpfile.fragment;
 
 import android.content.SharedPreferences;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -62,15 +63,24 @@ public class ServerInfoFragment extends FileListFragment  {
     private void startAction() {
         WifiManager manager = (WifiManager) getActivity().getSystemService(ACTIVITY.WIFI_SERVICE);
         int i = manager.getWifiState();
+        WifiInfo wifiInfo = manager.getConnectionInfo();
+
         switch (i){
             case WifiManager.WIFI_STATE_DISABLED:
                 //提示用户当前网络不可用。
                 ACTIVITY.print(R.string.network_err);
                 break;
             case WifiManager.WIFI_STATE_ENABLED:
-            {   //wifi已经打开。
-                conenctserver();
-                break;
+            {   /*wifi已经打开。
+                判断WiFi是否连接到网络。，没有连接到网络不进行操作。
+                */
+                if (wifiInfo.getBSSID()==null){
+                    ACTIVITY.print(R.string.network_err);
+                    break;
+                }else{
+                    conenctserver();
+                }
+
             }
         }
     }

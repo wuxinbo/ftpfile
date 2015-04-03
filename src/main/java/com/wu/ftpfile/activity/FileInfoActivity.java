@@ -1,5 +1,6 @@
 package com.wu.ftpfile.activity;
 
+import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.wu.ftpfile.AsyncTask.AsyncUpdatelist;
 import com.wu.ftpfile.Implment.FileListPagechangelistener;
@@ -252,6 +254,21 @@ public class FileInfoActivity extends MyfragmentActivity {
         return null;
     }
 
+    /**
+     * 菜单点击处理事件。
+     * @param v
+     */
+    public void clickMenuView (View v){
+        Log.d("click",((TextView)v).getText().toString());
+        FileListFragment fragment=null;
+        if (isFragmentByFragmennumber()){
+             fragment =getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER);
+        }else{
+            fragment =getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER);
+        }
+        DialogFragment dialogFragment =new DialogFragment();
+
+    }
     /**
      * 采用了新的办法获取APK图标，之前的失败是因为android中存在的一个BUG,通过
      */

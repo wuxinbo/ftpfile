@@ -1,5 +1,6 @@
 package com.wu.ftpfile.utils;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.io.DataOutputStream;
@@ -10,6 +11,8 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.wu.ftpfile.R;
+import com.wu.ftpfile.UI.FileListView;
 import com.wu.ftpfile.model.FileInfo;
 
 public class Fileutil {
@@ -198,5 +201,75 @@ public class Fileutil {
             }
 
             return true;
+    }
+
+    /**
+     * 是否是压缩文件
+     * @param filename 文件名
+     * @return 如果是返回true，否则返回FALSE。
+     */
+    public static boolean isZIP(Context context,String filename) {
+        String[] zip = context.getResources().getStringArray(R.array.zip);
+        return isIncludeString(filename, zip);
+    }
+
+    /**
+     * 从给定的数组中寻找str。
+     *
+     * @param str  需要查询的string
+     * @param play 需要查询的数组
+     * @return 如果数组中某个字符串以str结尾则返回TRUE，如果没有符合条件的返回false。
+     */
+    public static boolean isIncludeString(String str, String[] play) {
+        for (String name : play) {
+            if (str.endsWith(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 判断是否是apk安装文件
+     *
+     * @param filename 文件名
+     * @return 如果是apk文件返回true，否则返回flase。
+     */
+    public static boolean isApk(String filename) {
+        if (filename.endsWith("apk")) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 是否是图片。
+     * @param filename 文件名
+     * @return 如果是返回true，否则返回FALSE。
+     */
+    public  static boolean ispicture(Context context,String filename) {
+        String[] picture = context.getResources().getStringArray(R.array.picture);
+        return isIncludeString(filename, picture);
+    }
+
+    /**
+     * 判断是否为可播放文件
+     *
+     * @param filename 文件名
+     * @return
+     */
+    public static boolean isplay(Context context,String filename) {
+        String[] play = context.getResources().getStringArray(R.array.play);
+        return isIncludeString(filename, play);
+    }
+
+    /**
+     * 是否是音乐文件
+     * @param filename 文件名
+     * @return 如果是返回true，否则返回FALSE。
+     */
+    public  static boolean isMusic(Context context,String filename) {
+        String[] music = context.getResources().getStringArray(R.array.music);
+        return isIncludeString(filename, music);
     }
 }

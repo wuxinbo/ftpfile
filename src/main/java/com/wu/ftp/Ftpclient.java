@@ -48,15 +48,13 @@ public class Ftpclient {
 	/**
 	 *  对连接FTP服务器进行封装。
 	 * @param ftp
-	 * @param url
-	 * @param password
-	 * @param username
+	 * @param user 用户信息。
 	 * @return
 	 */
-	public static FTPFile []  Login(FTPClient ftp,String url,String password,String username )throws SocketException,IOException{
+	public static FTPFile []  Login(FTPClient ftp,UserInfo user )throws SocketException,IOException{
 		FTPFile[] files =null;
-            ftp.connect(url);
-			islogin=ftp.login(username, password);
+            ftp.connect(user.getUrl());
+			islogin=ftp.login(user.getUsername(), user.getPassword());
 			files = ftp.listFiles("");
 		return files;
 		

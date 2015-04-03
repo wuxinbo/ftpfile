@@ -25,12 +25,13 @@ public class DataBaseUtil extends SQLiteOpenHelper{
     public final static String HOST_NAME="host_name";//主机名
     public final static String ENCODING="encoding";//编码
     public final static String CURRENT_USER="current_user";//当前用户
+    public final static String PORT="port";//端口号
     /**
      * userinfo表对应的列集合。
      */
     public final static String[] USER_INFO_COLUMNS= new String []{UESR_NAME,PASSWORD,LOGIN_TIME,
-                                                                       HOST_NAME,ENCODING,CURRENT_USER};
-//    public final static String PORT="port";
+                                                                       HOST_NAME,ENCODING,CURRENT_USER,PORT};
+
     public DataBaseUtil(Context context, String name, SQLiteDatabase.CursorFactory factory,
                         int version) {
         super(context, name, factory, version);
@@ -47,6 +48,15 @@ public class DataBaseUtil extends SQLiteOpenHelper{
     }
 
     /**
+     * 删除主机名字为null的数据。
+     */
+    public  void deleteUserInfo(){
+        SQLiteDatabase db =getWritableDatabase();
+//        db.delete(Constant.TABLE_NAME,HOST_NAME+" is null",null);
+        db.delete(Constant.TABLE_NAME,HOST_NAME+" = ?",new String[]{"192.168.1.106"});
+        db.close();
+    }
+    /**
      * 得到DataBaseUtil实例。
      * @param context 上下文环境
      * @return 实例的DataBaseUtil
@@ -61,7 +71,15 @@ public class DataBaseUtil extends SQLiteOpenHelper{
      */
     public  void saveUserInfo(UserInfo user){
         SQLiteDatabase db=getWritableDatabase();
-        db.insert(Constant.TABLE_NAME,null,getContentValues(user));
+        int count =selectUserInfo(Constant.TABLE_NAME,HOST_NAME,user.getUrl());//查询是否有用户信息
+        if (count==0){//没有就插入一条数据。
+            db.insert(Constant.TABLE_NAME,null,getContentValues(user));
+        }else{//更新数据
+            db.update(Constant.TABLE_NAME, getContentValues(user), HOST_NAME + " = ?", new String[]{user.getUrl()});
+        }
+        UserInfo userInfo =new UserInfo();
+        userInfo.setCurrentUser("0");//用户把其他用户改为不是当前用户。
+        db.update(Constant.TABLE_NAME,getContentValues(userInfo), HOST_NAME + " != ?",new String[]{user.getUrl()});//更新原来的用户信息
         db.close();
     }
 
@@ -72,7 +90,7 @@ public class DataBaseUtil extends SQLiteOpenHelper{
     public  UserInfo getUserInfoFromDataBase(){
         SQLiteDatabase db =getWritableDatabase();
         Cursor cursor = getquerycursor(db,Constant.TABLE_NAME,
-                USER_INFO_COLUMNS,null,null,null,null,null);
+                USER_INFO_COLUMNS,CURRENT_USER+" = ?",new String[]{"1"},null,null,null);
         UserInfo user =new UserInfo();
         if (cursor.moveToFirst()){//将游标移到第一位。
         user.setUsername(cursor.getString(cursor.getColumnIndex(UESR_NAME)));
@@ -91,12 +109,22 @@ public class DataBaseUtil extends SQLiteOpenHelper{
      */
     public static ContentValues getContentValues(UserInfo user){
         ContentValues values =new ContentValues();
-        values.put(DataBaseUtil.UESR_NAME,user.getUsername());
-        values.put(DataBaseUtil.PASSWORD,user.getPassword());
-        values.put(DataBaseUtil.HOST_NAME,user.getUrl());
-        values.put(DataBaseUtil.ENCODING,user.getEncoding());
+        if (user.getUsername()!=null&&!user.getUsername().equals("")){
+            values.put(DataBaseUtil.UESR_NAME,user.getUsername());
+        }if (user.getUrl()!=null&&!user.getUrl().equals("")){
+            values.put(DataBaseUtil.HOST_NAME,user.getUrl());
+        }if (user.getPassword()!=null&&!user.getPassword().equals("")){
+            values.put(DataBaseUtil.PASSWORD,user.getPassword());
+        }
+        if (user.getEncoding()!=null&&!user.getEncoding().equals("")){
+            values.put(DataBaseUtil.ENCODING,user.getEncoding());
+        }
+        if (user.getPort()!=null&&!user.getPort().equals("")){
+            values.put(DataBaseUtil.PORT,user.getPort());
+        }if (user.getLoginTime()!=null){
+            values.put(DataBaseUtil.LOGIN_TIME,user.getLoginTime().toString());//获取当前时间作为登录时间。
+        }
         values.put(DataBaseUtil.CURRENT_USER,user.isCurrentUser());
-        values.put(DataBaseUtil.LOGIN_TIME,new Date().toString());//获取当前时间作为登录时间。
         return values;
     }
 
@@ -124,20 +152,19 @@ public class DataBaseUtil extends SQLiteOpenHelper{
 
     /**
      * 查询是否有该用户。
-     * @param context 上下文环境
      * @param tableName 表名
      * @param select 查询条件（字段）
      * @param where 查询参数（值）
      * @return 如果有改用户返回查询记录数，否则返回0
      */
-    public static int selectUserInfo(Context context,String tableName,String select,String where){
-        DataBaseUtil dbHelper = getdataHelper(context);
+    public  int selectUserInfo(String tableName,String select,String where){
+        SQLiteDatabase db = getWritableDatabase();
         String sql = "SELECT count(*) FROM "+tableName+" WHERE "+select+" = '"+where+"'; ";
-        SQLiteDatabase db = dbHelper.getReadableDatabase();
         Cursor cursor=db.rawQuery(sql,null);
         if (cursor.moveToFirst()){
             return cursor.getInt(0);
         }
+        db.close();
         return 0;
     }
     /**

@@ -41,21 +41,20 @@ public class AsyncConnectServer extends AsyncTask<UserInfo, List<FileInfo>, FTPC
         FTPClient ftp = Ftpclient.initFTP();
         FTPFile[] files = null;
         try {
-            files = Ftpclient.Login(ftp,
-                    user.getUrl(),
-                    user.getPassword(),
-                    user.getUsername());
+            files = Ftpclient.Login(ftp,user);
             Log.d("replay",String.valueOf(ftp.getReplyCode()));
             FileInfoActivity fileInfoActivity = (FileInfoActivity) context;
             fileInfoActivity.getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER)
                     .setPath(ftp.printWorkingDirectory());//设置服务器上面的路径。
         } catch (SocketException e) {
             Log.e("SocketException",e.getMessage());
-            publishProgress(null);
+            List<FileInfo> fileInfos =null;
+            publishProgress(fileInfos);
             return ftp;
         } catch (IOException e) {
             Log.e("IOException",e.getMessage());
-            publishProgress(null);
+            List<FileInfo> fileInfos =null;
+            publishProgress(fileInfos);
             return ftp;
         }
         List<FileInfo> fileinfos = FileInfo.getFileInfoList(files, "");//设定初始目录。
