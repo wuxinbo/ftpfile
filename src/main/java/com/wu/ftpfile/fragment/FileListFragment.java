@@ -1,5 +1,6 @@
 package com.wu.ftpfile.fragment;
 
+import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.BaseAdapter;
@@ -34,8 +35,16 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
      * 用于显示路径的
      */
     protected TextView path_view;
+    /**
+     * 页面加载对话框。
+     */
+    protected ProgressDialog loadDialog;
 
-//    private String tag="FileListFragment";
+    public ProgressDialog getLoadDialog() {
+        return loadDialog;
+    }
+
+    //    private String tag="FileListFragment";
     public  void updatelist(List<FileInfo> fileinfo){
         if (fileinfos.size() > 0) {
             fileinfos.clear();

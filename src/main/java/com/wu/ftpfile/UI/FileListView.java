@@ -52,14 +52,15 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
      * 本地文件路径。
      */
     private StringBuffer localPath = null;
-//    /**
-//     * 第一次得到对象。
-//     */
-//    public static boolean isfirstRead = true;
     /**
      * 菜单选项对话框。
      */
-    private AlertDialog.Builder menuBuilder;
+    private AlertDialog menuDialog;
+
+    public AlertDialog getMenuDialog() {
+        return menuDialog;
+    }
+
 
     public FileListView(Context context) {
         super(context);
@@ -79,9 +80,7 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
         this.fileinfos = fileinfos;
     }
 
-    public AlertDialog.Builder getMenuBuilder() {
-        return menuBuilder;
-    }
+
 
     /**
      * 点击事件监听器。
@@ -255,9 +254,9 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
      */
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        menuBuilder =new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
-
-        menuBuilder.setView(View.inflate(context,R.layout.grid_menu_layout,null)).create().show();
+        AlertDialog.Builder  menuBuilder =new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
+        menuDialog = menuBuilder.setView(View.inflate(context,R.layout.grid_menu_layout,null)).setTitle("操作").create();
+        menuDialog.show();
         return true;
     }
 }

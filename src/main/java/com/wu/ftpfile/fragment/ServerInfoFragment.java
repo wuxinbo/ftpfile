@@ -1,6 +1,9 @@
 package com.wu.ftpfile.fragment;
 
+import android.app.ProgressDialog;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -51,6 +54,7 @@ public class ServerInfoFragment extends FileListFragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.activity_fileinfo,container,false);
         initview(view);
+        loadDialog = ProgressDialog.show(ACTIVITY, "", "加载中");
         startAction();
         return view;
     }
@@ -74,11 +78,14 @@ public class ServerInfoFragment extends FileListFragment  {
             {   /*wifi已经打开。
                 判断WiFi是否连接到网络。，没有连接到网络不进行操作。
                 */
-                if (wifiInfo.getBSSID()==null){
+                ConnectivityManager connectivityManager =(ConnectivityManager) getActivity().
+                        getSystemService(getActivity().CONNECTIVITY_SERVICE);
+               NetworkInfo info= connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                if (info.isConnected()){
+                    conenctserver();
+                }else{
                     ACTIVITY.print(R.string.network_err);
                     break;
-                }else{
-                    conenctserver();
                 }
 
             }

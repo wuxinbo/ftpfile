@@ -1,7 +1,10 @@
 package com.wu.ftpfile.activity;
 
+import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -66,7 +69,6 @@ public class FileInfoActivity extends MyfragmentActivity {
      * </ul>
      */
     private int fragmnetnumber;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,10 +156,10 @@ public class FileInfoActivity extends MyfragmentActivity {
         initnavbar();
         server_img = (ImageView) findViewById(R.id.server_img);
         fileViewpage = (ViewPager) findViewById(R.id.fileviewpager);
+
     }
 
     protected void initactivity() {
-//        localimgview=(ImageView)findViewById(R.id.local_img);
         initview();
         setview();
     }
@@ -255,19 +257,32 @@ public class FileInfoActivity extends MyfragmentActivity {
     }
 
     /**
+     * 得到fragment实例。
+     * @return FileListFragment
+     */
+    public FileListFragment getFragmentInstance(){
+        if (isFragmentByFragmennumber()){
+            return getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER);
+        }else{
+            return getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER);
+        }
+    }
+    /**
      * 菜单点击处理事件。
      * @param v
      */
     public void clickMenuView (View v){
         Log.d("click",((TextView)v).getText().toString());
         FileListFragment fragment=null;
-        if (isFragmentByFragmennumber()){
-             fragment =getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER);
-        }else{
-            fragment =getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER);
-        }
-        DialogFragment dialogFragment =new DialogFragment();
-
+        /*
+        判断属于哪个fragment，在进行销毁。
+         */
+       if (isFragmentByFragmennumber()){
+           fragment = getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER);
+       }else{
+           fragment = getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER);
+       }
+        fragment.getFileListView().getMenuDialog().dismiss();//销毁菜单选项对话框。
     }
     /**
      * 采用了新的办法获取APK图标，之前的失败是因为android中存在的一个BUG,通过

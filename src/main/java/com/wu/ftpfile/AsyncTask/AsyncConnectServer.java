@@ -28,11 +28,11 @@ import java.util.List;
  */
 public class AsyncConnectServer extends AsyncTask<UserInfo, List<FileInfo>, FTPClient> {
     private FileListView filelistview = null;
-    private Context context;
+    private FileInfoActivity fileInfoActivity=null;
 
     public AsyncConnectServer(FileListView listview, Context context) {
         filelistview = listview;
-        this.context = context;
+        fileInfoActivity = (FileInfoActivity)context;
     }
 
     @Override
@@ -43,7 +43,6 @@ public class AsyncConnectServer extends AsyncTask<UserInfo, List<FileInfo>, FTPC
         try {
             files = Ftpclient.Login(ftp,user);
             Log.d("replay",String.valueOf(ftp.getReplyCode()));
-            FileInfoActivity fileInfoActivity = (FileInfoActivity) context;
             fileInfoActivity.getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER)
                     .setPath(ftp.printWorkingDirectory());//设置服务器上面的路径。
         } catch (SocketException e) {
@@ -69,10 +68,9 @@ public class AsyncConnectServer extends AsyncTask<UserInfo, List<FileInfo>, FTPC
      */
     @Override
     protected void onProgressUpdate(List<FileInfo>... values) {
+        fileInfoActivity.getFragmentInstance().getLoadDialog().dismiss();
         if (values==null){
-            FileInfoActivity fileInfoActivity = (FileInfoActivity) context;
             fileInfoActivity.print(R.string.net_err);//用toast消息机制提示用户网络故障。
-
         }else{
             filelistview.updateListVIew(values[0]);
         }
@@ -80,7 +78,7 @@ public class AsyncConnectServer extends AsyncTask<UserInfo, List<FileInfo>, FTPC
 
     @Override
     protected void onPostExecute(FTPClient ftpClient) {
-        ((FileInfoActivity) context).ftp = ftpClient;
+        fileInfoActivity.ftp = ftpClient;
     }
 }
 

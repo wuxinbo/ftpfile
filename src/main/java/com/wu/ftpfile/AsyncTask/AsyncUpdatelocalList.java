@@ -3,6 +3,7 @@ package com.wu.ftpfile.AsyncTask;
 import android.os.AsyncTask;
 
 import com.wu.ftpfile.UI.FileListView;
+import com.wu.ftpfile.activity.FileInfoActivity;
 import com.wu.ftpfile.model.Constant;
 import com.wu.ftpfile.model.FileInfo;
 import com.wu.ftpfile.utils.Fileutil;
@@ -15,9 +16,10 @@ import java.util.List;
  */
 public class AsyncUpdatelocalList extends AsyncTask<String,List<FileInfo>,Void> {
     private FileListView filelistview =null;
-
+    private FileInfoActivity fileInfoActivity=null;
     public AsyncUpdatelocalList(FileListView filelistview) {
         this.filelistview = filelistview;
+        fileInfoActivity = (FileInfoActivity) filelistview.getContext();
     }
 
     @Override
@@ -31,5 +33,6 @@ public class AsyncUpdatelocalList extends AsyncTask<String,List<FileInfo>,Void> 
     protected void onProgressUpdate(List<FileInfo>... values) {
         List<FileInfo> files=values[0];
         filelistview.updateListVIew(files);
+//        fileInfoActivity.getFragmentInstance().getLoadDialog().dismiss();
     }
 }
