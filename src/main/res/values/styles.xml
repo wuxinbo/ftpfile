@@ -28,11 +28,10 @@
         <item name="android:progressDrawable">@drawable/progress</item>
     </style>
     <style name="menu">
-        <item name="android:height">50dp</item>
-        <item name="android:width">120dp</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">150dp</item>
         <item name="android:clickable">true</item>
         <item name="android:gravity">center</item><!--文字居中 -->
-        <item name="android:layout_margin">0.1dp</item>
         <item name="android:background">#fff</item>
         <item name="android:onClick">clickMenuView</item>
     </style>
