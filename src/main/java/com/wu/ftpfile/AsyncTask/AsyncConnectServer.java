@@ -3,10 +3,9 @@ package com.wu.ftpfile.AsyncTask;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ListView;
 
-import com.wu.ftp.Ftpclient;
-import com.wu.ftp.UserInfo;
+import com.wu.ftpfile.model.Ftpclient;
+import com.wu.ftpfile.model.UserInfo;
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.UI.FileListView;
 import com.wu.ftpfile.activity.FileInfoActivity;
@@ -18,8 +17,6 @@ import org.apache.commons.net.ftp.FTPFile;
 
 import java.io.IOException;
 import java.net.SocketException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

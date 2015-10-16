@@ -1,6 +1,6 @@
 package com.wu.ftpfile.Interface;
 
-import com.wu.ftp.UserInfo;
+import com.wu.ftpfile.model.UserInfo;
 
 /**
  * Created by wuxinbo on 2014/10/11.

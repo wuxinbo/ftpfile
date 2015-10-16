@@ -40,7 +40,6 @@ import java.io.File;
  * @author wuxinbo
  */
 public class FileInfoActivity extends MyfragmentActivity {
-    //	private ProgressBar pga;
     private ImageView localimgview;
     /**
      * 存放目录

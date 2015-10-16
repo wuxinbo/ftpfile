@@ -1,10 +1,9 @@
-package com.wu.ftp;
+package com.wu.ftpfile.model;
 
 import java.io.Serializable;
 import java.util.Date;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 

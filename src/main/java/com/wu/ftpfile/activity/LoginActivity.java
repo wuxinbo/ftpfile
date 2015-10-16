@@ -3,12 +3,11 @@ package com.wu.ftpfile.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 
-import com.wu.ftp.UserInfo;
+import com.wu.ftpfile.model.UserInfo;
 import com.wu.ftpfile.Implment.LoginIpl;
 import com.wu.ftpfile.Interface.preLoginlistener;
 import com.wu.ftpfile.R;

@@ -30,6 +30,8 @@
     <string name="sure_Exit">你确定是否退出应用？</string>
     <string name="sure">确定</string>
     <string name="cancel">取消</string>
+    <string name="save">保存</string>
+
     <!-- 关于界面 -->
     <string name="weibo_link">http://weibo.com/wuxincaiaaa</string>
     <!-- 用户界面-->

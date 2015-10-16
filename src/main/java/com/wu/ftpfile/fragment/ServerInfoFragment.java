@@ -1,19 +1,17 @@
 package com.wu.ftpfile.fragment;
 
 import android.app.ProgressDialog;
-import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.wu.ftp.UserInfo;
+import com.wu.ftpfile.model.UserInfo;
 import com.wu.ftpfile.AsyncTask.AsyncConnectServer;
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.activity.FileInfoActivity;
@@ -73,6 +71,7 @@ public class ServerInfoFragment extends FileListFragment  {
             case WifiManager.WIFI_STATE_DISABLED:
                 //提示用户当前网络不可用。
                 ACTIVITY.print(R.string.network_err);
+                loadDialog.dismiss(); //销毁进度条对话框。
                 break;
             case WifiManager.WIFI_STATE_ENABLED:
             {   /*wifi已经打开。
@@ -85,6 +84,7 @@ public class ServerInfoFragment extends FileListFragment  {
                     conenctserver();
                 }else{
                     ACTIVITY.print(R.string.network_err);
+                    loadDialog.dismiss();
                     break;
                 }
 

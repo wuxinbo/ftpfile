@@ -1,12 +1,10 @@
 package com.wu.ftpfile.activity;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wu.ftp.UserInfo;
 import com.wu.ftpfile.R;
 
 public abstract class MyActivity extends Activity {
@@ -48,9 +46,6 @@ public abstract class MyActivity extends Activity {
     protected   void initnavbar(){
         nav_settext = (android.widget.TextView) findViewById(R.id.nav_setting);
         nav_title   = (android.widget.TextView) findViewById(R.id.nav_title);
-    }
-    protected  void initUserinfo(){
-
     }
 
 }
