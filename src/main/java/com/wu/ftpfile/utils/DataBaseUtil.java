@@ -6,10 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.wu.ftp.UserInfo;
+import com.wu.ftpfile.model.UserInfo;
 import com.wu.ftpfile.model.Constant;
-
-import java.util.Date;
 
 /**
  * 封装SQLite数据库的常用操作。
@@ -52,7 +50,6 @@ public class DataBaseUtil extends SQLiteOpenHelper{
      */
     public  void deleteUserInfo(){
         SQLiteDatabase db =getWritableDatabase();
-//        db.delete(Constant.TABLE_NAME,HOST_NAME+" is null",null);
         db.delete(Constant.TABLE_NAME,HOST_NAME+" = ?",new String[]{"192.168.1.106"});
         db.close();
     }
@@ -66,7 +63,7 @@ public class DataBaseUtil extends SQLiteOpenHelper{
         return  dataHelper;
     }
     /**
-     * 保存用户信息岛数据表。
+     * 保存用户信息到数据表。
      * @param user 封装了用户信息的Userinfo。
      */
     public  void saveUserInfo(UserInfo user){

@@ -3,10 +3,8 @@ package com.wu.ftpfile.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.DatabaseUtils;
 import android.os.Bundle;
 
-import com.wu.ftp.UserInfo;
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.model.Constant;
 import com.wu.ftpfile.utils.DataBaseUtil;

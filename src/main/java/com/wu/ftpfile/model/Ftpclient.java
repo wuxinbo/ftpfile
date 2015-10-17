@@ -1,6 +1,4 @@
-package com.wu.ftp;
-
-import android.util.Log;
+package com.wu.ftpfile.model;
 
 import com.wu.ftpfile.utils.Fileutil;
 
@@ -13,7 +11,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.SocketException;
 
-import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;

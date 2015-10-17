@@ -1,12 +1,10 @@
 package com.wu.ftpfile.Implment;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.wu.ftp.UserInfo;
+import com.wu.ftpfile.model.UserInfo;
 import com.wu.ftpfile.Interface.Loginclicklistener;
 import com.wu.ftpfile.activity.LoginActivity;
-import com.wu.ftpfile.exception.FTPconnectException;
 
 /**
  * Created by wuxinbo on 2014/10/11.
