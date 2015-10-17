@@ -45,8 +45,6 @@ public class ServerInfoFragment extends FileListFragment  {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ACTIVITY=(FileInfoActivity)getActivity();
-//        nav_title= (TextView) ACTIVITY.findViewById(R.id.nav_title);
-//        nav_title.setText("服务器");
     }
 
 
@@ -55,6 +53,7 @@ public class ServerInfoFragment extends FileListFragment  {
         View view =inflater.inflate(R.layout.activity_fileinfo,container,false);
         initview(view);
         loadDialog = ProgressDialog.show(ACTIVITY, "", "加载中");
+        loadDialog.setView(LayoutInflater.from(ACTIVITY).inflate(R.layout.load_dialog,null));
         startAction();
         return view;
     }

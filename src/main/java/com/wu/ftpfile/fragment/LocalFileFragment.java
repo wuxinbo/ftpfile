@@ -39,15 +39,4 @@ public class LocalFileFragment extends FileListFragment {
         updatelocalList.execute(Constant.SD_ROOT_PATH);
     }
 
-
-//    @Override
-//    public void initFilelist(View view) {
-//        filelistview= (com.wu.ftpfile.UI.FileListView) view.findViewById(R.id.local_listView);
-//        filelistview.setlistener(this);
-//    }
-
-//    @Override
-//    public void setadapter() {
-//        filelistview.setAdapter(listItemAdapter);
-//    }
 }

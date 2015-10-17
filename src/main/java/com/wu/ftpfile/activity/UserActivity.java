@@ -28,7 +28,7 @@ public class UserActivity extends MyActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.userinfo_layout);
+        setContentView(R.layout.user_layout);
         initactivity();
     }
 
