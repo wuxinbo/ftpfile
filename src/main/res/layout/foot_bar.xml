@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<!--程序底部-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="70dp">
+
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="70dp">
-        <ImageView
-            android:id="@+id/foot_background"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:background="#fff"
-            android:layout_alignParentBottom="true"/>
-        <ImageView
-            android:id="@+id/local_img"
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="30dp"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/local_nomal"
-            />
-        <ImageView
-            android:id="@+id/server_img"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="30dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/server_pressed"
-            />
-    </RelativeLayout>
+        android:layout_height="2dp"
+        android:background="#86b6dc" />
+
+    <ImageView
+        android:id="@+id/foot_background"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#fff"
+        android:layout_alignParentBottom="true" />
+
+    <ImageView
+        android:id="@+id/local_img"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/local_nomal" />
+
+    <ImageView
+        android:id="@+id/server_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+        android:layout_centerVertical="true"
+        android:src="@drawable/server_pressed" />
+</RelativeLayout>

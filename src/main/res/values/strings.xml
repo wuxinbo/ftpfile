@@ -19,10 +19,23 @@
     <string name="download">下载</string>
     <string name="not_null">所填信息不能为空！</string>
     <string name="title_local">本地文件</string>
+    <string name="net_err">不能连接到服务器，请检查网络！</string>
+    <string name="upload">上传</string>
+    <string name="cut">剪切</string>
+    <string name="copy">复制</string>
+    <string name="paste">粘贴</string>
     <!-- 设置界面 -->
     <string name="action_settings">设置</string>
     <string name="title_activity_main">服务器</string>
+    <string name="sure_Exit">你确定是否退出应用？</string>
+    <string name="sure">确定</string>
+    <string name="cancel">取消</string>
+    <string name="save">保存</string>
+
     <!-- 关于界面 -->
     <string name="weibo_link">http://weibo.com/wuxincaiaaa</string>
-
+    <!-- 用户界面-->
+    <string name="addUser">新增账号</string>
+    <string name="exit_current_User">注销当前账号</string>
+    <string name="userInfo">用户信息</string>
 </resources>

@@ -19,6 +19,9 @@
     <string name="not_null">infomation not null！</string>
     <string name="title_local">SDFile</string>
     <string name="network_err">当前网络不可用，不能连接服务器！</string>
+    <string name="sure_Exit">Are you sure Exit Application?</string>
+    <string name="sure">continue</string>
+    <string name="cancel">cancel</string>
     <!-- about-->
     <string name="weibo_link">http://weibo.com/wuxincaiaaa</string>
 </resources>

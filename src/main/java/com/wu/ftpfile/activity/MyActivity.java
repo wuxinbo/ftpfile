@@ -1,12 +1,10 @@
 package com.wu.ftpfile.activity;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.wu.ftp.UserInfo;
 import com.wu.ftpfile.R;
 
 public abstract class MyActivity extends Activity {
@@ -36,24 +34,6 @@ public abstract class MyActivity extends Activity {
 				LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 	}
 
-    /**
-     * 将用户信息保存在本地，
-     * @param user 用户信息
-     */
-    protected void saveuserinfo(UserInfo user) {
-        SharedPreferences userinfo=getSharedPreferences("userinfo",1);
-        SharedPreferences.Editor edit =userinfo.edit();
-        if (!UserInfo.userIsNull(user)){
-        edit.putString("url",user.getUrl());
-        edit.putString("username",user.getUsername());
-        edit.putString("pwd",user.getPassword());
-        edit.commit();
-        }
-        else{
-            print(R.string.not_null);
-        }
-    }
-
     protected abstract void setview();
     protected abstract void initview();
     /**
@@ -66,9 +46,6 @@ public abstract class MyActivity extends Activity {
     protected   void initnavbar(){
         nav_settext = (android.widget.TextView) findViewById(R.id.nav_setting);
         nav_title   = (android.widget.TextView) findViewById(R.id.nav_title);
-    }
-    protected  void initUserinfo(){
-
     }
 
 }

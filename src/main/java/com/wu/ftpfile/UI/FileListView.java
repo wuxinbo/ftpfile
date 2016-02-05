@@ -1,5 +1,6 @@
 package com.wu.ftpfile.UI;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -19,41 +20,47 @@ import com.wu.ftpfile.activity.FileInfoActivity;
 import com.wu.ftpfile.fragment.FileListFragment;
 import com.wu.ftpfile.model.Constant;
 import com.wu.ftpfile.model.FileInfo;
+import com.wu.ftpfile.utils.Fileutil;
 
 import java.io.File;
 import java.util.List;
 
 /**
+ * 自定义Listview用来封装显示数据。
  * Created by wuxinbo on 2014/10/21.
  */
-public class FileListView extends ListView implements AdapterView.OnItemClickListener {
+public class FileListView extends ListView implements AdapterView.OnItemClickListener,
+                                                        AdapterView.OnItemLongClickListener {
     /**
      * 上下文环境
      */
     private static Context context;
     private static final String tag = "IFlelistview";
     private UpdatelistViewIn updatelistview = null;
-    private  FileInfoActivity fileInfoActivity;
+    private FileInfoActivity fileInfoActivity;
     /**
      * serverfileinfofragmnet实例
      */
     private FileListFragment serverfileListFragment;
     private FileListFragment LocalfileListFragment;
-    //    private static  SQLiteDatabase db=null;
-//    private static DataBaseUtil dbhelper =null;
     private List<FileInfo> fileinfos = null;
     /**
      * 服务器上的文件路径
      */
-    private StringBuffer serverpath = null;
+    private StringBuffer serverPath = null;
     /**
      * 本地文件路径。
      */
-    private StringBuffer localpath = null;
+    private StringBuffer localPath = null;
     /**
-     * 第一次得到对象。
+     * 菜单选项对话框。
      */
-    public static boolean isfirstRead = true;
+    private AlertDialog menuDialog;
+
+    public AlertDialog getMenuDialog() {
+        return menuDialog;
+    }
+
 
     public FileListView(Context context) {
         super(context);
@@ -73,23 +80,38 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
         this.fileinfos = fileinfos;
     }
 
+
+
+    /**
+     * 点击事件监听器。
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         final FileInfo fileinfo = fileinfos.get(position);
-        final int fragmentnumber=((FileInfoActivity) context).getFragmnetnumber();
-        serverpath = new StringBuffer(serverfileListFragment.getPath());
-        localpath = new StringBuffer(LocalfileListFragment.getPath());
-        serverpath = serverpath.append(File.separator
+        final int fragmentnumber = ((FileInfoActivity) context).getFragmnetnumber();
+        serverPath = new StringBuffer(serverfileListFragment.getPath()); //得到服务器上的文件路径
+        localPath = new StringBuffer(LocalfileListFragment.getPath());//得到本地文件的路径。
+        serverPath = serverPath.append(File.separator
                 + fileinfo.getFilename());
-        if (fragmentnumber==Constant.SERVERFILE_FRAGMNET_NUMBER){
+        /*
+        如果是当前是服务器fragment,就显示服务器上面的文件。
+         */
+        if (fragmentnumber == Constant.SERVERFILE_FRAGMNET_NUMBER) {
             if (fileinfo.getIsdir() == 1) {
-                gotoDir(serverpath.toString());
+                gotoDir(serverPath.toString());
             } else {
                 final Button btn_download = (Button) view.findViewById(R.id.download_btn);
                 final ProgressBar bar_download = (ProgressBar) view.findViewById(R.id.download_probar);
                 btn_download.setVisibility(View.VISIBLE);
                 bar_download.setVisibility(View.VISIBLE);
-                fileinfo.setFilepath(serverpath.toString());
+                fileinfo.setFilepath(serverPath.toString());
+                /*
+                下载按钮监听器执行方法。
+                 */
                 btn_download.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -100,25 +122,28 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
                     }
                 });
             }
-        }else{
-            String path=((FileInfoActivity) context).getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER).getPath();
-            localpath.append(File.separator+fileinfo.getFilename());
-            if (fileinfo.getIsdir() == 1){
-                gotoDir(localpath.toString());
+        } else {
+            /*
+            进入本地文件
+             */
+            String path = ((FileInfoActivity) context).getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER).getPath();
+            localPath.append(File.separator + fileinfo.getFilename());
+            if (fileinfo.getIsdir() == 1) {
+                gotoDir(localPath.toString());
             } else {
-                clickfile(localpath.toString());
+                clickfile(localPath.toString());
             }
 
         }
-            serverpath=null;
-            localpath=null;
+        serverPath = null;
+        localPath = null;
 
     }
 
     /**
      * 根据传入的路径,进入相应的目录。
      */
-    private void gotoDir(String path ){
+    private void gotoDir(String path) {
         AsyncUpdatelist updatelist = new AsyncUpdatelist(this, context);
         updatelist.execute(path);
 
@@ -135,7 +160,8 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
         LocalfileListFragment = fileInfoActivity.getFragmentInstance(
                 Constant.LOCALFILE_FRAGMNET_NUMBER);
 
-        setOnItemClickListener(this);
+        setOnItemClickListener(this);//绑定点击事件。
+        setOnItemLongClickListener(this); //绑定长按事件监听器
     }
 
     /**
@@ -168,7 +194,7 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
         String fileInfo = file.getFilename();
         if (file.getIsdir() == 1) {
             file.setFile_pic(R.drawable.dir);
-        } else if (isplay(fileInfo)) {
+        } else if (Fileutil.isplay(context, fileInfo)) {
             file.setFile_pic(R.drawable.play);
         } else if (fileInfo.endsWith("mp3")) {
             file.setFile_pic(R.drawable.mp3);
@@ -178,12 +204,12 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
             file.setFile_pic(R.drawable.xls);
         } else if (fileInfo.endsWith("exe")) {
             file.setFile_pic(R.drawable.exe);
-        } else if (isZIP(fileInfo)) {
+        } else if (Fileutil.isZIP(context,fileInfo)) {
             file.setFile_pic(R.drawable.zip);
-        } else if (ispicture(fileInfo)) {
+        } else if (Fileutil.ispicture(context, fileInfo)) {
             file.setHeadimg(FileInfo.getdrawable(file.getFilepath()));
             file.setFile_pic(0);
-        } else if (isApk(fileInfo)) {
+        } else if (Fileutil.isApk(fileInfo)) {
             file.setIcon(FileInfoActivity.getApkIcon(context, file.getFilepath()));
             file.setFile_pic(0);
         } else {
@@ -193,73 +219,45 @@ public class FileListView extends ListView implements AdapterView.OnItemClickLis
     }
 
     /**
-     * 判断是否为可播放文件
-     *
-     * @param filename 文件名
-     * @return
-     */
-    private static boolean isplay(String filename) {
-        String[] play = context.getResources().getStringArray(R.array.play);
-        return isIncludeString(filename, play);
-    }
-
-    /**
-     * 从给定的数组中寻找str。
-     *
-     * @param str  需要查询的string
-     * @param play 需要查询的数组
-     * @return 如果数组中某个字符串以str结尾则返回TRUE，如果没有符合条件的返回false。
-     */
-    private static boolean isIncludeString(String str, String[] play) {
-        for (String name : play) {
-            if (str.endsWith(name)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private static boolean isZIP(String filename) {
-        String[] zip = context.getResources().getStringArray(R.array.zip);
-        return isIncludeString(filename, zip);
-    }
-
-    private static boolean isMusic(String filename) {
-        String[] music = context.getResources().getStringArray(R.array.music);
-        return isIncludeString(filename, music);
-    }
-
-    private static boolean ispicture(String filename) {
-        String[] picture = context.getResources().getStringArray(R.array.picture);
-        return isIncludeString(filename, picture);
-    }
-
-    /**
-     * 判断是否是apk安装文件
-     *
-     * @param filename 文件名
-     * @return 如果是apk文件返回true，否则返回flase。
-     */
-    private static boolean isApk(String filename) {
-        if (filename.endsWith("apk")) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * 当点击本地可识别文件执行相应的操作。
      */
     private void clickfile(String filepath) {
         Intent intent = new Intent(Intent.ACTION_VIEW);
-        if (isMusic(filepath)) {
+        if (Fileutil.isMusic(context, filepath)) {
             intent.setDataAndType(Uri.parse(filepath), "audio/mp3");
-        } else if (isplay(filepath)) {
+//            intent.setComponent(new ComponentName("com.android.music",
+//                    "com.android.music.MediaPlaybackActivity"));
+        } else if (Fileutil.isplay(context, filepath)) {
             intent.setDataAndType(Uri.parse(filepath), "video/mp4");
-        } else if (ispicture(filepath)) {
-            intent.setDataAndType(Uri.parse(filepath), "image/jpeg");
+        } else if (Fileutil.ispicture(context,filepath)) {
+//            ComponentName com =new ComponentName("com.android.gallery",
+//                    "com.android.camera.GalleryPicker");
+//            intent.setComponent(com);
+            intent.setDataAndType(Uri.parse(filepath), "image/*");
+        } else if (Fileutil.isApk(filepath)) {
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//            ComponentName com = new ComponentName(Constant.PACKAGENAME_INSTALLER,
+//                    Constant.PACKAGENAME_INSTALLER_ACTIVITY);
+//            intent.setComponent(com);
+//            intent.setDataAndType(Uri.parse(filepath), Constant.APK_INSTALL_DATATYPE);
         }
         context.startActivity(intent);
+    }
+
+    /**
+     * listview 长按点击事件。
+     * @param parent
+     * @param view
+     * @param position
+     * @param id
+     * @return
+     */
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        AlertDialog.Builder  menuBuilder =new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_LIGHT);
+        menuDialog = menuBuilder.setView(View.inflate(context,R.layout.grid_menu_layout,null)).setTitle("操作").create();
+        menuDialog.show();
+        return true;
     }
 }
 

@@ -1,6 +1,9 @@
 package com.wu.ftpfile.fragment;
 
-import android.content.SharedPreferences;
+import android.app.ProgressDialog;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,10 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.wu.ftp.UserInfo;
+import com.wu.ftpfile.model.UserInfo;
 import com.wu.ftpfile.AsyncTask.AsyncConnectServer;
 import com.wu.ftpfile.R;
 import com.wu.ftpfile.activity.FileInfoActivity;
+import com.wu.ftpfile.utils.DataBaseUtil;
 
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -34,14 +38,11 @@ public class ServerInfoFragment extends FileListFragment  {
      * 服务器上的目录路径
      */
     private TextView nav_title;
-//    private FileListView filelistview;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ACTIVITY=(FileInfoActivity)getActivity();
-//        nav_title= (TextView) ACTIVITY.findViewById(R.id.nav_title);
-//        nav_title.setText("服务器");
     }
 
 
@@ -49,6 +50,8 @@ public class ServerInfoFragment extends FileListFragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =inflater.inflate(R.layout.activity_fileinfo,container,false);
         initview(view);
+        loadDialog = ProgressDialog.show(ACTIVITY, "", "加载中");
+        loadDialog.setView(LayoutInflater.from(ACTIVITY).inflate(R.layout.load_dialog,null));
         startAction();
         return view;
     }
@@ -61,52 +64,41 @@ public class ServerInfoFragment extends FileListFragment  {
     private void startAction() {
         WifiManager manager = (WifiManager) getActivity().getSystemService(ACTIVITY.WIFI_SERVICE);
         int i = manager.getWifiState();
+        WifiInfo wifiInfo = manager.getConnectionInfo();
+
         switch (i){
             case WifiManager.WIFI_STATE_DISABLED:
                 //提示用户当前网络不可用。
                 ACTIVITY.print(R.string.network_err);
+                loadDialog.dismiss(); //销毁进度条对话框。
                 break;
             case WifiManager.WIFI_STATE_ENABLED:
-            {   //wifi已经打开。
-                ACTIVITY.print(R.string.network_normal);
-                conenctserver();
-                break;
+            {   /*wifi已经打开。
+                判断WiFi是否连接到网络。，没有连接到网络不进行操作。
+                */
+                ConnectivityManager connectivityManager =(ConnectivityManager) getActivity().
+                        getSystemService(getActivity().CONNECTIVITY_SERVICE);
+               NetworkInfo info= connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+                if (info.isConnected()){
+                    conenctserver();
+                }else{
+                    ACTIVITY.print(R.string.network_err);
+                    loadDialog.dismiss();
+                    break;
+                }
+
             }
         }
     }
-    /**
-     * 读取保存在sharepreferences中的信息。
-     *
-     * @return 读取到值时返回true，否则返回false
+    /*
+    连接Ftp服务器获取数据。
      */
-    public UserInfo readConfig() {
-        UserInfo info = null;
-        SharedPreferences shared = ACTIVITY.getSharedPreferences("userinfo", 1);
-        if (shared != null) {
-            info = UserInfo.getServerInstance(shared.getString("url", null),
-                    shared.getString("username", ""),
-                    shared.getString("pwd", ""));
-            return info;
-        }
-        return null;
-    }
-    private void conenctserver() {
-        user = readConfig();
+    public void conenctserver() {
+        user = DataBaseUtil.getdataHelper(ACTIVITY).getUserInfoFromDataBase();
         AsyncConnectServer connectServer =
                 new AsyncConnectServer(fileListView, ACTIVITY);
         connectServer.execute(user);
     }
-
-//    @Override
-//    public void initFilelist(View view) {
-//        filelistview= (com.wu.ftpfile.UI.FileListView) view.findViewById(R.id.server_listView);
-//        filelistview.setlistener(this);
-//    }
-
-//    @Override
-//    public void setadapter() {
-//        filelistview.setAdapter(listItemAdapter);
-//    }
 
 
 }

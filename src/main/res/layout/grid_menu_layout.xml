@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--文件信息菜单界面-->
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:rowCount="3"
+    android:columnCount="2"
+    >
+    <TextView
+        android:id="@+id/upload"
+        style="@style/menu"
+        android:text="@string/upload"
+        />
+
+
+    <TextView
+        android:id="@+id/download"
+        style="@style/menu"
+        android:text="@string/download"
+        />
+
+    <TextView
+        android:id="@+id/cut"
+        style="@style/menu"
+        android:text="@string/cut"
+        />
+
+    <TextView
+        android:id="@+id/copy"
+        style="@style/menu"
+        android:text="@string/copy"
+        />
+
+    <TextView
+        android:id="@+id/paste"
+        style="@style/menu"
+        android:text="@string/paste"
+        />
+
+    <TextView
+
+        />
+</GridLayout>

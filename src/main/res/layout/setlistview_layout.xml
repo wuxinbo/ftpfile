@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--设置界面listview布局文件-->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
@@ -7,10 +8,28 @@
         android:paddingTop="@dimen/listview_textview_padding_top_bottom"
         android:paddingBottom="@dimen/listview_textview_padding_top_bottom"
         android:layout_marginLeft="@dimen/listview_textview_margin_left"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:background="@drawable/listview_setting"
+        android:text="hello"
+
         />
 
+    <TextView
+        android:id="@+id/value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/setting"
+        android:layout_toLeftOf="@+id/dayu"
+        android:textColor="@color/dark"
+        android:paddingTop="@dimen/listview_textview_padding_top_bottom" />
+
+    <ImageView
+        android:id="@+id/dayu"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/dayu"
+        android:layout_alignParentRight="true"
+        android:paddingTop="@dimen/listview_textview_padding_top_bottom"
+        android:layout_marginRight="4dp" />
 </RelativeLayout>

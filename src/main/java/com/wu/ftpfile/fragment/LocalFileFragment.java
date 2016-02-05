@@ -1,5 +1,6 @@
 package com.wu.ftpfile.fragment;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +23,14 @@ public class LocalFileFragment extends FileListFragment {
         super.onCreate(savedInstanceState);
         ACTIVITY=(FileInfoActivity)getActivity();
         path=Constant.SD_ROOT_PATH;
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v =inflater.inflate(R.layout.localfilefragment,container,false);
         initview(v);
+//        loadDialog = ProgressDialog.show(ACTIVITY, "", "加载中");
         StartAction();
         return v;
     }
@@ -36,15 +39,4 @@ public class LocalFileFragment extends FileListFragment {
         updatelocalList.execute(Constant.SD_ROOT_PATH);
     }
 
-
-//    @Override
-//    public void initFilelist(View view) {
-//        filelistview= (com.wu.ftpfile.UI.FileListView) view.findViewById(R.id.local_listView);
-//        filelistview.setlistener(this);
-//    }
-
-//    @Override
-//    public void setadapter() {
-//        filelistview.setAdapter(listItemAdapter);
-//    }
 }

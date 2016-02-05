@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--账号管理界面-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/activity_background"
+    android:orientation="vertical">
+    <include
+        layout="@layout/nav_bar"
+        android:id="@+id/user_navbar">
+
+    </include>
+    <TextView
+        android:id="@+id/userView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:clickable="true"
+        android:background="#fff"
+        android:onClick="gotoUserInfoActivity"
+        android:layout_marginTop="20dp">
+
+    </TextView>
+    <TextView
+        android:id="@+id/addUser"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/Edit_background"
+        android:text="@string/addUser"
+        android:gravity="center_vertical"
+        />
+    <TextView
+        android:id="@+id/exitView"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="60dp"
+        android:background="@color/Edit_background"
+        android:text="@string/exit_current_User"
+        android:gravity="center"
+        android:clickable="true"
+        android:onClick="logout"
+        />
+</LinearLayout>

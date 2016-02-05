@@ -2,11 +2,10 @@ package com.wu.ftpfile.UI;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.wu.ftp.UserInfo;
+import com.wu.ftpfile.model.UserInfo;
 import com.wu.ftpfile.Interface.Loginclicklistener;
 import com.wu.ftpfile.Interface.preLoginlistener;
 

@@ -27,7 +27,14 @@
         <item name="android:indeterminateDrawable">@android:drawable/progress_indeterminate_horizontal</item>
         <item name="android:progressDrawable">@drawable/progress</item>
     </style>
-
+    <style name="menu">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">150dp</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center</item><!--文字居中 -->
+        <item name="android:background">#fff</item>
+        <item name="android:onClick">clickMenuView</item>
+    </style>
     <style name="FullscreenTheme" parent="android:Theme.NoTitleBar">
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@null</item>

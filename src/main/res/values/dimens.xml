@@ -3,7 +3,7 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="listview_top_margin">10dp</dimen>
+    <dimen name="listview_top_margin">20dp</dimen>
     <dimen name="listview_bottom_margin">5dp</dimen>
     <dimen name="listview_textview_margin_left">10dp</dimen>
     <dimen name="listview_textview_padding_top_bottom">10dp</dimen>
@@ -11,12 +11,12 @@
     <!-- 登录界面-->
     <dimen name="loginview_width">200dp</dimen>
     <dimen name="loginview_height">40dp</dimen>
-	<dimen name="loginview_textsize">14sp</dimen>
+    <dimen name="loginview_textsize">14sp</dimen>
 
     <!-- button-->
     <dimen name="button_radius">10dp</dimen>
     <dimen name="button_padding_top_bottom">5dp</dimen>
 
-    <!--Fileinfoactivity -->
-    <!--<dimen name=""></dimen>-->
+    <!--设置界面 -->
+    <dimen name="settinglistview_cornor">5dp</dimen>
 </resources>

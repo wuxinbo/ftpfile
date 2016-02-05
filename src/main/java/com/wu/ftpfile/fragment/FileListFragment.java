@@ -1,7 +1,6 @@
 package com.wu.ftpfile.fragment;
 
-import android.content.Intent;
-import android.net.Uri;
+import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.BaseAdapter;
@@ -36,8 +35,16 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
      * 用于显示路径的
      */
     protected TextView path_view;
+    /**
+     * 页面加载对话框。
+     */
+    protected ProgressDialog loadDialog;
 
-//    private String tag="FileListFragment";
+    public ProgressDialog getLoadDialog() {
+        return loadDialog;
+    }
+
+    //    private String tag="FileListFragment";
     public  void updatelist(List<FileInfo> fileinfo){
         if (fileinfos.size() > 0) {
             fileinfos.clear();
@@ -51,9 +58,9 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
                 fileinfos.add(fileInfo);
             }
         }
-        Collections.sort(fileinfos);
+        Collections.sort(fileinfos);//对文件集合进行排序。
         fileListView.setFileinfos(fileinfos);
-        listItemAdapter.notifyDataSetChanged();
+        listItemAdapter.notifyDataSetChanged();//通知适配器数据更新
         fileListView.setAdapter(listItemAdapter);
         if (this instanceof LocalFileFragment){
             if (path.equals(Constant.SD_ROOT_PATH)){
@@ -72,7 +79,7 @@ public abstract class FileListFragment  extends Fragment implements UpdatelistVi
     protected void initview(View view) {
         fileinfos = new ArrayList<FileInfo>();
         fileListView= (com.wu.ftpfile.UI.FileListView) view.findViewById(R.id.local_listView);
-        fileListView.setlistener(this);
+        fileListView.setlistener(this); //绑定监听器。
         listItemAdapter = new FileLIstAdapter(ACTIVITY,fileinfos);
         path_view = (TextView) view.findViewById(R.id.pathView);
     }

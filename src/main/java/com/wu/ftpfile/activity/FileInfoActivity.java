@@ -1,6 +1,10 @@
 package com.wu.ftpfile.activity;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -14,6 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.wu.ftpfile.AsyncTask.AsyncUpdatelist;
 import com.wu.ftpfile.Implment.FileListPagechangelistener;
@@ -22,6 +27,7 @@ import com.wu.ftpfile.UI.FileListView;
 import com.wu.ftpfile.adapter.FileFragmentpageAdapter;
 import com.wu.ftpfile.fragment.FileListFragment;
 import com.wu.ftpfile.model.Constant;
+import com.wu.ftpfile.utils.ExitApplication;
 
 import org.apache.commons.net.ftp.FTPClient;
 
@@ -34,7 +40,6 @@ import java.io.File;
  * @author wuxinbo
  */
 public class FileInfoActivity extends MyfragmentActivity {
-    //	private ProgressBar pga;
     private ImageView localimgview;
     /**
      * 存放目录
@@ -63,12 +68,12 @@ public class FileInfoActivity extends MyfragmentActivity {
      * </ul>
      */
     private int fragmnetnumber;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fileinfofragment);
         initactivity();
+        ExitApplication.getInstance().addToList(this); //将activity添加到集合中。
     }
 
 
@@ -78,6 +83,12 @@ public class FileInfoActivity extends MyfragmentActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * 重写onkeydown事件，使其自定义返回键功能。
+     * @param keyCode
+     * @param event
+     * @return
+     */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         switch (keyCode) {
@@ -96,6 +107,11 @@ public class FileInfoActivity extends MyfragmentActivity {
         return true;
     }
 
+    /**
+     * 菜单选项监听器绑定。
+     * @param item
+     * @return
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.setting: {
@@ -130,8 +146,8 @@ public class FileInfoActivity extends MyfragmentActivity {
                 jumpTosetactivity();
             }
         });
-        fileViewpage.setAdapter(new FileFragmentpageAdapter(getSupportFragmentManager()));
-        fileViewpage.setOnPageChangeListener(new FileListPagechangelistener(this));
+        fileViewpage.setAdapter(new FileFragmentpageAdapter(getSupportFragmentManager()));//绑定适配器
+        fileViewpage.setOnPageChangeListener(new FileListPagechangelistener(this));//绑定滑动事件监听器。
     }
 
     @Override
@@ -139,10 +155,10 @@ public class FileInfoActivity extends MyfragmentActivity {
         initnavbar();
         server_img = (ImageView) findViewById(R.id.server_img);
         fileViewpage = (ViewPager) findViewById(R.id.fileviewpager);
+
     }
 
     protected void initactivity() {
-//        localimgview=(ImageView)findViewById(R.id.local_img);
         initview();
         setview();
     }
@@ -157,17 +173,16 @@ public class FileInfoActivity extends MyfragmentActivity {
     private void press_back() {
         String serverfilepath = getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER).getPath();
         String localfilepath = getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER).getPath();
-        if(isFragmentByFragmennumber()){
-            if (serverfilepath.equals(File.separator)){
+        if (isFragmentByFragmennumber()) {
+            if (serverfilepath.equals(File.separator)) {
                 finnshActivity();
-            }else{
-            backParentDirectory(serverfilepath);
+            } else {
+                backParentDirectory(serverfilepath);
             }
-        }else{
+        } else {
             if (localfilepath.equals(Constant.SD_ROOT_PATH)) {
                 finnshActivity();
-            }
-            else{
+            } else {
                 backParentDirectory(localfilepath);
             }
 
@@ -175,25 +190,30 @@ public class FileInfoActivity extends MyfragmentActivity {
 
     }
 
+    /**
+     * 退出activity，结束应用程序。
+     */
     private void finnshActivity() {
         if (i == 0) {
             print(R.string.press_exit);
             i++;
         } else {
-            finish();
+            ExitApplication.getInstance().exitApplication(); //退出应用。
         }
     }
 
     /**
      * 根据fragmentnumber判断当前属于哪个fragment。
+     *
      * @return 如果返回true就是serverfileinfofragment，否则为Localfileinfofragment。
      */
-    public boolean isFragmentByFragmennumber(){
+    public boolean isFragmentByFragmennumber() {
         if (fragmnetnumber == Constant.SERVERFILE_FRAGMNET_NUMBER) {
             return true;
         }
         return false;
     }
+
     public int getFragmnetnumber() {
         return fragmnetnumber;
     }
@@ -207,9 +227,6 @@ public class FileInfoActivity extends MyfragmentActivity {
      */
     private void backParentDirectory(String path) {
         path = path.substring(0, path.lastIndexOf(File.separator));
-//        if (isFragmentByFragmennumber()){
-//            getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER).setPath();
-//        }
         FileListView filelistview = null;
         if (isFragmentByFragmennumber()) {
             filelistview = getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER).getFileListView();
@@ -220,6 +237,11 @@ public class FileInfoActivity extends MyfragmentActivity {
         updatelist.execute(path);
     }
 
+    /**
+     * 获取到fragment实例。
+     * @param fragmentnumber
+     * @return
+     */
     public FileListFragment getFragmentInstance(int fragmentnumber) {
         switch (fragmentnumber) {
             case Constant.SERVERFILE_FRAGMNET_NUMBER:
@@ -233,6 +255,34 @@ public class FileInfoActivity extends MyfragmentActivity {
         return null;
     }
 
+    /**
+     * 得到fragment实例。
+     * @return FileListFragment
+     */
+    public FileListFragment getFragmentInstance(){
+        if (isFragmentByFragmennumber()){
+            return getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER);
+        }else{
+            return getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER);
+        }
+    }
+    /**
+     * 菜单点击处理事件。
+     * @param v
+     */
+    public void clickMenuView (View v){
+        Log.d("click",((TextView)v).getText().toString());
+        FileListFragment fragment=null;
+        /*
+        判断属于哪个fragment，在进行销毁。
+         */
+       if (isFragmentByFragmennumber()){
+           fragment = getFragmentInstance(Constant.SERVERFILE_FRAGMNET_NUMBER);
+       }else{
+           fragment = getFragmentInstance(Constant.LOCALFILE_FRAGMNET_NUMBER);
+       }
+        fragment.getFileListView().getMenuDialog().dismiss();//销毁菜单选项对话框。
+    }
     /**
      * 采用了新的办法获取APK图标，之前的失败是因为android中存在的一个BUG,通过
      */
@@ -253,5 +303,9 @@ public class FileInfoActivity extends MyfragmentActivity {
         return null;
     }
 
+    public void initmenu() {
+
+
+    }
 
 }

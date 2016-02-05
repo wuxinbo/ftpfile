@@ -2,27 +2,28 @@
 <resources>
     <string-array name="setting">
         <item>账号管理</item>
+        <item>文件存放位置</item>
+        <item>自定义图标</item>
         <item>关于</item>
-        <item>退出</item>
     </string-array>
-    <string-array name="play">
+    <string-array name="play"><!--可播放文件 -->
         <item>rmvb</item>
         <item>mkv</item>
         <item>avi</item>
         <item>flv</item>
     </string-array>
-    <string-array name="zip">
+    <string-array name="zip"><!--压缩文件 -->
         <item>zip</item>
         <item>jar</item>
         <item>rar</item>
         <item>iso</item>
     </string-array>
-    <string-array name="music">
+    <string-array name="music"><!--音乐文件-->
         <item>mp3</item>
         <item>wma</item>
         <item>wav</item>
     </string-array>
-    <string-array name="picture">
+    <string-array name="picture"><!--图片-->
         <item>jpg</item>
         <item>png</item>
     </string-array>
